@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ECMAScript Syntax Grammar 6th Edition / Draft</title>
+  <link rel="stylesheet" type="text/css" href="ecma.css"/>
+</head>
+<body>
+<header>
+  <h1>ECMAScript 6th Syntax Grammer</h1>
+  <h2>6th Edition / Draft May 4, 2012</h2>
+  <p>この文章は <a href="http://wiki.ecmascript.org/lib/exe/fetch.php?id=harmony%3Aspecification_drafts&cache=cache&media=harmony:working_draft_ecma-262_edition_6_5-4-12.pdf">working_draft_ecma-262_edition_6_5-4-12.pdf</a> の構文部分の一部を抜き取り、編集したものです。<br/>
+  次期ECMAScriptのドラフトの最新版は<a href="http://wiki.ecmascript.org/doku.php?id=harmony:specification_drafts">harmony:specification_drafts [ES Wiki]</a>にあげられるはずです。</p>
+</header>
+
+
+<article>
+
+<!-- ==============================================================
+  Source Text
+  ============================================================= -->
+<section>
+  <h2 id="6">Source Text</h2>
+  <pre>
+SourceCharacter:
+  any Unicode code unit
+  </pre>
+</section>
+
+
+<!-- ==============================================================
+  Lexical Conventions
+  ============================================================= -->
+<section>
+  <h2 id="7">Lexical Conventions</h2>
+  <pre>
+InputElementDiv:
+  WhiteSpace
+  LineTerminator
+  Comment
+  Token
+  DivPunctuator
+
+InputElementRegExp:
+  WhiteSpace
+  LineTerminator
+  Comment
+  Token
+  RegularExpressionLiteral
+  </pre>
+  <section>
+    <h3 id="7.1">Unicode Format-Control Characters</h3>
+    <table>
+      <caption>Table 1: Format-Control Character Usage</caption>
+      <thead>
+        <tr><th>Code Unit Value</th><th>Name</th><th>Formal Name</th><th>Usage</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>\u200C</td><td>Zero width non-joiner</td><td>&lt;ZWNJ&gt;</td><td>IdentifierPart</td>
+        </tr><tr>
+          <td>\u200D</td><td>Zero width joiner</td><td>&lt;ZWJ&gt;</td><td>IdentifierPart</td>
+        </tr><tr>
+          <td>\uFEFF</td><td>Byte Order Mark</td><td>&lt;BOM&gt;</td><td>Whitespace</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+  	<h3 id="7.2">White Space</h3>
+  	<table>
+  		<caption>Table 2: Whitespace Characters</caption>
+  		<thead>
+        <tr><th>Code Unit Value</th><th>Name</th><th>Formal Name</th></tr>
+      </thead>
+  		<tbody>
+        <tr>
+        	<td>\u0009</td><td>Tab</td><td>&lt;Tab&gt;</td>
+        </tr><tr>
+        	<td>\u000B</td><td>Vartical Tab</td><td>&lt;VT&gt;</td>
+        </tr><tr>
+        	<td>\u000C</td><td>Form Feed</td><td>&lt;FF&gt;</td>
+        </tr><tr>
+        	<td>\u0020</td><td>Space</td><td>&lt;SP&gt;</td>
+        </tr><tr>
+        	<td>0x00A0</td><td>No-break space</td><td>&lt;NBSP&gt;</td>
+        </tr><tr>
+        	<td>\uFEFF</td><td>Byte Order Mark</td><td>&lt;BOM&gt;</td>
+        </tr><tr>
+        	<td>Other category "Zs"</td><td>Any other Unicode "space-separator"</td><td>&lt;USP&gt;</td>
+        </tr>
+      </tbody>
+  	</table>
+    <pre>
+WhiteSpace:
+  &lt;Tab&gt;
+  &lt;VT&gt;
+  &lt;FF&gt;
+  &lt;SP&gt;
+  &lt;NBSP&gt;
+  &lt;BOM&gt;
+  &lt;USP&gt;
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="7.3">Line Terminators</h3>
+    <table>
+    	<caption>Table 3: Line Terminator Characters</caption>
+    	<thead>
+    		<tr>
+    			<th>Code Unit Value</th>
+    			<th>Name</th>
+    			<th>Formal Name</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		<tr>
+    			<td>\u000A</td>
+    			<td>Line Feed</td>
+    			<td>&lt;LF&gt;</td>
+    		</tr>
+    		<tr>
+    			<td>\u000D</td>
+    			<td>Carriage Return</td>
+    			<td>&lt;CR&gt;</td>
+    		</tr>
+    		<tr>
+    			<td>\u2028</td>
+    			<td>Line separator</td>
+    			<td>&lt;LS&gt;</td>
+    		</tr>
+    		<tr>
+    			<td>\u2029</td>
+    			<td>Paragraph separator</td>
+    			<td>&lt;PS&gt;</td>
+    		</tr>
+    	</tbody>
+    </table>
+    <pre>
+LineTerminator:
+  &lt;LF&gt;
+  &lt;CR&gt;
+  &lt;LS&gt;
+  &lt;PS&gt;
+
+LineTerminatorSequence:
+  &lt;LF&gt;
+  &lt;CR&gt; <small>[lookahead &notin; &lt;LF&gt;]</small>
+  &lt;LS&gt;
+  &lt;PS&gt;
+  &lt;CR&gt; &lt;LF&gt;
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="7.4">Comments</h3>
+  	<pre>
+Comment:
+  MultiLineComment
+  SingleLineComment
+
+MultiLineComment:
+  <em class="p">/*</em> MultiLineCommentChars<sub>opt</sub> <em class="p">*/</em>
+
+MultiLineCommentChars:
+  MultiLineNotAsteriskChar MultiLineCommentChars<sub>opt</sub>
+  <em class="p">*</em> PostAsteriskCommentChars<sub>opt</sub>
+
+PostAsteriskCommentChars:
+  MultiLineNotForwardSlashOrAsteriskChar MultiLineCommentChars<sub>opt</sub>
+  <em class="p">*</em> PostAsteriskCommentChars<sub>opt</sub>
+
+MultiLineNotAsteriskChar:
+  SourceCharacter <b>but not</b> <em class="p">*</em>
+
+MultiLineNotForwardSlashOrAsteriskChar:
+  SourceCharacter <b>but not one of <em class="p">/</em> or <em class="p">*</em></b>
+
+SingleLineComment:
+  <em class="p">//</em> SingleLineCommentChars<sub>opt</sub>
+
+SingleLineCommentChars:
+  SingleLineCommentChar SingleLineCommentChars<sub>opt</sub>
+
+SingleLineCommentChar:
+  SourceCharacter <b>but not <em class=k">LineTerminator</em></b>
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="7.5">Tokens</h3>
+  	<pre>
+Token:
+  IdentifierName
+  Punctuator
+  NumericLiteral
+  StringLiteral
+    </pre>
+    <aside class="note">
+      <p>The <code>DivPunctuator</code> and <code>RegularExpressionLiteral</code> productions define tokens, but are not included in the <code>Token</code> production.</p>
+    </aside>
+  </section>
+
+  <section>
+  	<h3 id="7.6">Identifier Names and Identifiers</h3>
+  	<pre>
+Identifier:
+  IdentfierName <b>but not ReservedWord</b>
+
+IdentifierName:
+  IdentifierStart
+  IdentifierName IdentifierPart
+
+IdentifierStart:
+  UnicodeLetter
+  <em class="p">$</em>
+  <em class="p">_</em>
+  <em class="p">\</em> UnicodeEscapeSequence
+
+IdentifierPart:
+  IdentifierStart
+  UnicodeCombiningMark
+  UnicodeDigit
+  UnicodeConnectorPunctuation
+  &lt;ZWNJ&gt;
+  &lt;ZWJ&gt;
+
+UnicodeLetter:
+  any character in the Unicode categories
+  "Uppercase letter (Lu)", "Lowercase letter (Ll)",
+  "Titlecase letter (Lt)", "Modifier letter (Lm)",
+  "Other letter (Lo)", or "Letter number (Nl)".
+
+UnicodeCombiningMark:
+  any character in the Unicode categories
+  "Non-spacing mark (Mn)" or "Combining spacing mark (Mc)"
+
+UnicodeDigit:
+  any character in the Unicode category "Decimal number (Nd)"
+
+UnicodeConnectorPunctuation:
+  any character in the Unicode category "Connector puctuation (Pc)"
+    </pre>
+
+    <section>
+    	<h4 id="7.6.1">Reserved Words</h4>
+    	<pre>
+ReservedWord:
+  Keyword
+  FutureReservedWord
+  NullLiteral
+  BooleanLiteral
+      </pre>
+
+      <section>
+      	<h5 id="7.6.1.1">Keywords</h5>
+      	<pre>
+Keyword: <b>one of</b>
+  <em class="k oneof">break do instanceof typeof</em>
+  <em class="k oneof">case else new var</em>
+  <em class="k oneof">catch finally return void</em>
+  <em class="k oneof">continue for switch while</em>
+  <em class="k oneof">debugger function this with</em>
+  <em class="k oneof">default if throw</em>
+  <em class="k oneof">delete in try</em>
+        </pre>
+      </section>
+
+      <section>
+      	<h5 id="7.6.1.2">Future Reserved Words</h5>
+      	<pre>
+FutureReservedWord: <b>one of</b>
+  <em class="k oneof">class enum extends super</em>
+  <em class="k oneof">const export import</em>
+        </pre>
+        <p>The following tokens are also considered to be <code>FutureReservedWord</code> when they occure within strict mode code</p>
+        <pre>
+<em class="k oneof">implements let private public yield</em>
+<em class="k oneof">interface package protected static</em>
+        </pre>
+      </section>
+    </section>
+    
+    <section>
+      <h3 id="7.7">Punctuators</h3>
+      <pre>
+Punctuator: <b>one of</b>
+  <em class="p oneof">{ } ( ) [ ]</em>
+  <em class="p oneof">. ; , &lt; &gt; &lt;=</em>
+  <em class="p oneof">&gt;= == != === !==</em>
+  <em class="p oneof">+ - * % ++ --</em>
+  <em class="p oneof">&lt;&lt; &gt;&gt; &gt;&gt;&gt; &amp; | ^</em>
+  <em class="p oneof">! ~ &amp;&amp; || ? :</em>
+  <em class="p oneof">= += -= *= %= &lt;&lt;=</em>
+  <em class="p oneof">&gt;&gt;> &gt;&gt;&gt;= &amp;= |= ^= &lt;|</em>
+
+DivPunctuator: <b>one of</b>
+  <em class="p oneof">/ /=</em>
+      </pre>
+    </section>
+    
+    
+    <section>
+      <h3 id="7.8">Literals</h3>
+      <pre>
+Literal:
+  NullLiteral
+  ValueLiteral
+
+ValueLiteral:
+  BooleanLiteral
+  NumericLiteral
+  StringLiteral
+  RegularExpressionLiteral
+      </pre>
+      
+      <section>
+        <h4 id="7.8.1">Null Literals</h4>
+        <pre>
+NullLiteral:
+  <em class="k">null</em>
+        </pre>
+      </section>
+      
+      <section>
+        <h4 id="7.8.2">Boolean Literals</h4>
+        <pre>
+BooleanLiteral:
+  <em class="k">true</em>
+  <em class="k">false</em>
+        </pre>
+      </section>
+            
+      <section>
+        <h4 id="7.8.3">Numeric Literals</h4>
+        <pre>
+NumericLiteral:
+  DecimalLiteral
+  BinaryIntegerLiteral
+  OctalIntegerLiteral
+  HexIntegerLiteral
+
+DecimalLiteral:
+  DecimalIntegerLiteral <em class="p">.</em> DecimalDigits<sub>opt</sub> ExponentPart<sub>opt</sub>
+  <em class="p">.</em> DecimalDigits ExponentPart<sub>opt</sub>
+  DecimalIntegerLiteral ExponentPart<sub>opt</sub>
+
+DecimalIntegerLiteral:
+  0
+  NonZeroDigit DecimalDigits<sub>opt</sub>
+
+DecimalDigits:
+  DecimalDigit
+  DecimalDigits DecimalDigit
+
+DecimalDigit: <b>one of</b>
+  <em class="oneof">0 1 2 3 4 5 6 7 8 9</em>
+
+NonZeroDigit: <b>one of</b>
+  <em class="oneof">1 2 3 4 5 6 7 8 9</em>
+
+ExponentPart:
+  ExponentIndicator SignedInteger
+
+ExponentIndicator: <b>one of</b>
+  <em class="oneof">e E</em>
+
+SignedInteger:
+  DecimalDigits
+  <em class="p">+</em> DecimalDigits
+  <em class="p">-</em> DecimalDigits
+
+BinaryIntegerLiteral:
+  <em class="p">0b</em> BinaryDegit
+  <em class="p">0B</em> BinaryDegit
+  BinaryIntegerLiteral BinaryDegit
+
+BinaryDegit: <b>one of</b>
+  <em class="oneof">0 1</em>
+
+OctalIntegerLiteral:
+  <em class="p">0o</em> OctalDigit
+  <em class="p">0O</em> OctalDigit
+  OctalIntegerLiteral OctalDigit
+
+OctalDigit: <b>one of</b>
+  <em class="oneof">0 1 2 3 4 5 6 7</em>
+
+HexIntegerLiteral:
+  0x HexDigit
+  0X HexDigit
+  HexIntegerLiteral HexDigit
+
+HexDigit: <b>one of</b>
+  <em class="oneof">0 1 2 3 4 5 6 7 8 9</em>
+  <em class="oneof">a b c d e f A B C D E F</em>
+        </pre>
+      </section>
+            
+      <section>
+        <h3 id="7.8.4">String Literal</h3>
+        <pre>
+StringLiteral:
+  <em class="p">"</em> DoubleStringCharacters<sub>opt</sub> <em class="p">"</em>
+  <em class="p">'</em> SingleStringCharacters<sub>opt</sub> <em class="p">'</em>
+
+DoubleStringCharacters:
+  DoubleStringCharacter DoubleStringCharacters<sub>opt</sub>
+
+SingleStringCharacters:
+  SingleStringCharacter SingleStringCharacters<sub>opt</sub>
+
+DoubleStringCharacter:
+  SourceCharacter <b>but not one of <em class="p">"</em> or <em class="p">\</em> or LineTerminator</b>
+  <em class="p">\</em> EscapeSequence
+  LineContinuation
+
+SingleStringCharacter:
+  SourceCharacter <b>but not one of <em class="p">'</em> or <em class="p">\</em> or LineTerminator</b>
+  <em class="p">\</em> EscapeSequence
+  LineContinuation
+
+LineContinuation:
+  <em class="p">\</em> LineTerminatorSequence
+
+EscapeSequence:
+  CharacterEscapeSequence
+  0 <small>[lookahead &notin; DecimalDigit]</small>
+  HexEscapeSequence
+  UnicodeEscapeSequence
+
+CharacterEscapeSequence:
+  SingleEscapeCharacter
+  NonEscapeCharacter
+
+SingleEscapeCharacter: <b>one of</b>
+  <em class="oneof">' " \ b f n r t v</em>
+
+NonEscapeCharacter:
+  SourceCharacter <b>but not one of EscapeCharacter or LineTerminator</b>
+
+EscapeCharacter:
+  SingleEscapeCharacter
+  DecimalDigit
+  x
+  u
+
+HexEscapeSequence:
+  x HexDigit HexDigit
+
+UnicodeEscapeSequence:
+  u HexDigit HexDigit HexDigit HexDigit
+        </pre>
+        
+        <table>
+          <caption>Table 4: String Single Character Escape Sequences</caption>
+          <thead>
+            <tr>
+              <th>Escape Sequence</th>
+              <th>Code Unit Value</th>
+              <th>Name</th>
+              <th>Symbol</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>\b</td>
+              <td>\u0008</td>
+              <td>backspace</td>
+              <td>&lt;BS&gt;</td>
+            </tr><tr>
+              <td>\t</td>
+              <td>\u0009</td>
+              <td>horizontal tab</td>
+              <td>&lt;HT&gt;</td>
+            </tr><tr>
+              <td>\n</td>
+              <td>\u000A</td>
+              <td>line feed(new line)</td>
+              <td>&lt;LF&gt;</td>
+            </tr><tr>
+              <td>\v</td>
+              <td>\u000B</td>
+              <td>vertical tab</td>
+              <td>&lt;VT&gt;</td>
+            </tr><tr>
+              <td>\f</td>
+              <td>\u000C</td>
+              <td>form feed</td>
+              <td>&lt;FF&gt;</td>
+            </tr><tr>
+              <td>\r</td>
+              <td>\u000D</td>
+              <td>carriage return</td>
+              <td>&lt;CR&gt;</td>
+            </tr><tr>
+              <td>\"</td>
+              <td>\u0022</td>
+              <td>double quote</td>
+              <td>"</td>
+            </tr><tr>
+              <td>\'</td>
+              <td>\u0027</td>
+              <td>single quote</td>
+              <td>'</td>
+            </tr><tr>
+              <td>\\</td>
+              <td>\u005C</td>
+              <td>backslash</td>
+              <td>\</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      
+      <section>
+      	<h3 id="7.8.5">Regular Expression Literals</h3>
+      	<pre>
+RegularExpressionLiteral:
+  <em class="p">/</em> RegularExpressionBody <em class="p">/</em> RegularExpressionFlags
+
+RegularExpressionBody:
+  RegularExpressionFirstChar RegularExpressionChars
+
+RegularExpressionChars:
+  <small>[empty]</small>
+  RegularExpressionChars RegularExpressionChar
+
+RegularExpressionFirstChar:
+  RegularExpressionNonTerminator <b>but not one of <em class="p">*</em> or <em class="p">\</em> or <em class="p">/</em> or <emv class="p">[</em></b>
+  RegularExpressionBackslashSequence
+  RegularExpressionClass
+
+RegularExpressionChar:
+  RegularExpressionNonTerminator <b>but not one of <em class="p">\</em> or <em class="p">/</em> or <emv class="p">[</em></b>
+  RegularExpressionBackslashSequence
+  RegularExpressionClass
+
+RegularExpressionBackslashSequence:
+  <em class="p">\</em> RegularExpressionNonTerminator
+
+RegularExpressionNonTerminator:
+  SourceCharacter <b>but not</b> LineTerminator
+
+RegularExpressionClass:
+  <em class="p">[</em> RegularExpressionClassChars <em class="p">]</em>
+
+RegularExpressionClassChars:
+  <small>[empty]</small>
+  RegularExpressionClassChars RegularExpressionClassChar
+
+RegularExpressionClassChar:
+  RegularExpressionNonTerminator <b>but not one of <em class="p">]</em> or <em class="p">\</em></b>
+  RegularExpressionBackslashSequence
+
+RegularExpressionFlags:
+  <small>[empty]</small>
+  RegularExpressionFlags IdentifierPart
+        </pre>
+
+        <aside class="note">
+          <p>Regular expression literals may not be empty; instead of representing an empty regular expression literal, the characters // start a single-line comment. To specify an empty regular expression, use: /(?:)/ .</p>
+        </aside>
+      </section>
+    </section>
+  </section>
+</section>
+
+
+<!-- ==============================================================
+  Expressions
+  ============================================================= -->
+<section>
+  <h2 id="11">Expressions</h2>
+  <section>
+    <h3 id="11.1">Primary Expressions</h3>
+    <pre>
+PrimaryExpression:
+  <em class="k">this</em>
+  Identifier
+  Literal
+  SealedArrayLiteral
+  SealedObjectLiteral
+  FunctionExpression
+  GeneratorExpression
+  GeneratorComprehension
+  <em class="p">(</em> Expression <em class="p">)</em>
+    </pre>
+
+    <section>
+      <h4 id="11.1.4">Array Initalizer</h4>
+      <pre>
+SealedArrayInitialiser:
+  ArrayInitialiser
+  <em class="p">#</em> ArrayInitialiser
+
+ArrayInitialiser:
+  ArrayLiteral
+  ArrayComprehension
+      </pre>
+
+      <section>
+        <h5 id="11.1.4.1">Array Literal</h5>
+        <pre>
+ArrayLiteral:
+  <em class="p">[</em> Elision<sub>opt</sub> <em class="p">]</em>
+  <em class="p">[</em> ElementList <em class="p">]</em>
+  <em class="p">[</em> ElementList <em class="p">,</em> Elision<sub>opt</sub> <em class="p">]</em>
+
+ElementList:
+  Elision<sub>opt</sub> AssignmentExpression
+  Elision<sub>opt</sub> <em class="p">...</em> AssignmentExpression
+  ElementList <em class="p">,</em> Elision<sub>opt</sub> AssignmentExpression
+  ElementList <em class="p">,</em> Elision<sub>opt</sub> SpreadElement
+
+Elision:
+  <em class="p">,</em>
+  Elision <em class="p">,</em>
+
+SpreadElement:
+  <em class="p">...</em> AssignmentExpression
+        </pre>
+      </section>
+
+      <section>
+        <h5 id="11.1.4.2">Array Comprehension</h5>
+        <pre>
+ArrayComprehension:
+  <em class="p">[</em> Expression ComprehensionForList <em class="p">]</em>
+  <em class="p">[</em> Expression ComprehensionForList <em class="k">if</em> <em class="p">(</em> Expression <em class="p">) ]</em>
+
+ComprehensionForList:
+  ComprehensionFor
+  ComprehensionForList ComprehensionFor
+
+ComprehensionFor:
+  <em class="k">for</em> ForBinding <em class="k">of</em> Expression
+
+ForBinding:
+  BindingIdentifier
+  BindingPattern
+        </pre>
+      </section>
+    </section>
+
+    <section>
+      <h4 id="11.1.5">Object Initialiser</h4>
+      <pre>
+SealedObjectLiteral:
+  ObjectLiteral
+  <em class="p">#</em> ObjectLiteral
+
+ObjectLiteral:
+  <em class="p">{ }</em>
+  <em class="p">{</em> PropertyDefinitionList <em class="p">}</em>
+  <em class="p">{</em> PropertyDefinitionList <em class="p">,</em> <em class="p">}</em>
+
+PropertyDefinitionList:
+  PropertyDefinition
+  PropertyDefinitionList <em class="p">,</em> PropertyDefinition
+
+PropertyDefinition:
+  IdentifierName
+  PropertyName <em class="p">:</em> AssignmentExpression
+  MethodDefinition
+
+PropertyName:
+  IdentifierName
+  StringLiteral
+  NumericLiteral
+      </pre>
+    </section>
+  </section>
+
+  <section>
+    <h4 id="11.1.7">Generator Comprehensions</h4>
+    <pre>
+GeneratorComprehension:
+  <em class="p">(</em> Expression ComprehensionForList <em class="p">)</em>
+  <em class="p">(</em> Expression ComprehensionForList <em class="k">if</em> <em class="p">(</em> Expression <em class="p">) )</em>
+
+ComprehensionForList:
+  ComprehensionFor
+  ComprehensionForList ComprehensionFor
+
+ComprehensionFor:
+  <em class="k">for</em> LeftHandSideExpression <em class="k">of</em> Expression
+    </pre>
+  </section>
+
+  <section>
+    <h3 id="11.2">Left-Hand-Side Expressions</h3>
+    <pre>
+MemberExpression:
+  PrimaryExpression
+  MemberExpression <em class="p">[</em> Expression <em class="p">]</em>
+  MemberExpression <em class="p">.</em> IdentifierName
+  MemberExpression <em class="p">&lt;|</em> TriangleLiteral
+  <em class="k">super</em> <em class="p">[</em> Expression <em class="p">]</em>
+  <em class="k">super</em> <em class="p">.</em> IdentifierName
+  <em class="k">new</em> MemberExpression Arguments
+
+NewExpression:
+  MemberExpression
+  <em class="k">new</em> NewExpression
+
+CallExpression:
+  MemberExpression Arguments
+  <em class="k">super</em> Arguments
+  CallExpression Arguments
+  CallExpression <em class="p">[</em> Expression <em class="p">]</em>
+  CallExpression <em class="p">.</em> IdentifierName
+  CallExpression <em class="p">&lt;|</em> TriangleLiteral
+
+Arguments:
+  <em class="p">( )</em>
+  <em class="p">(</em> ArgumentList <em class="p">)</em>
+
+ArgumentList:
+  AssignmentExpression
+  <em class="p">...</em> AssignmentExpression
+  ArgumentList <em class="p">,</em> AssignmentExpression
+  ArgumentList <em class="p">,</em> <em class="p">...</em> AssignmentExpression
+
+TriangleLiteral:
+  SealedArrayLiteral
+  SealedObjectLiteral
+  FunctionExpression
+  ArrowFunction
+  ValueLiteral
+
+LeftHandSideExpression:
+  NewExpression
+  CallExpression
+    </pre>
+  </section>
+
+  <section>
+    <h3 id="11.3">Postfix Expressions</h3>
+    <pre>
+PostfixExpression:
+  LeftHandSideExpression
+  LeftHandSideExpression <small>[no LineTerminator here]</small> <em class="p">++</em>
+  LeftHandSideExpression <small>[no LineTerminator here]</small> <em class="p">--</em>
+    </pre>
+  </section>
+
+  <section>
+    <h3 id="11.4">Unary Operators</h3>
+    <pre>
+UnaryExpression:
+  PostfixExpression
+  <em class="k">delete</em> UnaryExpression
+  <em class="k">void</em> UnaryExpression
+  <em class="k">typeof</em> UnaryExpression
+  <em class="p">++</em> UnaryExpression
+  <em class="p">--</em> UnaryExpression
+  <em class="p">+</em> UnaryExpression
+  <em class="p">-</em> UnaryExpression
+  <em class="p">~</em> UnaryExpression
+  <em class="p">!</em> UnaryExpression
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="11.5">Multiplicative Operators</h3>
+  	<pre>
+MultiplicativeExpression:
+  UnaryExpression
+  MultiplicativeExpression <em class="p">*</em> UnaryExpression
+  MultiplicativeExpression <em class="p">/</em> UnaryExpression
+  MultiplicativeExpression <em class="p">%</em> UnaryExpression
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="11.6">Additive Operators</h3>
+  	<pre>
+AdditiveExpression:
+  MultiplicativeExpression
+  AdditiveExpression <em class="p">+</em> MultiplicativeExpression
+  AdditiveExpression <em class="p">-</em> MultiplicativeExpression
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="11.7">Bitwise Shift Operators</h3>
+  	<pre>
+ShiftExpression:
+  AdditiveExpression
+  ShiftExpression <em class="p">&lt;&lt;</em> AdditiveExpression
+  ShiftExpression <em class="p">&gt;&gt;</em> AdditiveExpression
+  ShiftExpression <em class="p">&lt;&lt;&lt;</em> AdditiveExpression
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="11.8">Relational Operators</h3>
+  	<pre>
+RelationalExpression:
+  ShiftExpression
+  RelationalExpression <em class="p">&lt;</em> ShiftExpression
+  RelationalExpression <em class="p">&gt;</em> ShiftExpression
+  RelationalExpression <em class="p">&lt;=</em> ShiftExpression
+  RelationalExpression <em class="p">&gt;=</em> ShiftExpression
+  RelationalExpression <em class="k">instanceof</em> ShiftExpression
+  RelationalExpression <em class="k">in</em> ShiftExpression
+
+RelationalExpressionNoIn:
+  ShiftExpression
+  RelationalExpressionNoIn <em class="p">&lt;</em> ShiftExpression
+  RelationalExpressionNoIn <em class="p">&gt;</em> ShiftExpression
+  RelationalExpressionNoIn <em class="p">&lt;=</em> ShiftExpression
+  RelationalExpressionNoIn <em class="p">&gt;=</em> ShiftExpression
+  RelationalExpressionNoIn <em class="k">instanceof</em> ShiftExpression
+    </pre>
+
+    <aside class="note">
+      <p>The "NoIn" variants are needed to avoid confusing the <em class="k">in</em> operator in a relational expression with <em class="k">in</em> operator in a <em class="k">for</em> statement.</p>
+    </aside>
+  </section>
+
+  <section>
+  	<h3 id="11.9">Equality Operators</h3>
+  	<pre>
+EqualityExpression:
+  RelationalExpression
+  EqualityExpression <em class="p">==</em> RelationalExpression
+  EqualityExpression <em class="p">!=</em> RelationalExpression
+  EqualityExpression <em class="p">===</em> RelationalExpression
+  EqualityExpression <em class="p">!==</em> RelationalExpression
+  EqualityExpression <small>[no LineTerminator here]</small> <em class="p">is</em> RelationalExpression
+  EqualityExpression <small>[no LineTerminator here]</small> <em class="p">isnt</em> RelationalExpression
+
+
+EqualityExpressionNoIn:
+  RelationalExpressionNoIn
+  EqualityExpressionNoIn <em class="p">==</em> RelationalExpressionNoIn
+  EqualityExpressionNoIn <em class="p">!=</em> RelationalExpressionNoIn
+  EqualityExpressionNoIn <em class="p">===</em> RelationalExpressionNoIn
+  EqualityExpressionNoIn <em class="p">!==</em> RelationalExpressionNoIn
+  EqualityExpression <small>[no LineTerminator here]</small> <em class="p">is</em> RelationalExpression
+  EqualityExpression <small>[no LineTerminator here]</small> <em class="p">isnt</em> RelationalExpression
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="11.10">Binary Bitwise Operators</h3>
+  	<pre>
+BitwiseANDExpression:
+  EqualityExpression
+  BitwiseANDExpression <em class="p">&amp;</em> EqualityExpression
+
+BitwiseANDExpressionNoIn:
+  EqualityExpressionNoIn
+  BitwiseANDExpressionNoIn <em class="p">&amp;</em> EqualityExpressionNoIn
+
+BitwiseXORExpression:
+  BitwiseANDExpression
+  BitwiseXORExpression <em class="p">^</em> BitwiseANDExpression
+
+BitwiseXORExpressionNoIn:
+  BitwiseANDExpressionNoIn
+  BitwiseXORExpressionNoIn <em class="p">^</em> BitwiseANDExpressionNoIn
+
+BitwiseORExpression:
+  BitwiseXORExpression
+  BitwiseORExpression <em class="p">|</em> BitwiseXORExpression
+
+BitwiseORExpressionNoIn:
+  BitwiseXORExpressionNoIn
+  BitwiseORExpressionNoIn <em class="p">|</em> BitwiseXORExpressionNoIn
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="11.11">Binary Logical Operators</h3>
+    <pre>
+LogicalANDExpression:
+  BitwiseXORExpression
+  LogicalANDExpression <em class="p">&amp;&amp;</em> BitwiseORExpression
+
+LogicalANDExpressionNoIn:
+  BitwiseXORExpressionNoIn
+  LogicalANDExpressionNoIn <em class="p">&amp;&amp;</em> BitwiseORExpressionNoIn
+
+LogicalORExpression:
+  LogicalANDExpression
+  LogicalORExpression <em class="p">||</em> LogicalANDExpression
+
+LogicalORExpressionNoIn:
+  LogicalANDExpressionNoIn
+  LogicalORExpressionNoIn <em class="p">||</em> LogicalANDExpressionNoIn
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="11.12">Conditional Operator</h3>
+    <pre>
+ConditionalExpression:
+  LogicalORExpression
+  LogicalORExpression <em class="p">?</em> AssignmentExpression <em class="p">:</em> AssignmentExpression
+
+ConditionalExpressionNoIn:
+  LogicalORExpressionNoIn
+  LogicalORExpressionNoIn <em class="p">?</em> AssignmentExpression <em class="p">:</em> AssignmentExpressionNoIn
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="11.13">Assignment Operators</h3>
+    <pre>
+AssignmentExpression:
+  ConditionalExpression
+  YieldExpression
+  ArrowFunction
+  LeftHandSideExpression <em class="p">=</em> AssignmentExpression
+  LeftHandSideExpression AssignmentOperator AssignmentExpression
+
+AssignmentExpressionNoIn:
+  ConditionalExpressionNoIn
+  YieldExpression
+  ArrowFunction
+  LeftHandSideExpression <em class="p">=</em> AssignmentExpressionNoIn
+  LeftHandSideExpression AssignmentOperator AssignmentExpressionNoIn
+
+AssignmentOperator: <b>one of</b>
+  <em class="p oneof">*= /= %= += -= &lt;&lt;= &gt;&gt;= &gt;&gt;&gt;= &amp;= ^= !=</em>
+  </pre>
+
+    <section>
+      <h4 id="11.13.1">Destructuring Assingment</h4>
+      <pre>
+AssignmentPattern:
+  ObjectAssignmentPattern
+  ArrayAssignmentPattern
+
+ObjectAssignmentPattern:
+  <em class="p">{ }</em>
+  <em class="p">{</em> AssignmentPropertyList <em class="p">}</em>
+  <em class="p">{</em> AssignmentPropertyList <em class="p">, }</em>
+
+ArrayAssignmentPattern:
+  <em class="p">[</em> Elision<sub>opt</sub> AssignmentRestElement<sub>opt</sub> <em class="p">]</em>
+  <em class="p">[</em> AssignmentElementList <em class="p">]</em>
+  <em class="p">[</em> AssignmentElementList <em class="p">,</em> Elision<sub>opt</sub> AssignmentRestElement<sub>opt</sub> <em class="p">]</em>
+
+AssignmentPropertyList:
+  AssignmentProperty
+  AssignmentPropertyList <em class="p">,</em> AssignmentProperty
+
+AssignmentElementList:
+  Elision<sub>opt</sub> AssignmentElement
+  AssignmentElementList <em class="p">,</em> Elision<sub>opt</sub> AssignmentElement
+
+AssignmentProperty:
+  Identifier
+  PropertyName <em class="p">:</em> LeftHandSideExpression
+
+AssignmentElement:
+  LeftHandSideExpression
+
+AssignmentRestElement:
+  <em class="p">...</em> LeftHandSideExpression
+      </pre>
+    </section>
+  </section>
+
+  <section>
+  	<h3 id="11.14">Comma Operator</h3>
+    <pre>
+Expression:
+  AssignmentExpression
+  Expression <em class="p">,</em> AssignmentExpression
+
+ExpressionNoIn:
+  AssignmentExpressionNoIn
+  ExpressionNoIn <em class="p">,</em> AssignmentExpressionNoIn
+    </pre>
+  </section>
+</section>
+<!-- ==============================================================
+  Statements and Declarations
+  ============================================================= -->
+<section>
+  <h2 id="12">Statements and Declarations</h2>
+  <pre>
+Statement:
+  BlockStatement
+  VariableStatement
+  EmptyStatement
+  ExpressionStatement
+  IfStatement
+  BreakableStatement
+  ContinueStatement
+  BreakStatement
+  ReturnStatement
+  WithStatement
+  LabelledStatement
+  ThrowStatement
+  TryStatement
+  DebuggerStatement
+
+Declaration:
+  FunctionDeclaration
+  LexicalDeclaration
+
+BreakableStatement:
+  IterationStatement
+  SwitchStatement
+  </pre>
+  <section>
+    <h3 id="12.1">Block</h3>
+    <pre>
+BlockStatement:
+  Block
+
+Block:
+  <em class="p">{</em> StatementList<sub>opt</sub> <em class="p">}</em>
+
+StatementList:
+  StatementListItem
+  StatementList StatementListItem
+
+StatementListItem:
+  Statement
+  Declaration
+    </pre>
+  </section>
+  <section>
+    <h3 id="12.2">Declarations and the Variable Statement</h3>
+    <section>
+      <h4 id="12.2.1">Let and Const Declarations</h4>
+      <pre>
+LexicalDeclaration:
+  LetOrConst BindingList <em class="p">;</em>
+
+LexicalDeclarationNoIn:
+  LetOrConst BindingListNoIn
+
+LetOrConst:
+  <em class="k">let</em>
+  <em class="k">const</em>
+
+BindingList:
+  LexicalBinding
+  BindingList <em class="p">,</em> LexicalBinding
+
+BindingListNoIn:
+  LexicalBindingNoIn
+  BindingListNoIn <em class="p">,</em> LexicalBindingNoIn
+
+LexicalBinding:
+  BindingIdentifier Initialiser<sub>opt</sub>
+  BindingPattern Initialiser
+
+LexicalBindingNoIn:
+  BindingIdentifier InitialiserNoIn<sub>opt</sub>
+  BindingPattern InitialiserNoIn
+
+BindingIdentifier:
+  Identifier
+
+Initialiser:
+  <em class="p">=</em> AssignmentExpression
+
+InitialiserNoIn:
+  <em class="p">=</em> AssignmentExpressionNoIn
+      </pre>
+    </section>
+
+    <section>
+      <h4 id="12.2.2">Variable Statement</h4>
+      <pre>
+VariableStatement:
+  <em class="k">var</em> VariableDeclarationList <em class="p">;</em>
+
+VariableDeclarationList:
+  VariableDeclaration
+  VariableDeclarationList <em class="p">,</em> VariableDeclaration
+
+VariableDeclarationListNoIn:
+  VariableDeclarationNoIn
+  VariableDeclarationListNoIn <em class="p">,</em> VariableDeclarationNoIn
+
+VariableDeclaration:
+  BindingIdentifier Initialiser<sub>opt</sub>
+  BindingPattern Initialiser
+
+VariableDeclarationNoIn:
+  BindingIdentifier InitialiserNoIn<sub>opt</sub>
+  BindingPattern InitialiserNoIn
+      </pre>
+    </section>
+
+    <section>
+      <h4 id="12.2.4">Destructuring Binding Pattern</h4>
+      <pre>
+BindingPattern:
+  ObjectBindingPattern
+  ArrayBindingPattern
+
+ObjectBindingPattern:
+  <em class="p">{ }</em>
+  <em class="p">{</em> BindingPropertyList <em class="p">}</em>
+  <em class="p">{</em> BindingPropertyList <em class="p">,</em> <em class="p">}</em>
+
+ArrayBindingPattern:
+  <em class="p">[</em> Elision<sub>opt</sub> BindingRestElement<sub>opt</sub> <em class="p">]</em>
+  <em class="p">[</em> BindingElementList <em class="p">]</em>
+  <em class="p">[</em> BindingElementList <em class="p">,</em> Elision<sub>opt</sub> BindingRestElement<sub>opt</sub> <em class="p">]</em>
+
+BindingPropertyList:
+  BindingProperty
+  BindingPropertyList <em class="p">,</em> BindingProperty
+
+BindingElementList:
+  Elision<sub>opt</sub> BindingElement
+  BindingElementList <em class="p">,</em> Elision<sub>opt</sub> BindingElement
+
+BindingProperty:
+  SingleNameBinding
+  PropertyName <em class="p">:</em> BindingElement
+
+BindingElement:
+  SingleNameBinding
+  BindingPattern Initialiser<sub>opt</sub>
+
+SingleNameBinding:
+  BindingIdentifier Initialiser<sub>opt</sub>
+
+BindingRestElement:
+  <em class="p">...</em> BindingIdentifier
+      </pre>
+    </section>
+  </section>
+
+  <section>
+  	<h3 id="12.3">Empty Statement</h3>
+    <pre>
+EmptyStatement:
+  <em class="p">;</em>
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="12.4">Expression Statement</h3>
+    <pre>
+ExpressionStatement:
+  <small>[lookahead &notin; {<em class="p">{</em> , <em class="k">function</em>}]</small> Expression <em class="p">;</em>
+    </pre>
+    <aside class="note">
+      <p>An <em>ExpressionStatement</em> cannot start with an opening curly brace because that might make it ambiguous with a <em>Block</em>. Also, an <em>ExpressionStatement</em> cannot start with the <em class="k">function</em> keyword because that might make it ambiguous with a <em>FunctionDeclaration</em>.
+    </aside>
+  </section>
+
+  <section>
+  	<h3 id="12.5">The <code>if</code> Statement</h3>
+    <pre>
+IfStatement:
+  <em class="k">if</em> <em class="p">(</em> Expression <em class="p">)</em> Statement <em class="k">else</em> Statement
+  <em class="k">if</em> <em class="p">(</em> Expression <em class="p">)</em> Statement
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="12.6">Iteration Statements</h3>
+    <pre>
+IterationStatement:
+  <em class="k">do</em> Statement <em class="k">while</em> <em class="p">(</em> Expression <em class="p">)</em>
+  <em class="k">while</em> <em class="p">(</em> Expression <em class="p">)</em> Statement
+  <em class="k">for</em> <em class="p">(</em> ExpressionNoIn<sub>opt</sub><em class="p">;</em> Expression<sub>opt</sub><em class="p">;</em> Expression<sub>opt</sub> <em class="p">)</em> Statement
+  <em class="k">for</em> <em class="p">(</em> <em class="k">var</em> VariableDeclarationListNoIn <em class="p">;</em> Expression<sub>opt</sub><em class="p">;</em> Expression<sub>opt</sub> <em class="p">)</em> Statement
+  <em class="k">for</em> <em class="p">(</em> LexicalDeclarationNoIn <em class="p">;</em> Expression<sub>opt</sub><em class="p">;</em> Expression<sub>opt</sub> <em class="p">)</em> Statement
+  <em class="k">for</em> <em class="p">(</em> LeftHandSideExpression <em class="k">in</em> Expression <em class="p">)</em> Statement
+  <em class="k">for</em> <em class="p">(</em> <em class="k">var</em> ForBinding <em class="k">in</em> Expression <em class="p">)</em> Statement
+  <em class="k">for</em> <em class="p">(</em> ForDeclaration <em class="k">in</em> Expression <em class="p">)</em> Statement
+  <em class="k">for</em> <em class="p">(</em> LeftHandSideExpression <em class="k">of</em> Expression <em class="p">)</em> Statement
+  <em class="k">for</em> <em class="p">(</em> <em class="k">var</em> ForBinding <em class="k">of</em> Expression <em class="p">)</em> Statement
+  <em class="k">for</em> <em class="p">(</em> ForDeclaration <em class="k">of</em> Expression <em class="p">)</em> Statement
+
+ForDeclaration:
+  LetOrConst ForBinding
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="12.7">The <code>continue</code> Statement</h3>
+    <pre>
+ContinueStatement:
+  <em class="k">continue</em> <em class="p">;</em>
+  <em class="k">continue</em> <small>[no LineTerminator here]</small> Identifier <em class="p">;</em>
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="12.8">The <code>break</code> Statement</h3>
+    <pre>
+BreakStatement:
+  <em class="k">break</em> <em class="p">;</em>
+  <em class="k">break</em> <small>[no LineTerminator here]</small> Identifier <em class="p">;</em>
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="12.9">The <code>return</code> Statement</h3>
+    <pre>
+ReturnStatement:
+  <em class="k">return</em> <em class="p">;</em>
+  <em class="k">return</em> <small>[no LineTerminator here]</small> Expression <em class="p">;</em>
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="12.10">The <code>with</code> Statement</h3>
+    <pre>
+WithStatement:
+  <em class="k">with</em> <em class="p">(</em> Expression <em class="p">)</em> Statement
+    </pre>
+    <aside class="note">
+      <p>The <em class="k">with</em> statement adds an object environment record for a compluted object to the lexical environment of the current execution context. It then executes a statement using this argumented lexical environment. Finally, it restores the original lexical environment.</p>
+    </aside>
+  </section>
+
+  <section>
+  	<h3 id="12.11">The <code>switch</code> Statement</h3>
+    <pre>
+SwitchStatement:
+  <em class="k">switch</em> <em class="p">(</em> Expression <em class="p">)</em> CaseBlock
+
+CaseBlock:
+  <em class="p">{</em> CaseClauses<sub>opt</sub> <em class="p">}</em>
+  <em class="p">{</em> CaseClauses<sub>opt</sub> DefaultClause CaseClauses<sub>opt</sub> <em class="p">}</em>
+
+CaseClauses:
+  CaseClause
+  CaseClauses CaseClause
+
+CaseClause:
+  <em class="k">case</em> Expression <em class="p">:</em> StatementList<sub>opt</sub>
+
+DefaultClause:
+  <em class="k">default</em> <em class="p">:</em> StatementList<sub>opt</sub>
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="12.12">Labelled Statements</h3>
+    <pre>
+LabelledStatement:
+  Identifier <em class="p">:</em> Statement
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="12.13">The <code>throw</code> Statement</h3>
+    <pre>
+ThrowStatement:
+  <em class="k">throw</em> <small>[no LineTerminator here]</small> Expression <em class="p">;</em>
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="12.14">The <code>try</code> Statement</h3>
+    <pre>
+TryStatement:
+  <em class="k">try</em> Block Catch
+  <em class="k">try</em> Block Finally
+  <em class="k">try</em> Block Catch Finally
+
+Catch:
+  <em class="k">catch</em> <em class="p">(</em> CatchParameter <em class="p">)</em> Block
+
+Finally:
+  <em class="k">finally</em> Block
+
+CatchParameter:
+  BindingIdentifier
+  BindingPattern
+    </pre>
+  </section>
+
+  <section>
+  	<h3 id="12.15">The <code>debugger</code> Statement</h3>
+    <pre>
+DebuggerStatement:
+  <em class="k">debugger</em> <em class="p">;</em>
+    </pre>
+  </section>
+</section>
+
+
+<!-- ==============================================================
+  Function Declaration
+  ============================================================= -->
+<section>
+  <h2 id="13">Function and Generators</h2>
+  <section>
+    <h3 id="13.1">Function Definitions</h3>
+    <pre>
+FunctionDeclaration:
+  <em class="k">function</em> BindingIdentifier <em class="p">(</em> FormalParameterList <em class="p">)</em> <em class="p">{</em> FunctionBody <em class="p">}</em>
+
+FunctionExpression:
+  <em class="k">function</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameterList <em class="p">)</em> <em class="p">{</em> FunctionBody <em class="p">}</em>
+
+FormalParameterList:
+  <small>[empty]</small>
+  FunctionRestParameter
+  FormalsList
+  FormalsList <em class="p">,</em> FunctionRestParameter
+
+FormalsList:
+  FormalParameter
+  FormalsList <em class="p">,</em> FormalParameter
+
+FunctionRestParameter:
+  <em class="p">...</em> BindingIdentifier
+
+FormalParameter:
+  BindingElement
+
+FunctionBody:
+  StatementList<sub>opt</sub>
+    </pre>
+  </section>
+
+  <section>
+    <h2 id="13.2">Arrow Function Definitions</h2>
+    <pre>
+ArrowFunction:
+  ArrowParameters <em class="p">=></em> ConciseBody
+
+ArrowParameters:
+  BindingIdentifier
+  <em class="p">(</em> ArrowFormalParameterList <em class="p">)</em>
+
+ArrowFormalParameterList:
+  <small>[empty]</small>
+  FunctionRestParameter
+  CoverFormalList
+  CoverFormalList <em class="p">,</em> FunctionRestParameter
+
+ConciseBody:
+  <small>[lookahead &notin; { <em class="p">{</em> }]</small> AssignmentExpression
+  <em class="p">{</em> FunctionBody <em class="p">}</em>
+
+CoverFormalList:
+  Expression
+    </pre>
+  </section>
+
+  <section>
+    <h2 id="13.3">Method Definitions</h2>
+    <pre>
+MethodDefinition:
+  PropertyName <em class="p">(</em> FormalParameterList <em class="p">)</em> ConciseBody
+  <em class="p">*</em> PropertyName <em class="p">(</em> FormalParameterList <em class="p">)</em> ConciseBody
+  <em class="k">get</em> PropertyName <em class="p">( )</em> ConciseBody
+  <em class="k">set</em> PropertyName <em class="p">(</em> PropertySetParameterList <em class="p">)</em> ConciseBody
+
+PropertySetParameterList:
+  BindingIdentifier
+  BindingPattern
+    </pre>
+  </section>
+
+  <section>
+    <h3 id="13.4">Generator Definitions</h3>
+    <pre>
+GeneratorDeclaration:
+  <em class="k">function</em> <em class="p">*</em> BindingIdentifier <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
+
+GeneratorExpression:
+  <em class="k">function</em> <em class="p">*</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
+    </pre>
+  </section>
+</section>
+
+
+<!-- ==============================================================
+  Program
+  ============================================================= -->
+<section>
+  <h2 id="14">Program</h2>
+  <pre>
+Program:
+  ProgramBody<sub>opt</sub>
+
+ProgramBody:
+  StatementList
+  </pre>
+</section>
+
+</article>
+<nav class="index">
+  <form id="searchForm">
+    <label for="searchBox">Serach:</label>
+    <input type="search" name="searchBox" list="syntaxName">
+    <datalist id="syntaxName"></datalist>
+  </form>
+  <ul>
+    <li><a href="#6">6 Source Text</li>
+    <li><a href="#7">7 Lexical Conventions</a>
+      <ul>
+        <li><a href="#7.1">7.1 Unicode Format-Control Characters</a></li>
+        <li><a href="#7.2">7.2 White Space</a></li>
+        <li><a href="#7.3">7.3 Line Terminators</a></li>
+        <li><a href="#7.4">7.4 Comments</a></li>
+        <li><a href="#7.5">7.5 Tokens</a></li>
+        <li><a href="#7.6">7.6 Identifier Names and Identifiers</a>
+          <ul>
+            <li><a href="#7.6.1">7.6.1 Reserved Words</a>
+              <ul>
+                <li><a href="7.6.1.1">7.6.1.1 Keywords</a></li>
+                <li><a href="7.6.1.2">7.6.1.2 Future Reserved Words</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#7.7">7.7 Punctuators</a></li>
+        <li><a href="#7.8">7.8 Literals</a>
+          <ul>
+            <li><a href="#7.8.1">7.8.1 Null Literals</a></li>
+            <li><a href="#7.8.2">7.8.2 Boolean Literals</a></li>
+            <li><a href="#7.8.3">7.8.3 Numeric Literals</a></li>
+            <li><a href="#7.8.4">7.8.4 String Literal</a></li>
+            <li><a href="#7.8.5">7.8.5 Regular Expression Literals</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#11">11 Expressions</a>
+      <ul>
+        <li><a href="#11.1">11.1 Primary Expressions</a>
+          <ul>
+            <li><a href="#11.1.4">11.1.4 Array Initialiser</a>
+              <ul>
+                <li><a href="#11.1.4.1">11.1.4.1 Array Literal</a></li>
+                <li><a href="#11.1.4.2">11.1.4.2 Array Comprehension</a></li>
+              </ul>
+            </li>
+            <li><a href="#11.1.5">11.1.5 Object Initialiser</a></li>
+            <li><a href="#11.1.7">11.1.7 Generator Comprehensions</a></li>
+          </ul>
+        </li>
+        <li><a href="#11.2">11.2 Left-Hand-Side Expressions</a></li>
+        <li><a href="#11.3">11.3 Postfix Expressions</a></li>
+        <li><a href="#11.4">11.4 Unary Operators</a></li>
+        <li><a href="#11.5">11.5 Multiplicative Operators</a></li>
+        <li><a href="#11.6">11.6 Additive Operators</a></li>
+        <li><a href="#11.7">11.7 Bitwise Shift Operators</a></li>
+        <li><a href="#11.8">11.8 Relational Operators</a></li>
+        <li><a href="#11.9">11.9 Equality Operators</a></li>
+        <li><a href="#11.10">11.10 Binaly Bitwise Operators</a></li>
+        <li><a href="#11.11">11.11 Binaly Logical Operators</a></li>
+        <li><a href="#11.12">11.12 Conditional Operator</a></li>
+        <li><a href="#11.13">11.13 Assignment Operators</a>
+          <ul>
+            <li><a href="#11.13.1">11.13.1 Destructuring Assingment</a></li>
+          </ul>
+        </li>
+        <li><a href="#11.14">11.14 Comma Operator</a></li>
+      </ul>
+    </li>
+    <li><a href="#12">12 Statements and Declarations</a>
+      <ul>
+        <li><a href="#12.1">12.1 Block</a></li>
+        <li><a href="#12.2">12.2 Declarations and the variable Statement</a>
+          <ul>
+            <li><a href="#12.2.1">12.2.1 Let and Const Declarations</a></li>
+            <li><a href="#12.2.2">12.2.2 Variable Statement</a></li>
+            <li><a href="#12.2.4">12.2.4 Destructuring Binding Pattern</a></li>
+          </ul>
+        </li>
+        <li><a href="#12.3">12.3 Empty Statement</a></li>
+        <li><a href="#12.4">12.4 Expression Statement</a></li>
+        <li><a href="#12.5">12.5 The if Statement</a></li>
+        <li><a href="#12.6">12.6 Iteration Statements</a></li>
+        <li><a href="#12.7">12.7 The continue Statement</a></li>
+        <li><a href="#12.8">12.8 The break Statement</a></li>
+        <li><a href="#12.9">12.9 The return Statement</a></li>
+        <li><a href="#12.10">12.10 The with Statement</a></li>
+        <li><a href="#12.11">12.11 The switch Statement</a></li>
+        <li><a href="#12.12">12.12 Labelled Statement</a></li>
+        <li><a href="#12.13">12.13 The throw Statement</a></li>
+        <li><a href="#12.14">12.14 The try Statement</a></li>
+        <li><a href="#12.15">12.15 The debugger Statement</a></li>
+      </ul>
+    </li>
+    <li><a href="#13">13 Function and Generators</a>
+      <ul>
+        <li><a href="#13.1">13.1 Function Definitions</a></li>
+        <li><a href="#13.2">13.2 Arrow Function Definitions</a></li>
+        <li><a href="#13.3">13.3 Method Definitions</a></li>
+        <li><a href="#13.4">13.4 Generator Definitions</a></li>
+      </ul>
+    </li>
+    <li><a href="#14">14 Program</a></li>
+  </ul>
+</nav>
+
+<footer>
+  <hr>
+  <p><a href="http://creativecommons.org/licenses/by/2.1/jp/"><img src="http://creativecommons.jp/wp/wp-content/uploads/2009/10/by.png"/></a></p>
+  <address>teramako@gmail.com</address>
+</footer>
+</body>
+<script>
+(function(){
+  var defs = [],
+      regSyntaxDef = /(^\w+):/mg,
+      regSyntaxWord = /\b([A-Z]\w+)\b/mg;
+  var pres = Array.prototype.slice.call(document.getElementsByTagName("pre"));
+  pres.map(function (e) {
+    var text = e.textContent;
+    var m;
+    while (m = (regSyntaxDef.exec(text))) {
+      defs.push(m[1])
+    }
+  });
+  pres.map(function(e) {
+    var text = e.innerHTML.replace(/\t+/g, "").trim();;
+    var m, html = "", lastIndex = 0;
+    while (m = (regSyntaxWord.exec(text))) {
+      html += text.substring(lastIndex, m.index);
+      lastIndex = regSyntaxWord.lastIndex;
+      if (text.charAt(m.index + m[1].length) === ":") {
+        html += "<em class=\"syntaxDef\" id=\"" + m[1] + "\">" + m[1] + "</em>";
+      } else if (defs.indexOf(m[1]) !== -1) {
+        html += "<a href=\"#" + m[1] + "\">" + m[1] + "</a>";
+      } else {
+        html += m[1];
+      }
+    }
+    html += text.substring(lastIndex);
+    e.innerHTML = html;
+  });
+  var datalist = document.getElementById("syntaxName");
+  defs.forEach(function (def) {
+    var opt = document.createElement("option");
+    opt.setAttribute("value", def);
+    datalist.appendChild(opt);
+  });
+
+  var util = {
+    requestAnimationFrame: (function() {
+      if ("mozRequestAnimationFrame" in window)
+        return window.mozRequestAnimationFrame.bind(window);
+      else if ("webkitRequestAnimationFrame" in window)
+        return window.webkitRequestAnimationFrame.bind(window);
+      else {
+        return function (callback) {
+          window.setTimeout(callback, 1000/60);
+        }
+      }
+    })(),
+    get scrollMaxY () {
+      return document.documentElement.getBoundingClientRect().height - window.innerHeight;
+    },
+  };
+
+  window.addEventListener("click", onLinkClick, true);
+  window.onpopstate = function (aEvent) {
+    if (aEvent.state && ("y" in aEvent.state)) {
+      console.log(aEvent.state, window.location.hash);
+      animationScroll(aEvent.state.y, window.location.hash);
+    }
+  };
+  document.getElementById("searchForm").addEventListener("submit", localSearch, false);
+  function onLinkClick (aEvent) {
+    var source = aEvent.target;
+    if (!(source instanceof HTMLAnchorElement))
+      return;
+
+    var href = source.getAttribute("href");
+    if (href.indexOf("#") !== 0)
+      return;
+
+    aEvent.preventDefault();
+    aEvent.stopPropagation();
+
+    var id = href.substr(1);
+    scrollToID(id);
+  }
+  function scrollToID (id) {
+    var target = document.getElementById(id);
+    animationScroll(target.getBoundingClientRect().top + window.scrollY, id, true);
+  }
+  function animationScroll (aY, aID, pushHistory) {
+    var currentScrollY = window.scrollY;
+    var targetScrollY = Math.min(aY, util.scrollMaxY);
+    //console.log("animationScroll", targetScrollY, currentScrollY);
+
+    function step() {
+      var s = targetScrollY - window.scrollY;
+      window.scrollBy(0, s / 4);
+      //console.log("step", targetScrollY, window.scrollY, s / 4);
+      if (-4 <= s && s <= 4) {
+        window.scrollTo(0, targetScrollY);
+        if (pushHistory) {
+          history.replaceState({y: currentScrollY}, "", window.location.hash);
+          history.pushState({y: targetScrollY}, "", aID ? "#" + aID : "");
+        }
+      } else {
+        util.requestAnimationFrame(step);
+      }
+    }
+
+    util.requestAnimationFrame(step);
+  }
+  function localSearch (aEvent) {
+    aEvent.preventDefault();
+    var value = aEvent.target.searchBox.value,
+        lowValue = value.toLowerCase();
+    if (defs.some(function(def){ return def.toLowerCase() === lowValue; })) {
+      scrollToID(value);
+    }
+    return false;
+  }
+})();
+</script>
+</html>
+<!-- vim: sw=2 ts=2 et:
+-->

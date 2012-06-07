@@ -1,0 +1,86 @@
+:root { background-color: silver; }
+h2[id]:before,
+h3[id]:before,
+h4[id]:before,
+h5[id]:before {
+  padding-right: 0.5em;
+  content: attr(id);
+}
+section > section {
+  margin-left: 1em;
+}
+pre {
+  color: white;
+  background-color: #333;
+  font-size: 14pt;
+  padding: 0.5em;
+  margin-left: 1em;
+}
+pre em {
+  font-style: normal;
+}
+pre .syntaxDef { font-weight: bold; text-decoration: underline; }
+pre .k { color: yellow; }
+pre .p { color: orange; }
+pre a:link {
+  color: aqua;
+}
+pre a:visited {
+  color: hotpink;
+}
+pre .oneof {
+  word-spacing: 1.5em;
+}
+.note {
+  margin: 0 2em;
+  padding: 0 0.5em;
+  border: thin solid gray;
+  border-radius: 0.5em;
+}
+code {
+  font-family: monospace;
+}
+.index {
+  width: 27%;
+  max-height: 95%;
+  font-size: 9pt;
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  overflow: auto;
+  background-color: rgba(164,164,164,0.5);
+  border: thin solid gray;
+  border-radius: 0.5em;
+}
+header, body > article, footer {
+  width: 70%;
+  margin-right: 1em;
+  min-width: 800px;
+}
+footer {
+  text-align: center;
+}
+footer:before {
+  display: block;
+  content: "";
+  clear: both;
+}
+footer p {
+  margin: 0;
+  padding: 0;
+}
+#searchForm {
+    margin: 0.5em;
+}
+#searchForm > input { width: 70%; }
+table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+thead { background-color: #EEE; }
+td, th {
+  border: thin solid gray;
+}
+small { font-size: 75%; }
+
