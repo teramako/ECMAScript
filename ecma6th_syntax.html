@@ -686,7 +686,6 @@ MemberExpression:
   PrimaryExpression
   MemberExpression <em class="p">[</em> Expression <em class="p">]</em>
   MemberExpression <em class="p">.</em> IdentifierName
-  MemberExpression <em class="p">&lt;|</em> TriangleLiteral
   <em class="k">super</em> <em class="p">[</em> Expression <em class="p">]</em>
   <em class="k">super</em> <em class="p">.</em> IdentifierName
   <em class="k">new</em> MemberExpression Arguments
@@ -701,7 +700,6 @@ CallExpression:
   CallExpression Arguments
   CallExpression <em class="p">[</em> Expression <em class="p">]</em>
   CallExpression <em class="p">.</em> IdentifierName
-  CallExpression <em class="p">&lt;|</em> TriangleLiteral
 
 Arguments:
   <em class="p">( )</em>
@@ -712,13 +710,6 @@ ArgumentList:
   <em class="p">...</em> AssignmentExpression
   ArgumentList <em class="p">,</em> AssignmentExpression
   ArgumentList <em class="p">,</em> <em class="p">...</em> AssignmentExpression
-
-TriangleLiteral:
-  SealedArrayLiteral
-  SealedObjectLiteral
-  FunctionExpression
-  ArrowFunction
-  ValueLiteral
 
 LeftHandSideExpression:
   NewExpression
