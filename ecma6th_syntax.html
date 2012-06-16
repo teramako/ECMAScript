@@ -936,11 +936,11 @@ AssignmentElementList:
   AssignmentElementList <em class="p">,</em> Elision<sub>opt</sub> AssignmentElement
 
 AssignmentProperty:
-  Identifier
-  PropertyName <em class="p">:</em> LeftHandSideExpression
+  Identifier Initialiser<sub>opt</sub>
+  PropertyName <em class="p">:</em> AssignmentElement
 
 AssignmentElement:
-  LeftHandSideExpression
+  LeftHandSideExpression Initialiser<sub>opt</sub>
 
 AssignmentRestElement:
   <em class="p">...</em> LeftHandSideExpression
