@@ -628,8 +628,8 @@ SpreadElement:
         <h5 id="11.1.4.2">Array Comprehension</h5>
         <pre>
 ArrayComprehension:
-  <em class="p">[</em> Expression ComprehensionForList <em class="p">]</em>
-  <em class="p">[</em> Expression ComprehensionForList <em class="k">if</em> <em class="p">(</em> Expression <em class="p">) ]</em>
+  <em class="p">[</em> AssignmentExpression ComprehensionForList <em class="p">]</em>
+  <em class="p">[</em> AssignmentExpression ComprehensionForList <em class="k">if</em> Expression <em class="p">]</em>
 
 ComprehensionForList:
   ComprehensionFor
@@ -675,14 +675,7 @@ PropertyName:
     <pre>
 GeneratorComprehension:
   <em class="p">(</em> Expression ComprehensionForList <em class="p">)</em>
-  <em class="p">(</em> Expression ComprehensionForList <em class="k">if</em> <em class="p">(</em> Expression <em class="p">) )</em>
-
-ComprehensionForList:
-  ComprehensionFor
-  ComprehensionForList ComprehensionFor
-
-ComprehensionFor:
-  <em class="k">for</em> LeftHandSideExpression <em class="k">of</em> Expression
+  <em class="p">(</em> Expression ComprehensionForList <em class="k">if</em> Expression <em class="p">)</em>
     </pre>
   </section>
 
