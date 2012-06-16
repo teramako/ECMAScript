@@ -1336,10 +1336,10 @@ CoverFormalList:
     <h2 id="13.3">Method Definitions</h2>
     <pre>
 MethodDefinition:
-  PropertyName <em class="p">(</em> FormalParameterList <em class="p">)</em> ConciseBody
-  <em class="p">*</em> PropertyName <em class="p">(</em> FormalParameterList <em class="p">)</em> ConciseBody
-  <em class="k">get</em> PropertyName <em class="p">( )</em> ConciseBody
-  <em class="k">set</em> PropertyName <em class="p">(</em> PropertySetParameterList <em class="p">)</em> ConciseBody
+  PropertyName <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
+  <em class="p">*</em> PropertyName <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
+  <em class="k">get</em> PropertyName <em class="p">( ) {</em> FunctionBody <em class="p">}</em>
+  <em class="k">set</em> PropertyName <em class="p">(</em> PropertySetParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
 
 PropertySetParameterList:
   BindingIdentifier
