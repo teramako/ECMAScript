@@ -258,13 +258,14 @@ ReservedWord:
       	<h5 id="7.6.1.1">Keywords</h5>
       	<pre>
 Keyword: <b>one of</b>
-  <em class="k oneof">break do instanceof typeof</em>
-  <em class="k oneof">case else new var</em>
-  <em class="k oneof">catch finally return void</em>
-  <em class="k oneof">continue for switch while</em>
-  <em class="k oneof">debugger function this with</em>
-  <em class="k oneof">default if throw</em>
-  <em class="k oneof">delete in try</em>
+  <em class="k oneof">break delete import this</em>
+  <em class="k oneof">case do in throw</em>
+  <em class="k oneof">catch else instanceof try</em>
+  <em class="k oneof">class export let typeof</em>
+  <em class="k oneof">continue finally new var</em>
+  <em class="k oneof">const for return void</em>
+  <em class="k oneof">debugger function super while</em>
+  <em class="k oneof">default if switch with</em>
         </pre>
       </section>
 
@@ -272,12 +273,11 @@ Keyword: <b>one of</b>
       	<h5 id="7.6.1.2">Future Reserved Words</h5>
       	<pre>
 FutureReservedWord: <b>one of</b>
-  <em class="k oneof">class enum extends super</em>
-  <em class="k oneof">const export import</em>
+  <em class="k oneof">enum extends</em>
         </pre>
         <p>The following tokens are also considered to be <code>FutureReservedWord</code> when they occure within strict mode code</p>
         <pre>
-<em class="k oneof">implements let private public yield</em>
+<em class="k oneof">implements private public yield</em>
 <em class="k oneof">interface package protected static</em>
         </pre>
       </section>
@@ -304,17 +304,6 @@ DivPunctuator: <b>one of</b>
     
     <section>
       <h3 id="7.8">Literals</h3>
-      <pre>
-Literal:
-  NullLiteral
-  ValueLiteral
-
-ValueLiteral:
-  BooleanLiteral
-  NumericLiteral
-  StringLiteral
-  RegularExpressionLiteral
-      </pre>
       
       <section>
         <h4 id="7.8.1">Null Literals</h4>
@@ -581,21 +570,33 @@ PrimaryExpression:
   <em class="k">this</em>
   Identifier
   Literal
-  SealedArrayLiteral
-  SealedObjectLiteral
+  ArrayLiteral
+  ObjectLiteral
   FunctionExpression
+  ClassExpression
   GeneratorExpression
   GeneratorComprehension
   <em class="p">(</em> Expression <em class="p">)</em>
     </pre>
 
     <section>
+      <h4 id="11.1.3">Literals</h4>
+      <pre>
+Literal:
+  NullLiteral
+  ValueLiteral
+
+ValueLiteral:
+  BooleanLiteral
+  NumericLiteral
+  StringLiteral
+  RegularExpressionLiteral
+      </pre>
+    </section>
+
+    <section>
       <h4 id="11.1.4">Array Initalizer</h4>
       <pre>
-SealedArrayInitialiser:
-  ArrayInitialiser
-  <em class="p">#</em> ArrayInitialiser
-
 ArrayInitialiser:
   ArrayLiteral
   ArrayComprehension
@@ -628,8 +629,8 @@ SpreadElement:
         <h5 id="11.1.4.2">Array Comprehension</h5>
         <pre>
 ArrayComprehension:
-  <em class="p">[</em> Expression ComprehensionForList <em class="p">]</em>
-  <em class="p">[</em> Expression ComprehensionForList <em class="k">if</em> <em class="p">(</em> Expression <em class="p">) ]</em>
+  <em class="p">[</em> AssignmentExpression ComprehensionForList <em class="p">]</em>
+  <em class="p">[</em> AssignmentExpression ComprehensionForList <em class="k">if</em> Expression <em class="p">]</em>
 
 ComprehensionForList:
   ComprehensionFor
@@ -648,10 +649,6 @@ ForBinding:
     <section>
       <h4 id="11.1.5">Object Initialiser</h4>
       <pre>
-SealedObjectLiteral:
-  ObjectLiteral
-  <em class="p">#</em> ObjectLiteral
-
 ObjectLiteral:
   <em class="p">{ }</em>
   <em class="p">{</em> PropertyDefinitionList <em class="p">}</em>
@@ -679,14 +676,7 @@ PropertyName:
     <pre>
 GeneratorComprehension:
   <em class="p">(</em> Expression ComprehensionForList <em class="p">)</em>
-  <em class="p">(</em> Expression ComprehensionForList <em class="k">if</em> <em class="p">(</em> Expression <em class="p">) )</em>
-
-ComprehensionForList:
-  ComprehensionFor
-  ComprehensionForList ComprehensionFor
-
-ComprehensionFor:
-  <em class="k">for</em> LeftHandSideExpression <em class="k">of</em> Expression
+  <em class="p">(</em> Expression ComprehensionForList <em class="k">if</em> Expression <em class="p">)</em>
     </pre>
   </section>
 
@@ -697,7 +687,6 @@ MemberExpression:
   PrimaryExpression
   MemberExpression <em class="p">[</em> Expression <em class="p">]</em>
   MemberExpression <em class="p">.</em> IdentifierName
-  MemberExpression <em class="p">&lt;|</em> TriangleLiteral
   <em class="k">super</em> <em class="p">[</em> Expression <em class="p">]</em>
   <em class="k">super</em> <em class="p">.</em> IdentifierName
   <em class="k">new</em> MemberExpression Arguments
@@ -712,7 +701,6 @@ CallExpression:
   CallExpression Arguments
   CallExpression <em class="p">[</em> Expression <em class="p">]</em>
   CallExpression <em class="p">.</em> IdentifierName
-  CallExpression <em class="p">&lt;|</em> TriangleLiteral
 
 Arguments:
   <em class="p">( )</em>
@@ -723,13 +711,6 @@ ArgumentList:
   <em class="p">...</em> AssignmentExpression
   ArgumentList <em class="p">,</em> AssignmentExpression
   ArgumentList <em class="p">,</em> <em class="p">...</em> AssignmentExpression
-
-TriangleLiteral:
-  SealedArrayLiteral
-  SealedObjectLiteral
-  FunctionExpression
-  ArrowFunction
-  ValueLiteral
 
 LeftHandSideExpression:
   NewExpression
@@ -956,11 +937,11 @@ AssignmentElementList:
   AssignmentElementList <em class="p">,</em> Elision<sub>opt</sub> AssignmentElement
 
 AssignmentProperty:
-  Identifier
-  PropertyName <em class="p">:</em> LeftHandSideExpression
+  Identifier Initialiser<sub>opt</sub>
+  PropertyName <em class="p">:</em> AssignmentElement
 
 AssignmentElement:
-  LeftHandSideExpression
+  LeftHandSideExpression Initialiser<sub>opt</sub>
 
 AssignmentRestElement:
   <em class="p">...</em> LeftHandSideExpression
@@ -1005,6 +986,8 @@ Statement:
 
 Declaration:
   FunctionDeclaration
+  GeneratorDeclaration
+  ClassDeclaration
   LexicalDeclaration
 
 BreakableStatement:
@@ -1149,10 +1132,10 @@ EmptyStatement:
   	<h3 id="12.4">Expression Statement</h3>
     <pre>
 ExpressionStatement:
-  <small>[lookahead &notin; {<em class="p">{</em> , <em class="k">function</em>}]</small> Expression <em class="p">;</em>
+  <small>[lookahead &notin; {<em class="p">{</em>, <em class="k">function</em>, <em class="k">class</em>}]</small> Expression <em class="p">;</em>
     </pre>
     <aside class="note">
-      <p>An <em>ExpressionStatement</em> cannot start with an opening curly brace because that might make it ambiguous with a <em>Block</em>. Also, an <em>ExpressionStatement</em> cannot start with the <em class="k">function</em> keyword because that might make it ambiguous with a <em>FunctionDeclaration</em>.
+      <p>An <em>ExpressionStatement</em> cannot start with an opening curly brace because that might make it ambiguous with a <em>Block</em>. Also, an <em>ExpressionStatement</em> cannot start with the <em class="k">function</em> or <em class="k">class</em> keywords because that would make it ambiguous with a <em>FunctionDeclaration</em>, a <em>GeneratorDeclaration</em> or a <em>ClassDeclaration</em>.
     </aside>
   </section>
 
@@ -1356,10 +1339,10 @@ CoverFormalList:
     <h2 id="13.3">Method Definitions</h2>
     <pre>
 MethodDefinition:
-  PropertyName <em class="p">(</em> FormalParameterList <em class="p">)</em> ConciseBody
-  <em class="p">*</em> PropertyName <em class="p">(</em> FormalParameterList <em class="p">)</em> ConciseBody
-  <em class="k">get</em> PropertyName <em class="p">( )</em> ConciseBody
-  <em class="k">set</em> PropertyName <em class="p">(</em> PropertySetParameterList <em class="p">)</em> ConciseBody
+  PropertyName <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
+  <em class="p">*</em> PropertyName <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
+  <em class="k">get</em> PropertyName <em class="p">( ) {</em> FunctionBody <em class="p">}</em>
+  <em class="k">set</em> PropertyName <em class="p">(</em> PropertySetParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
 
 PropertySetParameterList:
   BindingIdentifier
@@ -1375,6 +1358,40 @@ GeneratorDeclaration:
 
 GeneratorExpression:
   <em class="k">function</em> <em class="p">*</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
+
+YieldExpression:
+  <em class="k">yield</em> YieldDelegator<sub>opt</sub> AssignmentExpression
+
+YieldDelegator:
+  <em class="p">*</em>
+    </pre>
+  </section>
+
+  <section>
+    <h3 id="13.5">Class Definitions</h3>
+    <pre>
+ClassDeclaration:
+  <em class="k">class</em> BindingIdentifier ClassTail
+
+ClassExpression:
+  <em class="k">class</em> BindingIdentifier<sub>opt</sub> ClassTail
+
+ClassTail:
+  ClassHeritage<sub>opt</sub> <em class="p">{</em> ClassBody<sub>opt</sub> <em class="p">}</em>
+
+ClassHeritage:
+  <em class="k">extends</em> AssignmentExpression
+
+ClassBody:
+  ClassElementList
+
+ClassElementList:
+  ClassElement
+  ClassElementList ClassElement
+
+ClassElement:
+  MethodDefinition
+  <em class="p">;</em>
     </pre>
   </section>
 </section>
@@ -1436,6 +1453,7 @@ ProgramBody:
       <ul>
         <li><a href="#11.1">11.1 Primary Expressions</a>
           <ul>
+            <li><a href="#11.1.3">11.1.3 Literals</a>
             <li><a href="#11.1.4">11.1.4 Array Initialiser</a>
               <ul>
                 <li><a href="#11.1.4.1">11.1.4.1 Array Literal</a></li>
@@ -1496,6 +1514,7 @@ ProgramBody:
         <li><a href="#13.2">13.2 Arrow Function Definitions</a></li>
         <li><a href="#13.3">13.3 Method Definitions</a></li>
         <li><a href="#13.4">13.4 Generator Definitions</a></li>
+        <li><a href="#13.5">13.5 Class Definitions</a></li>
       </ul>
     </li>
     <li><a href="#14">14 Program</a></li>
