@@ -573,6 +573,7 @@ PrimaryExpression:
   ArrayLiteral
   ObjectLiteral
   FunctionExpression
+  ClassExpression
   GeneratorExpression
   GeneratorComprehension
   <em class="p">(</em> Expression <em class="p">)</em>
@@ -986,6 +987,7 @@ Statement:
 Declaration:
   FunctionDeclaration
   GeneratorDeclaration
+  ClassDeclaration
   LexicalDeclaration
 
 BreakableStatement:
@@ -1130,10 +1132,10 @@ EmptyStatement:
   	<h3 id="12.4">Expression Statement</h3>
     <pre>
 ExpressionStatement:
-  <small>[lookahead &notin; {<em class="p">{</em> , <em class="k">function</em>}]</small> Expression <em class="p">;</em>
+  <small>[lookahead &notin; {<em class="p">{</em>, <em class="k">function</em>, <em class="k">class</em>}]</small> Expression <em class="p">;</em>
     </pre>
     <aside class="note">
-      <p>An <em>ExpressionStatement</em> cannot start with an opening curly brace because that might make it ambiguous with a <em>Block</em>. Also, an <em>ExpressionStatement</em> cannot start with the <em class="k">function</em> keyword because that might make it ambiguous with a <em>FunctionDeclaration</em>.
+      <p>An <em>ExpressionStatement</em> cannot start with an opening curly brace because that might make it ambiguous with a <em>Block</em>. Also, an <em>ExpressionStatement</em> cannot start with the <em class="k">function</em> or <em class="k">class</em> keywords because that would make it ambiguous with a <em>FunctionDeclaration</em>, a <em>GeneratorDeclaration</em> or a <em>ClassDeclaration</em>.
     </aside>
   </section>
 
@@ -1364,6 +1366,34 @@ YieldDelegator:
   <em class="p">*</em>
     </pre>
   </section>
+
+  <section>
+    <h3 id="13.5">Class Definitions</h3>
+    <pre>
+ClassDeclaration:
+  <em class="k">class</em> BindingIdentifier ClassTail
+
+ClassExpression:
+  <em class="k">class</em> BindingIdentifier<sub>opt</sub> ClassTail
+
+ClassTail:
+  ClassHeritage<sub>opt</sub> <em class="p">{</em> ClassBody<sub>opt</sub> <em class="p">}</em>
+
+ClassHeritage:
+  <em class="k">extends</em> AssignmentExpression
+
+ClassBody:
+  ClassElementList
+
+ClassElementList:
+  ClassElement
+  ClassElementList ClassElement
+
+ClassElement:
+  MethodDefinition
+  <em class="p">;</em>
+    </pre>
+  </section>
 </section>
 
 
@@ -1484,6 +1514,7 @@ ProgramBody:
         <li><a href="#13.2">13.2 Arrow Function Definitions</a></li>
         <li><a href="#13.3">13.3 Method Definitions</a></li>
         <li><a href="#13.4">13.4 Generator Definitions</a></li>
+        <li><a href="#13.5">13.5 Class Definitions</a></li>
       </ul>
     </li>
     <li><a href="#14">14 Program</a></li>
