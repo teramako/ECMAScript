@@ -570,8 +570,8 @@ PrimaryExpression:
   <em class="k">this</em>
   Identifier
   Literal
-  SealedArrayLiteral
-  SealedObjectLiteral
+  ArrayLiteral
+  ObjectLiteral
   FunctionExpression
   GeneratorExpression
   GeneratorComprehension
@@ -596,10 +596,6 @@ ValueLiteral:
     <section>
       <h4 id="11.1.4">Array Initalizer</h4>
       <pre>
-SealedArrayInitialiser:
-  ArrayInitialiser
-  <em class="p">#</em> ArrayInitialiser
-
 ArrayInitialiser:
   ArrayLiteral
   ArrayComprehension
@@ -652,10 +648,6 @@ ForBinding:
     <section>
       <h4 id="11.1.5">Object Initialiser</h4>
       <pre>
-SealedObjectLiteral:
-  ObjectLiteral
-  <em class="p">#</em> ObjectLiteral
-
 ObjectLiteral:
   <em class="p">{ }</em>
   <em class="p">{</em> PropertyDefinitionList <em class="p">}</em>
