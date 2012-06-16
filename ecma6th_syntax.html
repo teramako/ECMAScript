@@ -1356,6 +1356,12 @@ GeneratorDeclaration:
 
 GeneratorExpression:
   <em class="k">function</em> <em class="p">*</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
+
+YieldExpression:
+  <em class="k">yield</em> YieldDelegator<sub>opt</sub> AssignmentExpression
+
+YieldDelegator:
+  <em class="p">*</em>
     </pre>
   </section>
 </section>
