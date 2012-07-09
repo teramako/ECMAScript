@@ -428,19 +428,19 @@ SingleEscapeCharacter: <b>one of</b>
   <em class="oneof">' " \ b f n r t v</em>
 
 NonEscapeCharacter:
-  SourceCharacter <b>but not one of EscapeCharacter or LineTerminator</b>
+  SourceCharacter <b>but not one of</b> EscapeCharacter <b>or</b> LineTerminator
 
 EscapeCharacter:
   SingleEscapeCharacter
   DecimalDigit
-  x
-  u
+  <em class="p">x</em>
+  <em class="p">u</em>
 
 HexEscapeSequence:
-  x HexDigit HexDigit
+  <em class="p">x</em> HexDigit HexDigit
 
 UnicodeEscapeSequence:
-  u HexDigit HexDigit HexDigit HexDigit
+  <em class="p">u</em> HexDigit HexDigit HexDigit HexDigit
         </pre>
         
         <table>
