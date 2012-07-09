@@ -68,30 +68,30 @@ InputElementRegExp:
   </section>
 
   <section>
-  	<h3 id="7.2">White Space</h3>
-  	<table>
-  		<caption>Table 2: Whitespace Characters</caption>
-  		<thead>
-        <tr><th>Code Unit Value</th><th>Name</th><th>Formal Name</th></tr>
+    <h3 id="7.2">White Space</h3>
+    <table>
+      <caption>Table 2: Whitespace Characters</caption>
+      <thead>
+        <tr><th>Code Point</th><th>Name</th><th>Formal Name</th></tr>
       </thead>
-  		<tbody>
+      <tbody>
         <tr>
-        	<td>\u0009</td><td>Tab</td><td>&lt;Tab&gt;</td>
+          <td>\u0009</td><td>Tab</td><td>&lt;Tab&gt;</td>
         </tr><tr>
-        	<td>\u000B</td><td>Vartical Tab</td><td>&lt;VT&gt;</td>
+          <td>\u000B</td><td>Vartical Tab</td><td>&lt;VT&gt;</td>
         </tr><tr>
-        	<td>\u000C</td><td>Form Feed</td><td>&lt;FF&gt;</td>
+          <td>\u000C</td><td>Form Feed</td><td>&lt;FF&gt;</td>
         </tr><tr>
-        	<td>\u0020</td><td>Space</td><td>&lt;SP&gt;</td>
+          <td>\u0020</td><td>Space</td><td>&lt;SP&gt;</td>
         </tr><tr>
-        	<td>0x00A0</td><td>No-break space</td><td>&lt;NBSP&gt;</td>
+          <td>0x00A0</td><td>No-break space</td><td>&lt;NBSP&gt;</td>
         </tr><tr>
-        	<td>\uFEFF</td><td>Byte Order Mark</td><td>&lt;BOM&gt;</td>
+          <td>\uFEFF</td><td>Byte Order Mark</td><td>&lt;BOM&gt;</td>
         </tr><tr>
-        	<td>Other category "Zs"</td><td>Any other Unicode "space-separator"</td><td>&lt;USP&gt;</td>
+          <td>Other category "Zs"</td><td>Any other Unicode "space-separator"</td><td>&lt;USP&gt;</td>
         </tr>
       </tbody>
-  	</table>
+    </table>
     <pre>
 WhiteSpace:
   &lt;Tab&gt;
@@ -105,38 +105,38 @@ WhiteSpace:
   </section>
 
   <section>
-  	<h3 id="7.3">Line Terminators</h3>
+    <h3 id="7.3">Line Terminators</h3>
     <table>
-    	<caption>Table 3: Line Terminator Characters</caption>
-    	<thead>
-    		<tr>
-    			<th>Code Unit Value</th>
-    			<th>Name</th>
-    			<th>Formal Name</th>
-    		</tr>
-    	</thead>
-    	<tbody>
-    		<tr>
-    			<td>\u000A</td>
-    			<td>Line Feed</td>
-    			<td>&lt;LF&gt;</td>
-    		</tr>
-    		<tr>
-    			<td>\u000D</td>
-    			<td>Carriage Return</td>
-    			<td>&lt;CR&gt;</td>
-    		</tr>
-    		<tr>
-    			<td>\u2028</td>
-    			<td>Line separator</td>
-    			<td>&lt;LS&gt;</td>
-    		</tr>
-    		<tr>
-    			<td>\u2029</td>
-    			<td>Paragraph separator</td>
-    			<td>&lt;PS&gt;</td>
-    		</tr>
-    	</tbody>
+      <caption>Table 3: Line Terminator Characters</caption>
+      <thead>
+        <tr>
+          <th>Code Point</th>
+          <th>Name</th>
+          <th>Formal Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>\u000A</td>
+          <td>Line Feed</td>
+          <td>&lt;LF&gt;</td>
+        </tr>
+        <tr>
+          <td>\u000D</td>
+          <td>Carriage Return</td>
+          <td>&lt;CR&gt;</td>
+        </tr>
+        <tr>
+          <td>\u2028</td>
+          <td>Line separator</td>
+          <td>&lt;LS&gt;</td>
+        </tr>
+        <tr>
+          <td>\u2029</td>
+          <td>Paragraph separator</td>
+          <td>&lt;PS&gt;</td>
+        </tr>
+      </tbody>
     </table>
     <pre>
 LineTerminator:
@@ -155,8 +155,8 @@ LineTerminatorSequence:
   </section>
 
   <section>
-  	<h3 id="7.4">Comments</h3>
-  	<pre>
+    <h3 id="7.4">Comments</h3>
+    <pre>
 Comment:
   MultiLineComment
   SingleLineComment
@@ -190,8 +190,8 @@ SingleLineCommentChar:
   </section>
 
   <section>
-  	<h3 id="7.5">Tokens</h3>
-  	<pre>
+    <h3 id="7.5">Tokens</h3>
+    <pre>
 Token:
   IdentifierName
   Punctuator
@@ -204,8 +204,8 @@ Token:
   </section>
 
   <section>
-  	<h3 id="7.6">Identifier Names and Identifiers</h3>
-  	<pre>
+    <h3 id="7.6">Identifier Names and Identifiers</h3>
+    <pre>
 Identifier:
   IdentfierName <b>but not ReservedWord</b>
 
@@ -245,8 +245,8 @@ UnicodeConnectorPunctuation:
     </pre>
 
     <section>
-    	<h4 id="7.6.1">Reserved Words</h4>
-    	<pre>
+      <h4 id="7.6.1">Reserved Words</h4>
+      <pre>
 ReservedWord:
   Keyword
   FutureReservedWord
@@ -255,8 +255,8 @@ ReservedWord:
       </pre>
 
       <section>
-      	<h5 id="7.6.1.1">Keywords</h5>
-      	<pre>
+        <h5 id="7.6.1.1">Keywords</h5>
+        <pre>
 Keyword: <b>one of</b>
   <em class="k oneof">break delete import this</em>
   <em class="k oneof">case do in throw</em>
@@ -270,8 +270,8 @@ Keyword: <b>one of</b>
       </section>
 
       <section>
-      	<h5 id="7.6.1.2">Future Reserved Words</h5>
-      	<pre>
+        <h5 id="7.6.1.2">Future Reserved Words</h5>
+        <pre>
 FutureReservedWord: <b>one of</b>
   <em class="k oneof">enum extends</em>
         </pre>
@@ -282,7 +282,7 @@ FutureReservedWord: <b>one of</b>
         </pre>
       </section>
     </section>
-    
+
     <section>
       <h3 id="7.7">Punctuators</h3>
       <pre>
@@ -300,11 +300,11 @@ DivPunctuator: <b>one of</b>
   <em class="p oneof">/ /=</em>
       </pre>
     </section>
-    
-    
+
+
     <section>
       <h3 id="7.8">Literals</h3>
-      
+
       <section>
         <h4 id="7.8.1">Null Literals</h4>
         <pre>
@@ -312,7 +312,7 @@ NullLiteral:
   <em class="k">null</em>
         </pre>
       </section>
-      
+
       <section>
         <h4 id="7.8.2">Boolean Literals</h4>
         <pre>
@@ -321,7 +321,7 @@ BooleanLiteral:
   <em class="k">false</em>
         </pre>
       </section>
-            
+
       <section>
         <h4 id="7.8.3">Numeric Literals</h4>
         <pre>
@@ -387,7 +387,7 @@ HexDigit: <b>one of</b>
   <em class="oneof">a b c d e f A B C D E F</em>
         </pre>
       </section>
-            
+
       <section>
         <h3 id="7.8.4">String Literal</h3>
         <pre>
@@ -442,7 +442,7 @@ HexEscapeSequence:
 UnicodeEscapeSequence:
   <em class="p">u</em> HexDigit HexDigit HexDigit HexDigit
         </pre>
-        
+
         <table>
           <caption>Table 4: String Single Character Escape Sequences</caption>
           <thead>
@@ -503,10 +503,10 @@ UnicodeEscapeSequence:
           </tbody>
         </table>
       </section>
-      
+
       <section>
-      	<h3 id="7.8.5">Regular Expression Literals</h3>
-      	<pre>
+        <h3 id="7.8.5">Regular Expression Literals</h3>
+        <pre>
 RegularExpressionLiteral:
   <em class="p">/</em> RegularExpressionBody <em class="p">/</em> RegularExpressionFlags
 
@@ -746,8 +746,8 @@ UnaryExpression:
   </section>
 
   <section>
-  	<h3 id="11.5">Multiplicative Operators</h3>
-  	<pre>
+    <h3 id="11.5">Multiplicative Operators</h3>
+    <pre>
 MultiplicativeExpression:
   UnaryExpression
   MultiplicativeExpression <em class="p">*</em> UnaryExpression
@@ -757,8 +757,8 @@ MultiplicativeExpression:
   </section>
 
   <section>
-  	<h3 id="11.6">Additive Operators</h3>
-  	<pre>
+    <h3 id="11.6">Additive Operators</h3>
+    <pre>
 AdditiveExpression:
   MultiplicativeExpression
   AdditiveExpression <em class="p">+</em> MultiplicativeExpression
@@ -767,8 +767,8 @@ AdditiveExpression:
   </section>
 
   <section>
-  	<h3 id="11.7">Bitwise Shift Operators</h3>
-  	<pre>
+    <h3 id="11.7">Bitwise Shift Operators</h3>
+    <pre>
 ShiftExpression:
   AdditiveExpression
   ShiftExpression <em class="p">&lt;&lt;</em> AdditiveExpression
@@ -778,8 +778,8 @@ ShiftExpression:
   </section>
 
   <section>
-  	<h3 id="11.8">Relational Operators</h3>
-  	<pre>
+    <h3 id="11.8">Relational Operators</h3>
+    <pre>
 RelationalExpression:
   ShiftExpression
   RelationalExpression <em class="p">&lt;</em> ShiftExpression
@@ -804,8 +804,8 @@ RelationalExpressionNoIn:
   </section>
 
   <section>
-  	<h3 id="11.9">Equality Operators</h3>
-  	<pre>
+    <h3 id="11.9">Equality Operators</h3>
+    <pre>
 EqualityExpression:
   RelationalExpression
   EqualityExpression <em class="p">==</em> RelationalExpression
@@ -828,8 +828,8 @@ EqualityExpressionNoIn:
   </section>
 
   <section>
-  	<h3 id="11.10">Binary Bitwise Operators</h3>
-  	<pre>
+    <h3 id="11.10">Binary Bitwise Operators</h3>
+    <pre>
 BitwiseANDExpression:
   EqualityExpression
   BitwiseANDExpression <em class="p">&amp;</em> EqualityExpression
@@ -857,7 +857,7 @@ BitwiseORExpressionNoIn:
   </section>
 
   <section>
-  	<h3 id="11.11">Binary Logical Operators</h3>
+    <h3 id="11.11">Binary Logical Operators</h3>
     <pre>
 LogicalANDExpression:
   BitwiseXORExpression
@@ -878,7 +878,7 @@ LogicalORExpressionNoIn:
   </section>
 
   <section>
-  	<h3 id="11.12">Conditional Operator</h3>
+    <h3 id="11.12">Conditional Operator</h3>
     <pre>
 ConditionalExpression:
   LogicalORExpression
@@ -891,7 +891,7 @@ ConditionalExpressionNoIn:
   </section>
 
   <section>
-  	<h3 id="11.13">Assignment Operators</h3>
+    <h3 id="11.13">Assignment Operators</h3>
     <pre>
 AssignmentExpression:
   ConditionalExpression
@@ -950,7 +950,7 @@ AssignmentRestElement:
   </section>
 
   <section>
-  	<h3 id="11.14">Comma Operator</h3>
+    <h3 id="11.14">Comma Operator</h3>
     <pre>
 Expression:
   AssignmentExpression
@@ -1121,7 +1121,7 @@ BindingRestElement:
   </section>
 
   <section>
-  	<h3 id="12.3">Empty Statement</h3>
+    <h3 id="12.3">Empty Statement</h3>
     <pre>
 EmptyStatement:
   <em class="p">;</em>
@@ -1129,7 +1129,7 @@ EmptyStatement:
   </section>
 
   <section>
-  	<h3 id="12.4">Expression Statement</h3>
+    <h3 id="12.4">Expression Statement</h3>
     <pre>
 ExpressionStatement:
   <small>[lookahead &notin; {<em class="p">{</em>, <em class="k">function</em>, <em class="k">class</em>}]</small> Expression <em class="p">;</em>
@@ -1140,7 +1140,7 @@ ExpressionStatement:
   </section>
 
   <section>
-  	<h3 id="12.5">The <code>if</code> Statement</h3>
+    <h3 id="12.5">The <code>if</code> Statement</h3>
     <pre>
 IfStatement:
   <em class="k">if</em> <em class="p">(</em> Expression <em class="p">)</em> Statement <em class="k">else</em> Statement
@@ -1149,7 +1149,7 @@ IfStatement:
   </section>
 
   <section>
-  	<h3 id="12.6">Iteration Statements</h3>
+    <h3 id="12.6">Iteration Statements</h3>
     <pre>
 IterationStatement:
   <em class="k">do</em> Statement <em class="k">while</em> <em class="p">(</em> Expression <em class="p">)</em>
@@ -1170,7 +1170,7 @@ ForDeclaration:
   </section>
 
   <section>
-  	<h3 id="12.7">The <code>continue</code> Statement</h3>
+    <h3 id="12.7">The <code>continue</code> Statement</h3>
     <pre>
 ContinueStatement:
   <em class="k">continue</em> <em class="p">;</em>
@@ -1179,7 +1179,7 @@ ContinueStatement:
   </section>
 
   <section>
-  	<h3 id="12.8">The <code>break</code> Statement</h3>
+    <h3 id="12.8">The <code>break</code> Statement</h3>
     <pre>
 BreakStatement:
   <em class="k">break</em> <em class="p">;</em>
@@ -1188,7 +1188,7 @@ BreakStatement:
   </section>
 
   <section>
-  	<h3 id="12.9">The <code>return</code> Statement</h3>
+    <h3 id="12.9">The <code>return</code> Statement</h3>
     <pre>
 ReturnStatement:
   <em class="k">return</em> <em class="p">;</em>
@@ -1197,7 +1197,7 @@ ReturnStatement:
   </section>
 
   <section>
-  	<h3 id="12.10">The <code>with</code> Statement</h3>
+    <h3 id="12.10">The <code>with</code> Statement</h3>
     <pre>
 WithStatement:
   <em class="k">with</em> <em class="p">(</em> Expression <em class="p">)</em> Statement
@@ -1208,7 +1208,7 @@ WithStatement:
   </section>
 
   <section>
-  	<h3 id="12.11">The <code>switch</code> Statement</h3>
+    <h3 id="12.11">The <code>switch</code> Statement</h3>
     <pre>
 SwitchStatement:
   <em class="k">switch</em> <em class="p">(</em> Expression <em class="p">)</em> CaseBlock
@@ -1230,7 +1230,7 @@ DefaultClause:
   </section>
 
   <section>
-  	<h3 id="12.12">Labelled Statements</h3>
+    <h3 id="12.12">Labelled Statements</h3>
     <pre>
 LabelledStatement:
   Identifier <em class="p">:</em> Statement
@@ -1238,7 +1238,7 @@ LabelledStatement:
   </section>
 
   <section>
-  	<h3 id="12.13">The <code>throw</code> Statement</h3>
+    <h3 id="12.13">The <code>throw</code> Statement</h3>
     <pre>
 ThrowStatement:
   <em class="k">throw</em> <small>[no LineTerminator here]</small> Expression <em class="p">;</em>
@@ -1246,7 +1246,7 @@ ThrowStatement:
   </section>
 
   <section>
-  	<h3 id="12.14">The <code>try</code> Statement</h3>
+    <h3 id="12.14">The <code>try</code> Statement</h3>
     <pre>
 TryStatement:
   <em class="k">try</em> Block Catch
@@ -1266,7 +1266,7 @@ CatchParameter:
   </section>
 
   <section>
-  	<h3 id="12.15">The <code>debugger</code> Statement</h3>
+    <h3 id="12.15">The <code>debugger</code> Statement</h3>
     <pre>
 DebuggerStatement:
   <em class="k">debugger</em> <em class="p">;</em>
