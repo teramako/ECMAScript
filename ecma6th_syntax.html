@@ -365,9 +365,13 @@ OctalDigit: <b>one of</b>
   <em class="oneof">0 1 2 3 4 5 6 7</em>
 
 HexIntegerLiteral:
-  0x HexDigit
-  0X HexDigit
+  0x HexDigits
+  0X HexDigits
   HexIntegerLiteral HexDigit
+
+HexDigits:
+  HexDigit
+  HexDigits HexDigit
 
 HexDigit: <b>one of</b>
   <em class="oneof">0 1 2 3 4 5 6 7 8 9</em>
