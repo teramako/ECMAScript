@@ -49,6 +49,14 @@ InputElementRegExp:
   Token
   RightBracePunctuator
   RegularExpressionLiteral
+
+InputElementQuasiTail:
+  WhiteSpace
+  LineTerminator
+  Comment
+  Token
+  DivPunctuator
+  QuasiSubstitutionTail
   </pre>
   <section>
     <h3 id="7.1">Unicode Format-Control Characters</h3>
@@ -199,9 +207,10 @@ Token:
   Punctuator
   NumericLiteral
   StringLiteral
+  Quasi
     </pre>
     <aside class="note">
-      <p>The <code>DivPunctuator</code> and <code>RegularExpressionLiteral</code> productions define tokens, but are not included in the <code>Token</code> production.</p>
+      <p>The <code>DivPunctuator</code>, <code>RegularExpressionLiteral</code> and <code>QuasiSubstitutionTail</code> productions define tokens, but are not included in the <code>Token</code> production.</p>
     </aside>
   </section>
 
@@ -550,6 +559,40 @@ RegularExpressionFlags:
           <p>Regular expression literals may not be empty; instead of representing an empty regular expression literal, the characters // start a single-line comment. To specify an empty regular expression, use: /(?:)/ .</p>
         </aside>
       </section>
+
+      <section>
+        <h3 id="7.8.6">Quasi Literal Lexical Components</h3>
+        <pre>
+Quasi:
+  FullQuasi
+  QuasiHead
+
+FullQuasi:
+  <em class="p">`</em> QuasiCharacters<sub>opt</sub> <em class="p">`</em>
+
+QuasiHead:
+  <em class="p">`</em> QuasiCharacters<sub>opt</sub> <em class="p">${</em>
+
+QuasiSubstitutionTail:
+  QuasiMiddle
+  QUasiTail
+
+QuasiMiddle:
+  <em class="p">}</em> QuasiCharacters<sub>opt</sub> <em class="p">${</em>
+
+QuasiTail:
+  <em class="p">}</em> QuasiCharacters<sub>opt</sub> <em class="p">`</em>
+
+QuasiCharacters:
+  QuasiCharacter QuasiCharacters<sub>opt</sub>
+
+QuasiCharacter:
+  SourceCharacter <b>but not one of <em class="p">`</em> or <em class="p">\</em> or <em class="p">$</em></b>
+  <em class="p">$</em> <small>[lookahead &notin; <em class="p">{</em>]</small>
+  <em class="p">\</em> EscapeSequence
+  LineContinuation
+        </pre>
+      </section>
     </section>
   </section>
 </section>
@@ -573,6 +616,8 @@ PrimaryExpression:
   ClassExpression
   GeneratorExpression
   GeneratorComprehension
+  <small>[Lexical goal InputElementRegExp]</small> RegularExpressionLiteral
+  QuasiLiteral
   <em class="p">(</em> Expression <em class="p">)</em>
     </pre>
 
@@ -678,12 +723,26 @@ GeneratorComprehension:
   </section>
 
   <section>
+    <h4 id="11.1.9">Quasi Literals</h4>
+    <pre>
+QuasiLiteral:
+  FullQuasi
+  QuasiHead Expression QuasiMiddleList<sub>opt</sub> <small>[Lexical goal InputElementQuasiTail]</small> QuasiTail
+
+QuasiMiddleList:
+  <small>[Lexical goal InputElementQuasiTail]</small> QuasiMiddle Expression
+  QuasiMiddleList <small>[Lexical goal InputElementQuasiTail]</small> QuasiMiddle Expression
+    </pre>
+  </section>
+
+  <section>
     <h3 id="11.2">Left-Hand-Side Expressions</h3>
     <pre>
 MemberExpression:
   PrimaryExpression
   MemberExpression <em class="p">[</em> Expression <em class="p">]</em>
   MemberExpression <em class="p">.</em> IdentifierName
+  MemberExpression QuasiLiteral
   <em class="k">super</em> <em class="p">[</em> Expression <em class="p">]</em>
   <em class="k">super</em> <em class="p">.</em> IdentifierName
   <em class="k">new</em> MemberExpression Arguments
@@ -698,6 +757,7 @@ CallExpression:
   CallExpression Arguments
   CallExpression <em class="p">[</em> Expression <em class="p">]</em>
   CallExpression <em class="p">.</em> IdentifierName
+  CallExpression QuasiLiteral
 
 Arguments:
   <em class="p">( )</em>
@@ -1442,6 +1502,7 @@ ProgramBody:
             <li><a href="#7.8.3">7.8.3 Numeric Literals</a></li>
             <li><a href="#7.8.4">7.8.4 String Literal</a></li>
             <li><a href="#7.8.5">7.8.5 Regular Expression Literals</a></li>
+            <li><a href="#7.8.6">7.8.6 Quasi Literal Lexical Components</a></li>
           </ul>
         </li>
       </ul>
@@ -1459,6 +1520,7 @@ ProgramBody:
             </li>
             <li><a href="#11.1.5">11.1.5 Object Initialiser</a></li>
             <li><a href="#11.1.7">11.1.7 Generator Comprehensions</a></li>
+            <li><a href="#11.1.9">11.1.9 Quasi Literals</a></li>
           </ul>
         </li>
         <li><a href="#11.2">11.2 Left-Hand-Side Expressions</a></li>
