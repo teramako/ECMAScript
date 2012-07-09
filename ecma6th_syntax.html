@@ -8,8 +8,8 @@
 <body>
 <header>
   <h1>ECMAScript 6th Syntax Grammer</h1>
-  <h2>6th Edition / Draft June 15, 2012</h2>
-  <p>この文章は <a href="http://wiki.ecmascript.org/lib/exe/fetch.php?id=harmony%3Aspecification_drafts&cache=cache&media=harmony:working_draft_ecma-262_edition_6_6-15-12.pdf">working_draft_ecma-262_edition_6_6-15-12.pdf</a> の構文部分の一部を抜き取り、編集したものです。<br/>
+  <h2>6th Edition / Draft July 8, 2012</h2>
+  <p>この文章は <a href="http://wiki.ecmascript.org/lib/exe/fetch.php?id=harmony%3Aspecification_drafts&cache=cache&media=harmony:working_draft_ecma-262_edition_6_7-8-12.pdf">working_draft_ecma-262_edition_6_7-8-12.pdf</a> の構文部分の一部を抜き取り、編集したものです。<br/>
   次期ECMAScriptのドラフトの最新版は<a href="http://wiki.ecmascript.org/doku.php?id=harmony:specification_drafts">harmony:specification_drafts [ES Wiki]</a>にあげられるはずです。</p>
 </header>
 
@@ -23,7 +23,7 @@
   <h2 id="6">Source Text</h2>
   <pre>
 SourceCharacter:
-  any Unicode code unit
+  any Unicode character
   </pre>
 </section>
 
@@ -40,28 +40,38 @@ InputElementDiv:
   Comment
   Token
   DivPunctuator
+  RightBracePunctuator
 
 InputElementRegExp:
   WhiteSpace
   LineTerminator
   Comment
   Token
+  RightBracePunctuator
   RegularExpressionLiteral
+
+InputElementQuasiTail:
+  WhiteSpace
+  LineTerminator
+  Comment
+  Token
+  DivPunctuator
+  QuasiSubstitutionTail
   </pre>
   <section>
     <h3 id="7.1">Unicode Format-Control Characters</h3>
     <table>
       <caption>Table 1: Format-Control Character Usage</caption>
       <thead>
-        <tr><th>Code Unit Value</th><th>Name</th><th>Formal Name</th><th>Usage</th></tr>
+        <tr><th>Code Point</th><th>Name</th><th>Formal Name</th><th>Usage</th></tr>
       </thead>
       <tbody>
         <tr>
-          <td>\u200C</td><td>Zero width non-joiner</td><td>&lt;ZWNJ&gt;</td><td>IdentifierPart</td>
+          <td>U+200C</td><td>Zero width non-joiner</td><td>&lt;ZWNJ&gt;</td><td>IdentifierPart</td>
         </tr><tr>
-          <td>\u200D</td><td>Zero width joiner</td><td>&lt;ZWJ&gt;</td><td>IdentifierPart</td>
+          <td>U+200D</td><td>Zero width joiner</td><td>&lt;ZWJ&gt;</td><td>IdentifierPart</td>
         </tr><tr>
-          <td>\uFEFF</td><td>Byte Order Mark</td><td>&lt;BOM&gt;</td><td>Whitespace</td>
+          <td>U+FEFF</td><td>Byte Order Mark</td><td>&lt;BOM&gt;</td><td>Whitespace</td>
         </tr>
       </tbody>
     </table>
@@ -76,17 +86,17 @@ InputElementRegExp:
       </thead>
       <tbody>
         <tr>
-          <td>\u0009</td><td>Tab</td><td>&lt;Tab&gt;</td>
+          <td>U+0009</td><td>Tab</td><td>&lt;Tab&gt;</td>
         </tr><tr>
-          <td>\u000B</td><td>Vartical Tab</td><td>&lt;VT&gt;</td>
+          <td>U+000B</td><td>Vartical Tab</td><td>&lt;VT&gt;</td>
         </tr><tr>
-          <td>\u000C</td><td>Form Feed</td><td>&lt;FF&gt;</td>
+          <td>U+000C</td><td>Form Feed</td><td>&lt;FF&gt;</td>
         </tr><tr>
-          <td>\u0020</td><td>Space</td><td>&lt;SP&gt;</td>
+          <td>U+0020</td><td>Space</td><td>&lt;SP&gt;</td>
         </tr><tr>
-          <td>0x00A0</td><td>No-break space</td><td>&lt;NBSP&gt;</td>
+          <td>U+00A0</td><td>No-break space</td><td>&lt;NBSP&gt;</td>
         </tr><tr>
-          <td>\uFEFF</td><td>Byte Order Mark</td><td>&lt;BOM&gt;</td>
+          <td>U+FEFF</td><td>Byte Order Mark</td><td>&lt;BOM&gt;</td>
         </tr><tr>
           <td>Other category "Zs"</td><td>Any other Unicode "space-separator"</td><td>&lt;USP&gt;</td>
         </tr>
@@ -117,22 +127,22 @@ WhiteSpace:
       </thead>
       <tbody>
         <tr>
-          <td>\u000A</td>
+          <td>U+000A</td>
           <td>Line Feed</td>
           <td>&lt;LF&gt;</td>
         </tr>
         <tr>
-          <td>\u000D</td>
+          <td>U+000D</td>
           <td>Carriage Return</td>
           <td>&lt;CR&gt;</td>
         </tr>
         <tr>
-          <td>\u2028</td>
+          <td>U+2028</td>
           <td>Line separator</td>
           <td>&lt;LS&gt;</td>
         </tr>
         <tr>
-          <td>\u2029</td>
+          <td>U+2029</td>
           <td>Paragraph separator</td>
           <td>&lt;PS&gt;</td>
         </tr>
@@ -197,9 +207,10 @@ Token:
   Punctuator
   NumericLiteral
   StringLiteral
+  Quasi
     </pre>
     <aside class="note">
-      <p>The <code>DivPunctuator</code> and <code>RegularExpressionLiteral</code> productions define tokens, but are not included in the <code>Token</code> production.</p>
+      <p>The <code>DivPunctuator</code>, <code>RegularExpressionLiteral</code> and <code>QuasiSubstitutionTail</code> productions define tokens, but are not included in the <code>Token</code> production.</p>
     </aside>
   </section>
 
@@ -214,34 +225,21 @@ IdentifierName:
   IdentifierName IdentifierPart
 
 IdentifierStart:
-  UnicodeLetter
+  UnicodeIDStart
   <em class="p">$</em>
   <em class="p">_</em>
   <em class="p">\</em> UnicodeEscapeSequence
 
 IdentifierPart:
-  IdentifierStart
-  UnicodeCombiningMark
-  UnicodeDigit
-  UnicodeConnectorPunctuation
+  IdentifierIDContinue
   &lt;ZWNJ&gt;
   &lt;ZWJ&gt;
 
-UnicodeLetter:
-  any character in the Unicode categories
-  "Uppercase letter (Lu)", "Lowercase letter (Ll)",
-  "Titlecase letter (Lt)", "Modifier letter (Lm)",
-  "Other letter (Lo)", or "Letter number (Nl)".
+UnicodeIDStart:
+  any Unicode character with the Unicode property "ID_Start".
 
-UnicodeCombiningMark:
-  any character in the Unicode categories
-  "Non-spacing mark (Mn)" or "Combining spacing mark (Mc)"
-
-UnicodeDigit:
-  any character in the Unicode category "Decimal number (Nd)"
-
-UnicodeConnectorPunctuation:
-  any character in the Unicode category "Connector puctuation (Pc)"
+UnicodeIDStart:
+  any Unicode character with the Unicode property "ID_Continue".
     </pre>
 
     <section>
@@ -287,7 +285,7 @@ FutureReservedWord: <b>one of</b>
       <h3 id="7.7">Punctuators</h3>
       <pre>
 Punctuator: <b>one of</b>
-  <em class="p oneof">{ } ( ) [ ]</em>
+  <em class="p oneof">{ ( ) [ ]</em>
   <em class="p oneof">. ; , &lt; &gt; &lt;=</em>
   <em class="p oneof">&gt;= == != === !==</em>
   <em class="p oneof">+ - * % ++ --</em>
@@ -298,6 +296,9 @@ Punctuator: <b>one of</b>
 
 DivPunctuator: <b>one of</b>
   <em class="p oneof">/ /=</em>
+
+RightBracePunctuator:
+  <em class="p">}</em>
       </pre>
     </section>
 
@@ -378,9 +379,13 @@ OctalDigit: <b>one of</b>
   <em class="oneof">0 1 2 3 4 5 6 7</em>
 
 HexIntegerLiteral:
-  0x HexDigit
-  0X HexDigit
+  0x HexDigits
+  0X HexDigits
   HexIntegerLiteral HexDigit
+
+HexDigits:
+  HexDigit
+  HexDigits HexDigit
 
 HexDigit: <b>one of</b>
   <em class="oneof">0 1 2 3 4 5 6 7 8 9</em>
@@ -441,6 +446,7 @@ HexEscapeSequence:
 
 UnicodeEscapeSequence:
   <em class="p">u</em> HexDigit HexDigit HexDigit HexDigit
+  <em class="p">u{</em> HexDigits <em class="p">}</em>
         </pre>
 
         <table>
@@ -456,47 +462,47 @@ UnicodeEscapeSequence:
           <tbody>
             <tr>
               <td>\b</td>
-              <td>\u0008</td>
+              <td>0x8</td>
               <td>backspace</td>
               <td>&lt;BS&gt;</td>
             </tr><tr>
               <td>\t</td>
-              <td>\u0009</td>
+              <td>0x9</td>
               <td>horizontal tab</td>
               <td>&lt;HT&gt;</td>
             </tr><tr>
               <td>\n</td>
-              <td>\u000A</td>
+              <td>0xA</td>
               <td>line feed(new line)</td>
               <td>&lt;LF&gt;</td>
             </tr><tr>
               <td>\v</td>
-              <td>\u000B</td>
+              <td>0xB</td>
               <td>vertical tab</td>
               <td>&lt;VT&gt;</td>
             </tr><tr>
               <td>\f</td>
-              <td>\u000C</td>
+              <td>0xC</td>
               <td>form feed</td>
               <td>&lt;FF&gt;</td>
             </tr><tr>
               <td>\r</td>
-              <td>\u000D</td>
+              <td>0xD</td>
               <td>carriage return</td>
               <td>&lt;CR&gt;</td>
             </tr><tr>
               <td>\"</td>
-              <td>\u0022</td>
+              <td>0x22</td>
               <td>double quote</td>
               <td>"</td>
             </tr><tr>
               <td>\'</td>
-              <td>\u0027</td>
+              <td>0x27</td>
               <td>single quote</td>
               <td>'</td>
             </tr><tr>
               <td>\\</td>
-              <td>\u005C</td>
+              <td>0x5C</td>
               <td>backslash</td>
               <td>\</td>
             </tr>
@@ -553,6 +559,40 @@ RegularExpressionFlags:
           <p>Regular expression literals may not be empty; instead of representing an empty regular expression literal, the characters // start a single-line comment. To specify an empty regular expression, use: /(?:)/ .</p>
         </aside>
       </section>
+
+      <section>
+        <h3 id="7.8.6">Quasi Literal Lexical Components</h3>
+        <pre>
+Quasi:
+  FullQuasi
+  QuasiHead
+
+FullQuasi:
+  <em class="p">`</em> QuasiCharacters<sub>opt</sub> <em class="p">`</em>
+
+QuasiHead:
+  <em class="p">`</em> QuasiCharacters<sub>opt</sub> <em class="p">${</em>
+
+QuasiSubstitutionTail:
+  QuasiMiddle
+  QUasiTail
+
+QuasiMiddle:
+  <em class="p">}</em> QuasiCharacters<sub>opt</sub> <em class="p">${</em>
+
+QuasiTail:
+  <em class="p">}</em> QuasiCharacters<sub>opt</sub> <em class="p">`</em>
+
+QuasiCharacters:
+  QuasiCharacter QuasiCharacters<sub>opt</sub>
+
+QuasiCharacter:
+  SourceCharacter <b>but not one of <em class="p">`</em> or <em class="p">\</em> or <em class="p">$</em></b>
+  <em class="p">$</em> <small>[lookahead &notin; <em class="p">{</em>]</small>
+  <em class="p">\</em> EscapeSequence
+  LineContinuation
+        </pre>
+      </section>
     </section>
   </section>
 </section>
@@ -576,6 +616,8 @@ PrimaryExpression:
   ClassExpression
   GeneratorExpression
   GeneratorComprehension
+  <small>[Lexical goal InputElementRegExp]</small> RegularExpressionLiteral
+  QuasiLiteral
   <em class="p">(</em> Expression <em class="p">)</em>
     </pre>
 
@@ -681,12 +723,26 @@ GeneratorComprehension:
   </section>
 
   <section>
+    <h4 id="11.1.9">Quasi Literals</h4>
+    <pre>
+QuasiLiteral:
+  FullQuasi
+  QuasiHead Expression QuasiMiddleList<sub>opt</sub> <small>[Lexical goal InputElementQuasiTail]</small> QuasiTail
+
+QuasiMiddleList:
+  <small>[Lexical goal InputElementQuasiTail]</small> QuasiMiddle Expression
+  QuasiMiddleList <small>[Lexical goal InputElementQuasiTail]</small> QuasiMiddle Expression
+    </pre>
+  </section>
+
+  <section>
     <h3 id="11.2">Left-Hand-Side Expressions</h3>
     <pre>
 MemberExpression:
   PrimaryExpression
   MemberExpression <em class="p">[</em> Expression <em class="p">]</em>
   MemberExpression <em class="p">.</em> IdentifierName
+  MemberExpression QuasiLiteral
   <em class="k">super</em> <em class="p">[</em> Expression <em class="p">]</em>
   <em class="k">super</em> <em class="p">.</em> IdentifierName
   <em class="k">new</em> MemberExpression Arguments
@@ -701,6 +757,7 @@ CallExpression:
   CallExpression Arguments
   CallExpression <em class="p">[</em> Expression <em class="p">]</em>
   CallExpression <em class="p">.</em> IdentifierName
+  CallExpression QuasiLiteral
 
 Arguments:
   <em class="p">( )</em>
@@ -1445,6 +1502,7 @@ ProgramBody:
             <li><a href="#7.8.3">7.8.3 Numeric Literals</a></li>
             <li><a href="#7.8.4">7.8.4 String Literal</a></li>
             <li><a href="#7.8.5">7.8.5 Regular Expression Literals</a></li>
+            <li><a href="#7.8.6">7.8.6 Quasi Literal Lexical Components</a></li>
           </ul>
         </li>
       </ul>
@@ -1462,6 +1520,7 @@ ProgramBody:
             </li>
             <li><a href="#11.1.5">11.1.5 Object Initialiser</a></li>
             <li><a href="#11.1.7">11.1.7 Generator Comprehensions</a></li>
+            <li><a href="#11.1.9">11.1.9 Quasi Literals</a></li>
           </ul>
         </li>
         <li><a href="#11.2">11.2 Left-Hand-Side Expressions</a></li>
