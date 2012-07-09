@@ -40,12 +40,14 @@ InputElementDiv:
   Comment
   Token
   DivPunctuator
+  RightBracePunctuator
 
 InputElementRegExp:
   WhiteSpace
   LineTerminator
   Comment
   Token
+  RightBracePunctuator
   RegularExpressionLiteral
   </pre>
   <section>
@@ -274,7 +276,7 @@ FutureReservedWord: <b>one of</b>
       <h3 id="7.7">Punctuators</h3>
       <pre>
 Punctuator: <b>one of</b>
-  <em class="p oneof">{ } ( ) [ ]</em>
+  <em class="p oneof">{ ( ) [ ]</em>
   <em class="p oneof">. ; , &lt; &gt; &lt;=</em>
   <em class="p oneof">&gt;= == != === !==</em>
   <em class="p oneof">+ - * % ++ --</em>
@@ -285,6 +287,9 @@ Punctuator: <b>one of</b>
 
 DivPunctuator: <b>one of</b>
   <em class="p oneof">/ /=</em>
+
+RightBracePunctuator:
+  <em class="p">}</em>
       </pre>
     </section>
 
