@@ -23,7 +23,7 @@
   <h2 id="6">Source Text</h2>
   <pre>
 SourceCharacter:
-  any Unicode code unit
+  any Unicode character
   </pre>
 </section>
 
@@ -53,15 +53,15 @@ InputElementRegExp:
     <table>
       <caption>Table 1: Format-Control Character Usage</caption>
       <thead>
-        <tr><th>Code Unit Value</th><th>Name</th><th>Formal Name</th><th>Usage</th></tr>
+        <tr><th>Code Point</th><th>Name</th><th>Formal Name</th><th>Usage</th></tr>
       </thead>
       <tbody>
         <tr>
-          <td>\u200C</td><td>Zero width non-joiner</td><td>&lt;ZWNJ&gt;</td><td>IdentifierPart</td>
+          <td>U+200C</td><td>Zero width non-joiner</td><td>&lt;ZWNJ&gt;</td><td>IdentifierPart</td>
         </tr><tr>
-          <td>\u200D</td><td>Zero width joiner</td><td>&lt;ZWJ&gt;</td><td>IdentifierPart</td>
+          <td>U+200D</td><td>Zero width joiner</td><td>&lt;ZWJ&gt;</td><td>IdentifierPart</td>
         </tr><tr>
-          <td>\uFEFF</td><td>Byte Order Mark</td><td>&lt;BOM&gt;</td><td>Whitespace</td>
+          <td>U+FEFF</td><td>Byte Order Mark</td><td>&lt;BOM&gt;</td><td>Whitespace</td>
         </tr>
       </tbody>
     </table>
@@ -76,17 +76,17 @@ InputElementRegExp:
       </thead>
       <tbody>
         <tr>
-          <td>\u0009</td><td>Tab</td><td>&lt;Tab&gt;</td>
+          <td>U+0009</td><td>Tab</td><td>&lt;Tab&gt;</td>
         </tr><tr>
-          <td>\u000B</td><td>Vartical Tab</td><td>&lt;VT&gt;</td>
+          <td>U+000B</td><td>Vartical Tab</td><td>&lt;VT&gt;</td>
         </tr><tr>
-          <td>\u000C</td><td>Form Feed</td><td>&lt;FF&gt;</td>
+          <td>U+000C</td><td>Form Feed</td><td>&lt;FF&gt;</td>
         </tr><tr>
-          <td>\u0020</td><td>Space</td><td>&lt;SP&gt;</td>
+          <td>U+0020</td><td>Space</td><td>&lt;SP&gt;</td>
         </tr><tr>
-          <td>0x00A0</td><td>No-break space</td><td>&lt;NBSP&gt;</td>
+          <td>U+00A0</td><td>No-break space</td><td>&lt;NBSP&gt;</td>
         </tr><tr>
-          <td>\uFEFF</td><td>Byte Order Mark</td><td>&lt;BOM&gt;</td>
+          <td>U+FEFF</td><td>Byte Order Mark</td><td>&lt;BOM&gt;</td>
         </tr><tr>
           <td>Other category "Zs"</td><td>Any other Unicode "space-separator"</td><td>&lt;USP&gt;</td>
         </tr>
@@ -117,22 +117,22 @@ WhiteSpace:
       </thead>
       <tbody>
         <tr>
-          <td>\u000A</td>
+          <td>U+000A</td>
           <td>Line Feed</td>
           <td>&lt;LF&gt;</td>
         </tr>
         <tr>
-          <td>\u000D</td>
+          <td>U+000D</td>
           <td>Carriage Return</td>
           <td>&lt;CR&gt;</td>
         </tr>
         <tr>
-          <td>\u2028</td>
+          <td>U+2028</td>
           <td>Line separator</td>
           <td>&lt;LS&gt;</td>
         </tr>
         <tr>
-          <td>\u2029</td>
+          <td>U+2029</td>
           <td>Paragraph separator</td>
           <td>&lt;PS&gt;</td>
         </tr>
@@ -214,34 +214,21 @@ IdentifierName:
   IdentifierName IdentifierPart
 
 IdentifierStart:
-  UnicodeLetter
+  UnicodeIDStart
   <em class="p">$</em>
   <em class="p">_</em>
   <em class="p">\</em> UnicodeEscapeSequence
 
 IdentifierPart:
-  IdentifierStart
-  UnicodeCombiningMark
-  UnicodeDigit
-  UnicodeConnectorPunctuation
+  IdentifierIDContinue
   &lt;ZWNJ&gt;
   &lt;ZWJ&gt;
 
-UnicodeLetter:
-  any character in the Unicode categories
-  "Uppercase letter (Lu)", "Lowercase letter (Ll)",
-  "Titlecase letter (Lt)", "Modifier letter (Lm)",
-  "Other letter (Lo)", or "Letter number (Nl)".
+UnicodeIDStart:
+  any Unicode character with the Unicode property "ID_Start".
 
-UnicodeCombiningMark:
-  any character in the Unicode categories
-  "Non-spacing mark (Mn)" or "Combining spacing mark (Mc)"
-
-UnicodeDigit:
-  any character in the Unicode category "Decimal number (Nd)"
-
-UnicodeConnectorPunctuation:
-  any character in the Unicode category "Connector puctuation (Pc)"
+UnicodeIDStart:
+  any Unicode character with the Unicode property "ID_Continue".
     </pre>
 
     <section>
@@ -456,47 +443,47 @@ UnicodeEscapeSequence:
           <tbody>
             <tr>
               <td>\b</td>
-              <td>\u0008</td>
+              <td>0x8</td>
               <td>backspace</td>
               <td>&lt;BS&gt;</td>
             </tr><tr>
               <td>\t</td>
-              <td>\u0009</td>
+              <td>0x9</td>
               <td>horizontal tab</td>
               <td>&lt;HT&gt;</td>
             </tr><tr>
               <td>\n</td>
-              <td>\u000A</td>
+              <td>0xA</td>
               <td>line feed(new line)</td>
               <td>&lt;LF&gt;</td>
             </tr><tr>
               <td>\v</td>
-              <td>\u000B</td>
+              <td>0xB</td>
               <td>vertical tab</td>
               <td>&lt;VT&gt;</td>
             </tr><tr>
               <td>\f</td>
-              <td>\u000C</td>
+              <td>0xC</td>
               <td>form feed</td>
               <td>&lt;FF&gt;</td>
             </tr><tr>
               <td>\r</td>
-              <td>\u000D</td>
+              <td>0xD</td>
               <td>carriage return</td>
               <td>&lt;CR&gt;</td>
             </tr><tr>
               <td>\"</td>
-              <td>\u0022</td>
+              <td>0x22</td>
               <td>double quote</td>
               <td>"</td>
             </tr><tr>
               <td>\'</td>
-              <td>\u0027</td>
+              <td>0x27</td>
               <td>single quote</td>
               <td>'</td>
             </tr><tr>
               <td>\\</td>
-              <td>\u005C</td>
+              <td>0x5C</td>
               <td>backslash</td>
               <td>\</td>
             </tr>
