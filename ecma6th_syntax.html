@@ -619,7 +619,6 @@ PrimaryExpression:
   ClassExpression
   GeneratorExpression
   GeneratorComprehension
-  <small>[Lexical goal InputElementRegExp]</small> RegularExpressionLiteral
   TemplateLiteral
   CoverParenthesizedExpressionAndArrowParameters
   <em class="p">(</em> Expression <em class="p">)</em>
@@ -768,7 +767,7 @@ TemplateMiddleList:
     <h3 id="11.2">Left-Hand-Side Expressions</h3>
     <pre>
 MemberExpression:
-  PrimaryExpression
+  <small>[Lexical goal InputElementRegExp]</small> PrimaryExpression
   MemberExpression <em class="p">[</em> Expression <em class="p">]</em>
   MemberExpression <em class="p">.</em> IdentifierName
   MemberExpression TemplateLiteral
@@ -1440,7 +1439,7 @@ GeneratorExpression:
   <em class="k">function</em> <em class="p">*</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
 
 YieldExpression:
-  <em class="k">yield</em> YieldDelegator<sub>opt</sub> AssignmentExpression
+  <em class="k">yield</em> YieldDelegator<sub>opt</sub> <small>[Lexical goal InputElementRegExp]</small> AssignmentExpression
 
 YieldDelegator:
   <em class="p">*</em>
