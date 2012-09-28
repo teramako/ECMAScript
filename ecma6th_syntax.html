@@ -231,14 +231,17 @@ IdentifierStart:
   <em class="p">\</em> UnicodeEscapeSequence
 
 IdentifierPart:
-  IdentifierIDContinue
+  UnicodeIDContinue
+  $
+  _
+  <em class="p">\</em> UnicodeEscapeSequence
   &lt;ZWNJ&gt;
   &lt;ZWJ&gt;
 
 UnicodeIDStart:
   any Unicode character with the Unicode property "ID_Start".
 
-UnicodeIDStart:
+UnicodeIDContinue:
   any Unicode character with the Unicode property "ID_Continue".
     </pre>
 
@@ -462,47 +465,47 @@ UnicodeEscapeSequence:
           <tbody>
             <tr>
               <td>\b</td>
-              <td>0x8</td>
+              <td>0x0008</td>
               <td>backspace</td>
               <td>&lt;BS&gt;</td>
             </tr><tr>
               <td>\t</td>
-              <td>0x9</td>
+              <td>0x0009</td>
               <td>horizontal tab</td>
               <td>&lt;HT&gt;</td>
             </tr><tr>
               <td>\n</td>
-              <td>0xA</td>
+              <td>0x000A</td>
               <td>line feed(new line)</td>
               <td>&lt;LF&gt;</td>
             </tr><tr>
               <td>\v</td>
-              <td>0xB</td>
+              <td>0x000B</td>
               <td>vertical tab</td>
               <td>&lt;VT&gt;</td>
             </tr><tr>
               <td>\f</td>
-              <td>0xC</td>
+              <td>0x000C</td>
               <td>form feed</td>
               <td>&lt;FF&gt;</td>
             </tr><tr>
               <td>\r</td>
-              <td>0xD</td>
+              <td>0x000D</td>
               <td>carriage return</td>
               <td>&lt;CR&gt;</td>
             </tr><tr>
               <td>\"</td>
-              <td>0x22</td>
+              <td>0x0022</td>
               <td>double quote</td>
               <td>"</td>
             </tr><tr>
               <td>\'</td>
-              <td>0x27</td>
+              <td>0x0027</td>
               <td>single quote</td>
               <td>'</td>
             </tr><tr>
               <td>\\</td>
-              <td>0x5C</td>
+              <td>0x005C</td>
               <td>backslash</td>
               <td>\</td>
             </tr>
