@@ -720,6 +720,7 @@ PropertyDefinitionList:
 
 PropertyDefinition:
   IdentifierName
+  CoverInitialisedName
   PropertyName <em class="p">:</em> AssignmentExpression
   MethodDefinition
 
@@ -727,6 +728,12 @@ PropertyName:
   IdentifierName
   StringLiteral
   NumericLiteral
+
+CoverInitialisedName:
+  IdentifierName Initialiser
+
+Initialiser:
+  <em class="p">=</em> AssignmentExpression
       </pre>
     </section>
   </section>
