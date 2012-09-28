@@ -8,8 +8,8 @@
 <body>
 <header>
   <h1>ECMAScript 6th Syntax Grammer</h1>
-  <h2>6th Edition / Draft July 8, 2012</h2>
-  <p>この文章は <a href="http://wiki.ecmascript.org/lib/exe/fetch.php?id=harmony%3Aspecification_drafts&cache=cache&media=harmony:working_draft_ecma-262_edition_6_7-8-12.pdf">working_draft_ecma-262_edition_6_7-8-12.pdf</a> の構文部分の一部を抜き取り、編集したものです。<br/>
+  <h2>6th Edition / Draft September 27, 2012</h2>
+  <p>この文章は <a href="http://wiki.ecmascript.org/lib/exe/fetch.php?id=harmony%3Aspecification_drafts&cache=cache&media=harmony:working_draft_ecma-262_edition_6_9-27-12-rev10markup.pdf">working_draft_ecma-262_edition_6_9-27-12-rev10markup.pdf</a> の構文部分の一部を抜き取り、編集したものです。<br/>
   次期ECMAScriptのドラフトの最新版は<a href="http://wiki.ecmascript.org/doku.php?id=harmony:specification_drafts">harmony:specification_drafts [ES Wiki]</a>にあげられるはずです。</p>
 </header>
 
@@ -50,13 +50,13 @@ InputElementRegExp:
   RightBracePunctuator
   RegularExpressionLiteral
 
-InputElementQuasiTail:
+InputElementTemplateTail:
   WhiteSpace
   LineTerminator
   Comment
   Token
   DivPunctuator
-  QuasiSubstitutionTail
+  TemplateSubstitutionTail
   </pre>
   <section>
     <h3 id="7.1">Unicode Format-Control Characters</h3>
@@ -207,10 +207,10 @@ Token:
   Punctuator
   NumericLiteral
   StringLiteral
-  Quasi
+  Template
     </pre>
     <aside class="note">
-      <p>The <code>DivPunctuator</code>, <code>RegularExpressionLiteral</code> and <code>QuasiSubstitutionTail</code> productions define tokens, but are not included in the <code>Token</code> production.</p>
+      <p>The <code>DivPunctuator</code>, <code>RegularExpressionLiteral</code>, <code>RightBracePunctuator</code> and <code>TemplateSubstitutionTail</code> productions define tokens, but are not included in the <code>Token</code> production.</p>
     </aside>
   </section>
 
@@ -231,14 +231,17 @@ IdentifierStart:
   <em class="p">\</em> UnicodeEscapeSequence
 
 IdentifierPart:
-  IdentifierIDContinue
+  UnicodeIDContinue
+  $
+  _
+  <em class="p">\</em> UnicodeEscapeSequence
   &lt;ZWNJ&gt;
   &lt;ZWJ&gt;
 
 UnicodeIDStart:
   any Unicode character with the Unicode property "ID_Start".
 
-UnicodeIDStart:
+UnicodeIDContinue:
   any Unicode character with the Unicode property "ID_Continue".
     </pre>
 
@@ -292,7 +295,7 @@ Punctuator: <b>one of</b>
   <em class="p oneof">&lt;&lt; &gt;&gt; &gt;&gt;&gt; &amp; | ^</em>
   <em class="p oneof">! ~ &amp;&amp; || ? :</em>
   <em class="p oneof">= += -= *= %= &lt;&lt;=</em>
-  <em class="p oneof">&gt;&gt;> &gt;&gt;&gt;= &amp;= |= ^= &lt;|</em>
+  <em class="p oneof">&gt;&gt;= &gt;&gt;&gt;= &amp;= |= ^= =&gt;</em>
 
 DivPunctuator: <b>one of</b>
   <em class="p oneof">/ /=</em>
@@ -462,47 +465,47 @@ UnicodeEscapeSequence:
           <tbody>
             <tr>
               <td>\b</td>
-              <td>0x8</td>
+              <td>0x0008</td>
               <td>backspace</td>
               <td>&lt;BS&gt;</td>
             </tr><tr>
               <td>\t</td>
-              <td>0x9</td>
+              <td>0x0009</td>
               <td>horizontal tab</td>
               <td>&lt;HT&gt;</td>
             </tr><tr>
               <td>\n</td>
-              <td>0xA</td>
+              <td>0x000A</td>
               <td>line feed(new line)</td>
               <td>&lt;LF&gt;</td>
             </tr><tr>
               <td>\v</td>
-              <td>0xB</td>
+              <td>0x000B</td>
               <td>vertical tab</td>
               <td>&lt;VT&gt;</td>
             </tr><tr>
               <td>\f</td>
-              <td>0xC</td>
+              <td>0x000C</td>
               <td>form feed</td>
               <td>&lt;FF&gt;</td>
             </tr><tr>
               <td>\r</td>
-              <td>0xD</td>
+              <td>0x000D</td>
               <td>carriage return</td>
               <td>&lt;CR&gt;</td>
             </tr><tr>
               <td>\"</td>
-              <td>0x22</td>
+              <td>0x0022</td>
               <td>double quote</td>
               <td>"</td>
             </tr><tr>
               <td>\'</td>
-              <td>0x27</td>
+              <td>0x0027</td>
               <td>single quote</td>
               <td>'</td>
             </tr><tr>
               <td>\\</td>
-              <td>0x5C</td>
+              <td>0x005C</td>
               <td>backslash</td>
               <td>\</td>
             </tr>
@@ -561,32 +564,32 @@ RegularExpressionFlags:
       </section>
 
       <section>
-        <h3 id="7.8.6">Quasi Literal Lexical Components</h3>
+        <h3 id="7.8.6">Template Literal Lexical Components</h3>
         <pre>
-Quasi:
-  FullQuasi
-  QuasiHead
+Template:
+  NoSubstitutionTemplate
+  TemplateHead
 
-FullQuasi:
-  <em class="p">`</em> QuasiCharacters<sub>opt</sub> <em class="p">`</em>
+NoSubstitutionTemplate:
+  <em class="p">`</em> TemplateCharacters<sub>opt</sub> <em class="p">`</em>
 
-QuasiHead:
-  <em class="p">`</em> QuasiCharacters<sub>opt</sub> <em class="p">${</em>
+TemplateHead:
+  <em class="p">`</em> TemplateCharacters<sub>opt</sub> <em class="p">${</em>
 
-QuasiSubstitutionTail:
-  QuasiMiddle
-  QUasiTail
+TemlateSubstitutionTail:
+  TemplateMiddle
+  TemplateTail
 
-QuasiMiddle:
-  <em class="p">}</em> QuasiCharacters<sub>opt</sub> <em class="p">${</em>
+TemplateMiddle:
+  <em class="p">}</em> TemplateCharacters<sub>opt</sub> <em class="p">${</em>
 
-QuasiTail:
-  <em class="p">}</em> QuasiCharacters<sub>opt</sub> <em class="p">`</em>
+TemplateTail:
+  <em class="p">}</em> TemplateCharacters<sub>opt</sub> <em class="p">`</em>
 
-QuasiCharacters:
-  QuasiCharacter QuasiCharacters<sub>opt</sub>
+TemplateCharacters:
+  TemplateCharacter TemplateCharacters<sub>opt</sub>
 
-QuasiCharacter:
+TemplateCharacter:
   SourceCharacter <b>but not one of <em class="p">`</em> or <em class="p">\</em> or <em class="p">$</em></b>
   <em class="p">$</em> <small>[lookahead &notin; <em class="p">{</em>]</small>
   <em class="p">\</em> EscapeSequence
@@ -610,16 +613,31 @@ PrimaryExpression:
   <em class="k">this</em>
   Identifier
   Literal
-  ArrayLiteral
+  ArrayInitialiser
   ObjectLiteral
   FunctionExpression
   ClassExpression
   GeneratorExpression
   GeneratorComprehension
-  <small>[Lexical goal InputElementRegExp]</small> RegularExpressionLiteral
-  QuasiLiteral
+  TemplateLiteral
+  CoverParenthesizedExpressionAndArrowParameters
   <em class="p">(</em> Expression <em class="p">)</em>
+
+CoverParenthesizedExpressionAndArrowParameters:
+  <em class="p">(</em> Expression <em class="p">)</em>
+  <em class="p">( )</em>
+  <em class="p">( ...</em> Identifier <em class="p">)</em>
+  <em class="p">(</em> Expression <em class="p">, ...</em> Identifier <em class="p">)</em>
     </pre>
+
+    <section>
+      <h4>Supplemental Syntax</h4>
+      <p>When processing the production <code>PrimaryExpression</code> : <code>CoverParenthesizedExpressionAndArrowParameters</code> the following grammar is used to refine the interpretation of <code>CoverParenthesizedExpressionAndArrowParameters</code>.</p>
+      <pre>
+ParenthesizedExpression:
+  <em class="p">(</em> FormalParameterList <em class="p">)</em>
+      </pre>
+    </section>
 
     <section>
       <h4 id="11.1.3">Literals</h4>
@@ -632,12 +650,11 @@ ValueLiteral:
   BooleanLiteral
   NumericLiteral
   StringLiteral
-  RegularExpressionLiteral
       </pre>
     </section>
 
     <section>
-      <h4 id="11.1.4">Array Initalizer</h4>
+      <h4 id="11.1.4">Array Initialiser</h4>
       <pre>
 ArrayInitialiser:
   ArrayLiteral
@@ -654,7 +671,7 @@ ArrayLiteral:
 
 ElementList:
   Elision<sub>opt</sub> AssignmentExpression
-  Elision<sub>opt</sub> <em class="p">...</em> AssignmentExpression
+  Elision<sub>opt</sub> SpreadElement
   ElementList <em class="p">,</em> Elision<sub>opt</sub> AssignmentExpression
   ElementList <em class="p">,</em> Elision<sub>opt</sub> SpreadElement
 
@@ -702,6 +719,7 @@ PropertyDefinitionList:
 
 PropertyDefinition:
   IdentifierName
+  CoverInitialisedName
   PropertyName <em class="p">:</em> AssignmentExpression
   MethodDefinition
 
@@ -709,6 +727,12 @@ PropertyName:
   IdentifierName
   StringLiteral
   NumericLiteral
+
+CoverInitialisedName:
+  IdentifierName Initialiser
+
+Initialiser:
+  <em class="p">=</em> AssignmentExpression
       </pre>
     </section>
   </section>
@@ -723,15 +747,19 @@ GeneratorComprehension:
   </section>
 
   <section>
-    <h4 id="11.1.9">Quasi Literals</h4>
+    <h4 id="11.1.9">Template Literals</h4>
     <pre>
-QuasiLiteral:
-  FullQuasi
-  QuasiHead Expression QuasiMiddleList<sub>opt</sub> <small>[Lexical goal InputElementQuasiTail]</small> QuasiTail
+TemplateLiteral:
+  NoSubstitutionTemplate
+  TemplateHead Expression <small>[Lexical goal InputElementTemplateTail]</small> TemplateSpans
 
-QuasiMiddleList:
-  <small>[Lexical goal InputElementQuasiTail]</small> QuasiMiddle Expression
-  QuasiMiddleList <small>[Lexical goal InputElementQuasiTail]</small> QuasiMiddle Expression
+TemplateSpans::
+  TemplateTail
+  TemplateMiddleList <small>[Lexical goal InputElementTemplateTail]</small> TemplateTail
+
+TemplateMiddleList:
+  TemplateMiddle Expression
+  TemplateMiddleList <small>[Lexical goal InputElementTemplateTail]</small> TemplateMiddle Expression
     </pre>
   </section>
 
@@ -739,10 +767,10 @@ QuasiMiddleList:
     <h3 id="11.2">Left-Hand-Side Expressions</h3>
     <pre>
 MemberExpression:
-  PrimaryExpression
+  <small>[Lexical goal InputElementRegExp]</small> PrimaryExpression
   MemberExpression <em class="p">[</em> Expression <em class="p">]</em>
   MemberExpression <em class="p">.</em> IdentifierName
-  MemberExpression QuasiLiteral
+  MemberExpression TemplateLiteral
   <em class="k">super</em> <em class="p">[</em> Expression <em class="p">]</em>
   <em class="k">super</em> <em class="p">.</em> IdentifierName
   <em class="k">new</em> MemberExpression Arguments
@@ -757,7 +785,7 @@ CallExpression:
   CallExpression Arguments
   CallExpression <em class="p">[</em> Expression <em class="p">]</em>
   CallExpression <em class="p">.</em> IdentifierName
-  CallExpression QuasiLiteral
+  CallExpression TemplateLiteral
 
 Arguments:
   <em class="p">( )</em>
@@ -965,7 +993,7 @@ AssignmentExpressionNoIn:
   LeftHandSideExpression AssignmentOperator AssignmentExpressionNoIn
 
 AssignmentOperator: <b>one of</b>
-  <em class="p oneof">*= /= %= += -= &lt;&lt;= &gt;&gt;= &gt;&gt;&gt;= &amp;= ^= !=</em>
+  <em class="p oneof">*= /= %= += -= &lt;&lt;= &gt;&gt;= &gt;&gt;&gt;= &amp;= ^= |=</em>
   </pre>
 
     <section>
@@ -1375,13 +1403,7 @@ ArrowFunction:
 
 ArrowParameters:
   BindingIdentifier
-  <em class="p">(</em> ArrowFormalParameterList <em class="p">)</em>
-
-ArrowFormalParameterList:
-  <small>[empty]</small>
-  FunctionRestParameter
-  CoverFormalList
-  CoverFormalList <em class="p">,</em> FunctionRestParameter
+  CoverParenthesizedExpressionAndArrowParameters
 
 ConciseBody:
   <small>[lookahead &notin; { <em class="p">{</em> }]</small> AssignmentExpression
@@ -1417,7 +1439,7 @@ GeneratorExpression:
   <em class="k">function</em> <em class="p">*</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
 
 YieldExpression:
-  <em class="k">yield</em> YieldDelegator<sub>opt</sub> AssignmentExpression
+  <em class="k">yield</em> YieldDelegator<sub>opt</sub> <small>[Lexical goal InputElementRegExp]</small> AssignmentExpression
 
 YieldDelegator:
   <em class="p">*</em>
@@ -1502,7 +1524,7 @@ ProgramBody:
             <li><a href="#7.8.3">7.8.3 Numeric Literals</a></li>
             <li><a href="#7.8.4">7.8.4 String Literal</a></li>
             <li><a href="#7.8.5">7.8.5 Regular Expression Literals</a></li>
-            <li><a href="#7.8.6">7.8.6 Quasi Literal Lexical Components</a></li>
+            <li><a href="#7.8.6">7.8.6 Template Literal Lexical Components</a></li>
           </ul>
         </li>
       </ul>
@@ -1520,7 +1542,7 @@ ProgramBody:
             </li>
             <li><a href="#11.1.5">11.1.5 Object Initialiser</a></li>
             <li><a href="#11.1.7">11.1.7 Generator Comprehensions</a></li>
-            <li><a href="#11.1.9">11.1.9 Quasi Literals</a></li>
+            <li><a href="#11.1.9">11.1.9 Template Literals</a></li>
           </ul>
         </li>
         <li><a href="#11.2">11.2 Left-Hand-Side Expressions</a></li>
