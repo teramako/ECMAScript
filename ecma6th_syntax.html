@@ -50,13 +50,13 @@ InputElementRegExp:
   RightBracePunctuator
   RegularExpressionLiteral
 
-InputElementQuasiTail:
+InputElementTemplateTail:
   WhiteSpace
   LineTerminator
   Comment
   Token
   DivPunctuator
-  QuasiSubstitutionTail
+  TemplateSubstitutionTail
   </pre>
   <section>
     <h3 id="7.1">Unicode Format-Control Characters</h3>
@@ -207,10 +207,10 @@ Token:
   Punctuator
   NumericLiteral
   StringLiteral
-  Quasi
+  Template
     </pre>
     <aside class="note">
-      <p>The <code>DivPunctuator</code>, <code>RegularExpressionLiteral</code> and <code>QuasiSubstitutionTail</code> productions define tokens, but are not included in the <code>Token</code> production.</p>
+      <p>The <code>DivPunctuator</code>, <code>RegularExpressionLiteral</code> and <code>TemplateSubstitutionTail</code> productions define tokens, but are not included in the <code>Token</code> production.</p>
     </aside>
   </section>
 
@@ -561,32 +561,32 @@ RegularExpressionFlags:
       </section>
 
       <section>
-        <h3 id="7.8.6">Quasi Literal Lexical Components</h3>
+        <h3 id="7.8.6">Template Literal Lexical Components</h3>
         <pre>
-Quasi:
-  FullQuasi
-  QuasiHead
+Template:
+  NoSubstitutionTemplate
+  TemplateHead
 
-FullQuasi:
-  <em class="p">`</em> QuasiCharacters<sub>opt</sub> <em class="p">`</em>
+NoSubstitutionTemplate:
+  <em class="p">`</em> TemplateCharacters<sub>opt</sub> <em class="p">`</em>
 
-QuasiHead:
-  <em class="p">`</em> QuasiCharacters<sub>opt</sub> <em class="p">${</em>
+TemplateHead:
+  <em class="p">`</em> TemplateCharacters<sub>opt</sub> <em class="p">${</em>
 
-QuasiSubstitutionTail:
-  QuasiMiddle
-  QUasiTail
+TemlateSubstitutionTail:
+  TemplateMiddle
+  TemplateTail
 
-QuasiMiddle:
-  <em class="p">}</em> QuasiCharacters<sub>opt</sub> <em class="p">${</em>
+TemplateMiddle:
+  <em class="p">}</em> TemplateCharacters<sub>opt</sub> <em class="p">${</em>
 
-QuasiTail:
-  <em class="p">}</em> QuasiCharacters<sub>opt</sub> <em class="p">`</em>
+TemplateTail:
+  <em class="p">}</em> TemplateCharacters<sub>opt</sub> <em class="p">`</em>
 
-QuasiCharacters:
-  QuasiCharacter QuasiCharacters<sub>opt</sub>
+TemplateCharacters:
+  TemplateCharacter TemplateCharacters<sub>opt</sub>
 
-QuasiCharacter:
+TemplateCharacter:
   SourceCharacter <b>but not one of <em class="p">`</em> or <em class="p">\</em> or <em class="p">$</em></b>
   <em class="p">$</em> <small>[lookahead &notin; <em class="p">{</em>]</small>
   <em class="p">\</em> EscapeSequence
@@ -617,7 +617,7 @@ PrimaryExpression:
   GeneratorExpression
   GeneratorComprehension
   <small>[Lexical goal InputElementRegExp]</small> RegularExpressionLiteral
-  QuasiLiteral
+  TemplateLiteral
   <em class="p">(</em> Expression <em class="p">)</em>
     </pre>
 
@@ -722,15 +722,19 @@ GeneratorComprehension:
   </section>
 
   <section>
-    <h4 id="11.1.9">Quasi Literals</h4>
+    <h4 id="11.1.9">Template Literals</h4>
     <pre>
-QuasiLiteral:
-  FullQuasi
-  QuasiHead Expression QuasiMiddleList<sub>opt</sub> <small>[Lexical goal InputElementQuasiTail]</small> QuasiTail
+TemplateLiteral:
+  NoSubstitutionTemplate
+  TemplateHead Expression <small>[Lexical goal InputElementTemplateTail]</small> TemplateSpans
 
-QuasiMiddleList:
-  <small>[Lexical goal InputElementQuasiTail]</small> QuasiMiddle Expression
-  QuasiMiddleList <small>[Lexical goal InputElementQuasiTail]</small> QuasiMiddle Expression
+TemplateSpans::
+  TemplateTail
+  TemplateMiddleList <small>[Lexical goal InputElementTemplateTail]</small> TemplateTail
+
+TemplateMiddleList:
+  TemplateMiddle Expression
+  TemplateMiddleList <small>[Lexical goal InputElementTemplateTail]</small> TemplateMiddle Expression
     </pre>
   </section>
 
@@ -741,7 +745,7 @@ MemberExpression:
   PrimaryExpression
   MemberExpression <em class="p">[</em> Expression <em class="p">]</em>
   MemberExpression <em class="p">.</em> IdentifierName
-  MemberExpression QuasiLiteral
+  MemberExpression TemplateLiteral
   <em class="k">super</em> <em class="p">[</em> Expression <em class="p">]</em>
   <em class="k">super</em> <em class="p">.</em> IdentifierName
   <em class="k">new</em> MemberExpression Arguments
@@ -756,7 +760,7 @@ CallExpression:
   CallExpression Arguments
   CallExpression <em class="p">[</em> Expression <em class="p">]</em>
   CallExpression <em class="p">.</em> IdentifierName
-  CallExpression QuasiLiteral
+  CallExpression TemplateLiteral
 
 Arguments:
   <em class="p">( )</em>
@@ -1501,7 +1505,7 @@ ProgramBody:
             <li><a href="#7.8.3">7.8.3 Numeric Literals</a></li>
             <li><a href="#7.8.4">7.8.4 String Literal</a></li>
             <li><a href="#7.8.5">7.8.5 Regular Expression Literals</a></li>
-            <li><a href="#7.8.6">7.8.6 Quasi Literal Lexical Components</a></li>
+            <li><a href="#7.8.6">7.8.6 Template Literal Lexical Components</a></li>
           </ul>
         </li>
       </ul>
@@ -1519,7 +1523,7 @@ ProgramBody:
             </li>
             <li><a href="#11.1.5">11.1.5 Object Initialiser</a></li>
             <li><a href="#11.1.7">11.1.7 Generator Comprehensions</a></li>
-            <li><a href="#11.1.9">11.1.9 Quasi Literals</a></li>
+            <li><a href="#11.1.9">11.1.9 Template Literals</a></li>
           </ul>
         </li>
         <li><a href="#11.2">11.2 Left-Hand-Side Expressions</a></li>
