@@ -8,8 +8,8 @@
 <body>
 <header>
   <h1>ECMAScript 6th Syntax Grammar</h1>
-  <h2>6th Edition / Draft September 27, 2012</h2>
-  <p>この文章は <a href="http://wiki.ecmascript.org/lib/exe/fetch.php?id=harmony%3Aspecification_drafts&cache=cache&media=harmony:working_draft_ecma-262_edition_6_9-27-12-rev10markup.pdf">working_draft_ecma-262_edition_6_9-27-12-rev10markup.pdf</a> の構文部分の一部を抜き取り、編集したものです。<br/>
+  <h2>6th Edition / Draft October 26, 2012</h2>
+  <p>この文章は <a href="http://wiki.ecmascript.org/lib/exe/fetch.php?id=harmony%3Aspecification_drafts&cache=cache&media=harmony:working_draft_ecma-262_edition_6_10-26-12-rev11markup.pdf">working_draft_ecma-262_edition_6_10-26-12-rev11markup.pdf</a> の構文部分の一部を抜き取り、編集したものです。<br/>
   次期ECMAScriptのドラフトの最新版は<a href="http://wiki.ecmascript.org/doku.php?id=harmony:specification_drafts">harmony:specification_drafts [ES Wiki]</a>にあげられるはずです。</p>
 </header>
 
@@ -620,10 +620,10 @@ PrimaryExpression:
   GeneratorExpression
   GeneratorComprehension
   TemplateLiteral
-  CoverParenthesizedExpressionAndArrowParameters
+  CoverParenthesizedExpressionAndArrowParametersList
   <em class="p">(</em> Expression <em class="p">)</em>
 
-CoverParenthesizedExpressionAndArrowParameters:
+CoverParenthesizedExpressionAndArrowParametersList:
   <em class="p">(</em> Expression <em class="p">)</em>
   <em class="p">( )</em>
   <em class="p">( ...</em> Identifier <em class="p">)</em>
@@ -632,7 +632,7 @@ CoverParenthesizedExpressionAndArrowParameters:
 
     <section>
       <h4>Supplemental Syntax</h4>
-      <p>When processing the production <code>PrimaryExpression</code> : <code>CoverParenthesizedExpressionAndArrowParameters</code> the following grammar is used to refine the interpretation of <code>CoverParenthesizedExpressionAndArrowParameters</code>.</p>
+      <p>When processing the production <code>PrimaryExpression</code> : <code>CoverParenthesizedExpressionAndArrowParametersList</code> the following grammar is used to refine the interpretation of <code>CoverParenthesizedExpressionAndArrowParametersList</code>.</p>
       <pre>
 ParenthesizedExpression:
   <em class="p">(</em> FormalParameterList <em class="p">)</em>
@@ -1026,10 +1026,13 @@ AssignmentProperty:
   PropertyName <em class="p">:</em> AssignmentElement
 
 AssignmentElement:
-  LeftHandSideExpression Initialiser<sub>opt</sub>
+  DestructuringAssignmentTarget Initialiser<sub>opt</sub>
 
 AssignmentRestElement:
-  <em class="p">...</em> LeftHandSideExpression
+  <em class="p">...</em> DestructuringAssignmentTarget
+
+DestructuringAssignmentTarget:
+  LeftHandSideExpression
       </pre>
     </section>
   </section>
@@ -1403,7 +1406,7 @@ ArrowFunction:
 
 ArrowParameters:
   BindingIdentifier
-  CoverParenthesizedExpressionAndArrowParameters
+  CoverParenthesizedExpressionAndArrowParametersList
 
 ConciseBody:
   <small>[lookahead &notin; { <em class="p">{</em> }]</small> AssignmentExpression
@@ -1480,14 +1483,27 @@ ClassElement:
   Program
   ============================================================= -->
 <section>
-  <h2 id="14">Programs and Modules</h2>
-  <pre>
-Program:
-  ProgramBody<sub>opt</sub>
+  <h2 id="14">Scripts and Modules</h2>
 
-ProgramBody:
-  StatementList
-  </pre>
+  <section>
+    <h3 id="14.1">Script</h3>
+    <pre>
+Script:
+  ScriptBody<sub>opt</sub>
+
+ScriptBody:
+  OuterStatementList
+
+OuterStatementList:
+  OuterItem
+  OuterStatementList OuterItem
+
+OuterItem:
+  ModuleDeclaration
+  ImportDeclaration
+  StatementListItem
+    </pre>
+  </section>
 </section>
 
 </article>
@@ -1598,7 +1614,7 @@ ProgramBody:
         <li><a href="#13.5">13.5 Class Definitions</a></li>
       </ul>
     </li>
-    <li><a href="#14">14 Programs and Modules</a></li>
+    <li><a href="#14">14 Scripts and Modules</a></li>
   </ul>
 </nav>
 
