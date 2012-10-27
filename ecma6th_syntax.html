@@ -1026,10 +1026,13 @@ AssignmentProperty:
   PropertyName <em class="p">:</em> AssignmentElement
 
 AssignmentElement:
-  LeftHandSideExpression Initialiser<sub>opt</sub>
+  DestructuringAssignmentTarget Initialiser<sub>opt</sub>
 
 AssignmentRestElement:
-  <em class="p">...</em> LeftHandSideExpression
+  <em class="p">...</em> DestructuringAssignmentTarget
+
+DestructuringAssignmentTarget:
+  LeftHandSideExpression
       </pre>
     </section>
   </section>
