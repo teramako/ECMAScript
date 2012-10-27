@@ -1483,14 +1483,27 @@ ClassElement:
   Program
   ============================================================= -->
 <section>
-  <h2 id="14">Programs and Modules</h2>
-  <pre>
-Program:
-  ProgramBody<sub>opt</sub>
+  <h2 id="14">Scripts and Modules</h2>
 
-ProgramBody:
-  StatementList
-  </pre>
+  <section>
+    <h3 id="14.1">Script</h3>
+    <pre>
+Script:
+  ScriptBody<sub>opt</sub>
+
+ScriptBody:
+  OuterStatementList
+
+OuterStatementList:
+  OuterItem
+  OuterStatementList OuterItem
+
+OuterItem:
+  ModuleDeclaration
+  ImportDeclaration
+  StatementListItem
+    </pre>
+  </section>
 </section>
 
 </article>
@@ -1601,7 +1614,7 @@ ProgramBody:
         <li><a href="#13.5">13.5 Class Definitions</a></li>
       </ul>
     </li>
-    <li><a href="#14">14 Programs and Modules</a></li>
+    <li><a href="#14">14 Scripts and Modules</a></li>
   </ul>
 </nav>
 
