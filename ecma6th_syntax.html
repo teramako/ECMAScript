@@ -218,7 +218,7 @@ Token:
     <h3 id="7.6">Identifier Names and Identifiers</h3>
     <pre>
 Identifier:
-  IdentfierName <b>but not ReservedWord</b>
+  IdentfierName <b>but not</b> ReservedWord
 
 IdentifierName:
   IdentifierStart
@@ -753,7 +753,7 @@ TemplateLiteral:
   NoSubstitutionTemplate
   TemplateHead Expression <small>[Lexical goal InputElementTemplateTail]</small> TemplateSpans
 
-TemplateSpans::
+TemplateSpans:
   TemplateTail
   TemplateMiddleList <small>[Lexical goal InputElementTemplateTail]</small> TemplateTail
 
