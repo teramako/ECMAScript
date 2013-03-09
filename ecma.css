@@ -1,4 +1,4 @@
-:root { background-color: silver; }
+:root {background-color: silver; counter-reset: table_caption; }
 h2[id]:before,
 h3[id]:before,
 h4[id]:before,
@@ -77,10 +77,14 @@ table {
   width: 100%;
   border-spacing: 0;
   border-collapse: collapse;
+  counter-increment: table_caption;
 }
 thead { background-color: #EEE; }
 td, th {
   border: thin solid gray;
+}
+table > caption:before {
+  content: "Table." counter(table_caption) ": ";
 }
 small { font-size: 75%; }
 
