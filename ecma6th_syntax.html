@@ -8,8 +8,8 @@
 <body>
 <header>
   <h1>ECMAScript 6th Syntax Grammar</h1>
-  <h2>6th Edition / Draft November 22, 2012</h2>
-  <p>この文章は <a href="http://wiki.ecmascript.org/lib/exe/fetch.php?id=harmony%3Aspecification_drafts&cache=cache&media=harmony:working_draft_ecma-262_edition_6_11-22-12-rev12markup.pdf">working_draft_ecma-262_edition_6_11-22-12-rev12markup.pdf</a> の構文部分の一部を抜き取り、編集したものです。<br/>
+  <h2>6th Edition / Draft March 8, 2013</h2>
+  <p>この文章は <a href="http://wiki.ecmascript.org/lib/exe/fetch.php?id=harmony%3Aspecification_drafts&cache=cache&media=harmony:working_draft_ecma-262_edition_6_03-08-13-rev14markup.pdf">working_draft_ecma-262_edition_6_03-08-13-rev14markup.pdf</a> の構文部分の一部を抜き取り、編集したものです。<br/>
   次期ECMAScriptのドラフトの最新版は<a href="http://wiki.ecmascript.org/doku.php?id=harmony:specification_drafts">harmony:specification_drafts [ES Wiki]</a>にあげられるはずです。</p>
 </header>
 
@@ -218,7 +218,7 @@ Token:
     <h3 id="7.6">Identifier Names and Identifiers</h3>
     <pre>
 Identifier:
-  IdentfierName <b>but not ReservedWord</b>
+  IdentfierName <b>but not</b> ReservedWord
 
 IdentifierName:
   IdentifierStart
@@ -688,15 +688,27 @@ SpreadElement:
         <h5 id="11.1.4.2">Array Comprehension</h5>
         <pre>
 ArrayComprehension:
-  <em class="p">[</em> AssignmentExpression ComprehensionForList <em class="p">]</em>
-  <em class="p">[</em> AssignmentExpression ComprehensionForList <em class="k">if</em> Expression <em class="p">]</em>
+  <em class="p">[</em> Comprehension <em class="p">]</em>
 
-ComprehensionForList:
+Comprehension:
+  ComprehensionQualification AssignmentExpression
+
+ComprehensionQualification:
+  ComprehensionFor ComprehensionQualifierList<sub>opt</sub>
+
+ComprehensionQualifierList:
+  ComprehensionQualifier
+  ComprehensionQualifierList ComprehensionQualifier
+
+ComprehensionQualifier:
   ComprehensionFor
-  ComprehensionForList ComprehensionFor
+  ComprehensionIf
 
 ComprehensionFor:
-  <em class="k">for</em> ForBinding <em class="k">of</em> Expression
+  <em class="k">for</em> <em class="p">(</em> ForBinding <em class="k">of</em> AssignmentExpression <em class="p">)</em>
+
+ComprehensionIf:
+  <em class="k">if</em> <em class="p">(</em> AssignmentExpression <em class="p">)</em>
 
 ForBinding:
   BindingIdentifier
@@ -741,8 +753,7 @@ Initialiser:
     <h4 id="11.1.7">Generator Comprehensions</h4>
     <pre>
 GeneratorComprehension:
-  <em class="p">(</em> Expression ComprehensionForList <em class="p">)</em>
-  <em class="p">(</em> Expression ComprehensionForList <em class="k">if</em> Expression <em class="p">)</em>
+  <em class="p">(</em> Comprehension <em class="p">)</em>
     </pre>
   </section>
 
@@ -753,7 +764,7 @@ TemplateLiteral:
   NoSubstitutionTemplate
   TemplateHead Expression <small>[Lexical goal InputElementTemplateTail]</small> TemplateSpans
 
-TemplateSpans::
+TemplateSpans:
   TemplateTail
   TemplateMiddleList <small>[Lexical goal InputElementTemplateTail]</small> TemplateTail
 
@@ -773,6 +784,7 @@ MemberExpression:
   MemberExpression TemplateLiteral
   <em class="k">super</em> <em class="p">[</em> Expression <em class="p">]</em>
   <em class="k">super</em> <em class="p">.</em> IdentifierName
+  <em class="k">new</em> <em class="k">super</em> Arguments<sub>opt</sub>
   <em class="k">new</em> MemberExpression Arguments
 
 NewExpression:
@@ -897,8 +909,6 @@ EqualityExpression:
   EqualityExpression <em class="p">!=</em> RelationalExpression
   EqualityExpression <em class="p">===</em> RelationalExpression
   EqualityExpression <em class="p">!==</em> RelationalExpression
-  EqualityExpression <small>[no LineTerminator here]</small> <em class="p">is</em> RelationalExpression
-  EqualityExpression <small>[no LineTerminator here]</small> <em class="p">isnt</em> RelationalExpression
 
 
 EqualityExpressionNoIn:
@@ -907,8 +917,6 @@ EqualityExpressionNoIn:
   EqualityExpressionNoIn <em class="p">!=</em> RelationalExpressionNoIn
   EqualityExpressionNoIn <em class="p">===</em> RelationalExpressionNoIn
   EqualityExpressionNoIn <em class="p">!==</em> RelationalExpressionNoIn
-  EqualityExpression <small>[no LineTerminator here]</small> <em class="p">is</em> RelationalExpression
-  EqualityExpression <small>[no LineTerminator here]</small> <em class="p">isnt</em> RelationalExpression
     </pre>
   </section>
 
@@ -1248,9 +1256,9 @@ IterationStatement:
   <em class="k">for</em> <em class="p">(</em> LeftHandSideExpression <em class="k">in</em> Expression <em class="p">)</em> Statement
   <em class="k">for</em> <em class="p">(</em> <em class="k">var</em> ForBinding <em class="k">in</em> Expression <em class="p">)</em> Statement
   <em class="k">for</em> <em class="p">(</em> ForDeclaration <em class="k">in</em> Expression <em class="p">)</em> Statement
-  <em class="k">for</em> <em class="p">(</em> LeftHandSideExpression <em class="k">of</em> Expression <em class="p">)</em> Statement
-  <em class="k">for</em> <em class="p">(</em> <em class="k">var</em> ForBinding <em class="k">of</em> Expression <em class="p">)</em> Statement
-  <em class="k">for</em> <em class="p">(</em> ForDeclaration <em class="k">of</em> Expression <em class="p">)</em> Statement
+  <em class="k">for</em> <em class="p">(</em> LeftHandSideExpression <em class="k">of</em> AssignmentExpression <em class="p">)</em> Statement
+  <em class="k">for</em> <em class="p">(</em> <em class="k">var</em> ForBinding <em class="k">of</em> AssignmentExpression <em class="p">)</em> Statement
+  <em class="k">for</em> <em class="p">(</em> ForDeclaration <em class="k">of</em> AssignmentExpression <em class="p">)</em> Statement
 
 ForDeclaration:
   LetOrConst ForBinding
@@ -1473,9 +1481,13 @@ ClassElementList:
 
 ClassElement:
   MethodDefinition
+  <em class="k">static</em> MethodDefinition
   <em class="p">;</em>
     </pre>
   </section>
+  <aside class="note">
+    <p>A ClassBody is alyways strict code.</p>
+  </aside>
 </section>
 
 
