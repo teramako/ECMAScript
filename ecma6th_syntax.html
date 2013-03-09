@@ -688,15 +688,27 @@ SpreadElement:
         <h5 id="11.1.4.2">Array Comprehension</h5>
         <pre>
 ArrayComprehension:
-  <em class="p">[</em> AssignmentExpression ComprehensionForList <em class="p">]</em>
-  <em class="p">[</em> AssignmentExpression ComprehensionForList <em class="k">if</em> Expression <em class="p">]</em>
+  <em class="p">[</em> Comprehension <em class="p">]</em>
 
-ComprehensionForList:
+Comprehension:
+  ComprehensionQualification AssignmentExpression
+
+ComprehensionQualification:
+  ComprehensionFor ComprehensionQualifierList<sub>opt</sub>
+
+ComprehensionQualifierList:
+  ComprehensionQualifier
+  ComprehensionQualifierList ComprehensionQualifier
+
+ComprehensionQualifier:
   ComprehensionFor
-  ComprehensionForList ComprehensionFor
+  ComprehensionIf
 
 ComprehensionFor:
-  <em class="k">for</em> ForBinding <em class="k">of</em> Expression
+  <em class="k">for</em> <em class="p">(</em> ForBinding <em class="k">of</em> AssignmentExpression <em class="p">)</em>
+
+ComprehensionIf:
+  <em class="k">if</em> <em class="p">(</em> AssignmentExpression <em class="p">)</em>
 
 ForBinding:
   BindingIdentifier
@@ -741,8 +753,7 @@ Initialiser:
     <h4 id="11.1.7">Generator Comprehensions</h4>
     <pre>
 GeneratorComprehension:
-  <em class="p">(</em> Expression ComprehensionForList <em class="p">)</em>
-  <em class="p">(</em> Expression ComprehensionForList <em class="k">if</em> Expression <em class="p">)</em>
+  <em class="p">(</em> Comprehension <em class="p">)</em>
     </pre>
   </section>
 
