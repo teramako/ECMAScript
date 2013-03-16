@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ECMAScript 6th Compatibility Test</title>
+  <!-- link rel="stylesheet" href="qunit-1.11.0.css" -->
+  <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.11.0.css">
+  <style>
+  #resultTable { border: 2px solid black; min-width: 600px; border-collapse: collapse; }
+  #resultTable td, #resultTable th {
+    border: thin solid ThreeDShadow;
+    padding: 2px;
+  }
+  #resultTable > thead { border-bottom: 2px solid black; }
+  .ok { background-color: #54B345; }
+  .ng { background-color: #AF528D; }
+  .partlyOK { background-color: #CDD351; }
+  #resultTBody td:last-child {
+    text-align: center;
+  }
+  </style>
+</head>
+<body>
+<header>
+  <h1 id="qunit-header">ECMAScript 6th Compatibility Test</h1>
+  <h2 id="qunit-banner"></h2>
+  <h2 id="qunit-userAgent"></h2>
+  <div id="qunit-testrunner-toolbar"></div>
+</header>
+<section id="res">
+  <table id="resultTable">
+    <caption>Summary</caption>
+    <thead>
+      <tr>
+        <th>Module</th><th>Name</th><th>Result</th>
+      </tr>
+    </thead>
+    <tbody id="resultTBody">
+    </tbody>
+  </table>
+</section>
+<section>
+  <ol id="qunit-tests"></ol>
+</section>
+</body>
+<!-- script src="qunit-1.11.0.js"></script -->
+<script src="http://code.jquery.com/qunit/qunit-1.11.0.js"></script>
+<script>
+window.addEventListener("DOMContentLoaded", init, false);
+function init () {
+  window.removeEventListener("DOMContentLoaded", init, false);
+  var tests = {};
+  var testNames;
+  var tbody = document.getElementById("resultTBody");
+  QUnit.testStart(function (info) {
+    if (!(info.module in tests)) {
+      tests[info.module] = [];
+    }
+    tests[info.module].push(info.name);
+  });
+  QUnit.testDone(function (info) {
+    var m = info.module,
+        t = info.name;
+    var list = tests[m];
+    if (!list) return;
+    var i = list.indexOf(t);
+    if (i === -1)
+      return;
+
+    tests[m][i] = info;
+  });
+  QUnit.done(function () {
+    testNames = document.getElementById("qunit-tests").querySelectorAll(".test-name");
+    for (var module in tests) {
+      var list = tests[module].sort(function(a, b) { return a.name.localeCompare(b.name); });
+      for (var i = 0, len = list.length; i < len; ++i) {
+        var info = list[i];
+        var tr = tbody.insertRow(-1);
+        if (i === 0)
+          tr.insertCell(0).textContent = info.module;
+        else
+          tr.insertCell(0);
+
+        var td1 = tr.insertCell(1);
+        setTimeout(setAnchor, 0, td1, info);
+        var td2 = tr.insertCell(2);
+        switch (info.total) {
+        case info.passed:
+          td2.textContent = "Yes";
+          tr.className = "ok";
+          break;
+        case info.failed:
+          td2.textContent = "No";
+          tr.className = "ng";
+          break;
+        default:
+          td2.textContent = info.passed + "/" + info.total;
+          tr.className = "partlyOK";
+        }
+      }
+    }
+  });
+  function setAnchor (elm, info) {
+    var testName;
+    for (var i = 0, len = testNames.length; i < len; ++i) {
+      testName = testNames[i];
+      if (testName.textContent === info.name) {
+        elm.innerHTML = "<a href=\"#" + testName.parentNode.parentNode.id + "\">" + info.name + "</a>";
+        break;
+      }
+    }
+  }
+  var elm = document.createElement("script");
+  elm.src = "ecma6th_test.js";
+  if (/Firefox\/[0-9.]+$/.test(navigator.userAgent))
+    elm.setAttribute("type", "text/javascript;version=1.8");
+
+  document.body.appendChild(elm);
+}
+</script>
+</html>
