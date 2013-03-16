@@ -1,4 +1,8 @@
-:root {background-color: silver; counter-reset: table_caption; }
+:root {
+  font-family: "Lucida Grande", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", Meiryo, "メイリオ", sans-serif;
+  background-color: silver;
+  counter-reset: table_caption;
+}
 h2[id]:before,
 h3[id]:before,
 h4[id]:before,
@@ -74,6 +78,7 @@ footer p {
 }
 #searchForm > input { width: 70%; }
 table {
+  margin: 1em 0;
   width: 100%;
   border-spacing: 0;
   border-collapse: collapse;
