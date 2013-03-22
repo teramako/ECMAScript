@@ -160,7 +160,7 @@
         code2 = '() => { return "OK" };',
         code3 = 'arg => typeof arg;';
     try {
-      var func = eval(code);
+      var func = eval(code1);
       ok(func() === "OK", code1);
     } catch (e) {
       ok(false, "not suppored: " + code1 + " : " + e);
@@ -168,6 +168,9 @@
     }
     ok(eval(code2)() === "OK", code2);
     ok(eval(code3)(0) === "number", code3);
+    var f = eval(code1);
+    ok(!f.hasOwnProperty("prototype"), 'ArrowFunction has no "prototype"');
+    throws(function(){ new f; }, "Cannot call [[Construct]]");
   });
 
   test("13.3 Method Defnition", function () {
