@@ -60,6 +60,9 @@
 window.addEventListener("DOMContentLoaded", init, false);
 function init () {
   window.removeEventListener("DOMContentLoaded", init, false);
+  if (typeof QUnit === "undefined")
+    return;
+
   var tests = {};
   var testNames;
   var tbody = document.getElementById("resultTBody");
