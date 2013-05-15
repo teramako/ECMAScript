@@ -690,14 +690,11 @@ ArrayComprehension:
   <em class="p">[</em> Comprehension <em class="p">]</em>
 
 Comprehension:
-  ComprehensionQualification AssignmentExpression
+  ComprehensionFor ComprehensionQualifierTail
 
-ComprehensionQualification:
-  ComprehensionFor ComprehensionQualifierList<sub>opt</sub>
-
-ComprehensionQualifierList:
-  ComprehensionQualifier
-  ComprehensionQualifierList ComprehensionQualifier
+ComprehensionQualifierTail:
+  AssignmentExpression
+  ComprehensionQualifier ComprehensionQualifierTail
 
 ComprehensionQualifier:
   ComprehensionFor
