@@ -1376,13 +1376,19 @@ DebuggerStatement:
     <h3 id="13.1">Function Definitions</h3>
     <pre>
 FunctionDeclaration:
-  <em class="k">function</em> BindingIdentifier <em class="p">(</em> FormalParameterList <em class="p">)</em> <em class="p">{</em> FunctionBody <em class="p">}</em>
+  <em class="k">function</em> BindingIdentifier <em class="p">(</em> FormalParameters <em class="p">)</em> <em class="p">{</em> FunctionBody <em class="p">}</em>
 
 FunctionExpression:
-  <em class="k">function</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameterList <em class="p">)</em> <em class="p">{</em> FunctionBody <em class="p">}</em>
+  <em class="k">function</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameters <em class="p">)</em> <em class="p">{</em> FunctionBody <em class="p">}</em>
+
+StrictFormalParameters:
+  FormalParameters
+
+FormalParameters:
+  <small>[empty]</small>
+  FormalParameterList
 
 FormalParameterList:
-  <small>[empty]</small>
   FunctionRestParameter
   FormalsList
   FormalsList <em class="p">,</em> FunctionRestParameter
@@ -1398,6 +1404,9 @@ FormalParameter:
   BindingElement
 
 FunctionBody:
+  FunctionStatementList
+
+FunctionStatementList:
   StatementList<sub>opt</sub>
     </pre>
   </section>
@@ -1437,10 +1446,10 @@ PropertySetParameterList:
     <h3 id="13.4">Generator Definitions</h3>
     <pre>
 GeneratorDeclaration:
-  <em class="k">function</em> <em class="p">*</em> BindingIdentifier <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
+  <em class="k">function</em> <em class="p">*</em> BindingIdentifier <em class="p">(</em> FormalParameters <em class="p">) {</em> FunctionBody <em class="p">}</em>
 
 GeneratorExpression:
-  <em class="k">function</em> <em class="p">*</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
+  <em class="k">function</em> <em class="p">*</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameters <em class="p">) {</em> FunctionBody <em class="p">}</em>
 
 YieldExpression:
   <em class="k">yield</em> YieldDelegator<sub>opt</sub> <small>[Lexical goal InputElementRegExp]</small> AssignmentExpression
