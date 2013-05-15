@@ -1431,8 +1431,8 @@ ConciseBody:
     <h2 id="13.3">Method Definitions</h2>
     <pre>
 MethodDefinition:
-  PropertyName <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
-  <em class="p">*</em> PropertyName <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
+  PropertyName <em class="p">(</em> StrictFormalParameters <em class="p">) {</em> FunctionBody <em class="p">}</em>
+  GeneratorMethod
   <em class="k">get</em> PropertyName <em class="p">( ) {</em> FunctionBody <em class="p">}</em>
   <em class="k">set</em> PropertyName <em class="p">(</em> PropertySetParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
 
@@ -1443,8 +1443,11 @@ PropertySetParameterList:
   </section>
 
   <section>
-    <h3 id="13.4">Generator Definitions</h3>
+    <h3 id="13.4">Generator Function Definitions</h3>
     <pre>
+GeneratorMethod:
+  <em class="p">*</em> PropertyName <em class="p">(</em> StrictFormalParameters <em class="p">) {</em> FunctionBody <em class="p">}</em>
+
 GeneratorDeclaration:
   <em class="k">function</em> <em class="p">*</em> BindingIdentifier <em class="p">(</em> FormalParameters <em class="p">) {</em> FunctionBody <em class="p">}</em>
 
@@ -1624,7 +1627,7 @@ OuterItem:
         <li><a href="#13.1">13.1 Function Definitions</a></li>
         <li><a href="#13.2">13.2 Arrow Function Definitions</a></li>
         <li><a href="#13.3">13.3 Method Definitions</a></li>
-        <li><a href="#13.4">13.4 Generator Definitions</a></li>
+        <li><a href="#13.4">13.4 Generator Function Definitions</a></li>
         <li><a href="#13.5">13.5 Class Definitions</a></li>
       </ul>
     </li>
