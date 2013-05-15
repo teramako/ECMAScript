@@ -8,8 +8,8 @@
 <body>
 <header>
   <h1>ECMAScript 6th Syntax Grammar</h1>
-  <h2>6th Edition / Draft March 8, 2013</h2>
-  <p>この文章は <a href="http://wiki.ecmascript.org/lib/exe/fetch.php?id=harmony%3Aspecification_drafts&cache=cache&media=harmony:working_draft_ecma-262_edition_6_03-08-13-rev14markup.pdf">working_draft_ecma-262_edition_6_03-08-13-rev14markup.pdf</a> の構文部分の一部を抜き取り、編集したものです。<br/>
+  <h2>6th Edition / Draft May 14, 2013</h2>
+  <p>この文章は <a href="http://wiki.ecmascript.org/lib/exe/fetch.php?id=harmony%3Aspecification_drafts&cache=cache&media=harmony:working_draft_ecma-262_edition_6_05-14-13rev15markup.pdf">working_draft_ecma-262_edition_6_05-14-13rev15markup.pdf</a> の構文部分の一部を抜き取り、編集したものです。<br/>
   次期ECMAScriptのドラフトの最新版は<a href="http://wiki.ecmascript.org/doku.php?id=harmony:specification_drafts">harmony:specification_drafts [ES Wiki]</a>にあげられるはずです。</p>
 </header>
 
@@ -620,10 +620,9 @@ PrimaryExpression:
   GeneratorExpression
   GeneratorComprehension
   TemplateLiteral
-  CoverParenthesizedExpressionAndArrowParametersList
-  <em class="p">(</em> Expression <em class="p">)</em>
+  CoverParenthesisedExpressionAndArrowParametersList
 
-CoverParenthesizedExpressionAndArrowParametersList:
+CoverParenthesisedExpressionAndArrowParametersList:
   <em class="p">(</em> Expression <em class="p">)</em>
   <em class="p">( )</em>
   <em class="p">( ...</em> Identifier <em class="p">)</em>
@@ -632,7 +631,7 @@ CoverParenthesizedExpressionAndArrowParametersList:
 
     <section>
       <h4>Supplemental Syntax</h4>
-      <p>When processing the production <code>PrimaryExpression</code> : <code>CoverParenthesizedExpressionAndArrowParametersList</code> the following grammar is used to refine the interpretation of <code>CoverParenthesizedExpressionAndArrowParametersList</code>.</p>
+      <p>When processing the production <code>PrimaryExpression</code> : <code>CoverParenthesisedExpressionAndArrowParametersList</code> the following grammar is used to refine the interpretation of <code>CoverParenthesisedExpressionAndArrowParametersList</code>.</p>
       <pre>
 ParenthesizedExpression:
   <em class="p">(</em> FormalParameterList <em class="p">)</em>
@@ -691,14 +690,11 @@ ArrayComprehension:
   <em class="p">[</em> Comprehension <em class="p">]</em>
 
 Comprehension:
-  ComprehensionQualification AssignmentExpression
+  ComprehensionFor ComprehensionQualifierTail
 
-ComprehensionQualification:
-  ComprehensionFor ComprehensionQualifierList<sub>opt</sub>
-
-ComprehensionQualifierList:
-  ComprehensionQualifier
-  ComprehensionQualifierList ComprehensionQualifier
+ComprehensionQualifierTail:
+  AssignmentExpression
+  ComprehensionQualifier ComprehensionQualifierTail
 
 ComprehensionQualifier:
   ComprehensionFor
@@ -1380,13 +1376,19 @@ DebuggerStatement:
     <h3 id="13.1">Function Definitions</h3>
     <pre>
 FunctionDeclaration:
-  <em class="k">function</em> BindingIdentifier <em class="p">(</em> FormalParameterList <em class="p">)</em> <em class="p">{</em> FunctionBody <em class="p">}</em>
+  <em class="k">function</em> BindingIdentifier <em class="p">(</em> FormalParameters <em class="p">)</em> <em class="p">{</em> FunctionBody <em class="p">}</em>
 
 FunctionExpression:
-  <em class="k">function</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameterList <em class="p">)</em> <em class="p">{</em> FunctionBody <em class="p">}</em>
+  <em class="k">function</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameters <em class="p">)</em> <em class="p">{</em> FunctionBody <em class="p">}</em>
+
+StrictFormalParameters:
+  FormalParameters
+
+FormalParameters:
+  <small>[empty]</small>
+  FormalParameterList
 
 FormalParameterList:
-  <small>[empty]</small>
   FunctionRestParameter
   FormalsList
   FormalsList <em class="p">,</em> FunctionRestParameter
@@ -1402,6 +1404,9 @@ FormalParameter:
   BindingElement
 
 FunctionBody:
+  FunctionStatementList
+
+FunctionStatementList:
   StatementList<sub>opt</sub>
     </pre>
   </section>
@@ -1414,14 +1419,11 @@ ArrowFunction:
 
 ArrowParameters:
   BindingIdentifier
-  CoverParenthesizedExpressionAndArrowParametersList
+  CoverParenthesisedExpressionAndArrowParametersList
 
 ConciseBody:
   <small>[lookahead &notin; { <em class="p">{</em> }]</small> AssignmentExpression
   <em class="p">{</em> FunctionBody <em class="p">}</em>
-
-CoverFormalList:
-  Expression
     </pre>
   </section>
 
@@ -1429,8 +1431,8 @@ CoverFormalList:
     <h2 id="13.3">Method Definitions</h2>
     <pre>
 MethodDefinition:
-  PropertyName <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
-  <em class="p">*</em> PropertyName <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
+  PropertyName <em class="p">(</em> StrictFormalParameters <em class="p">) {</em> FunctionBody <em class="p">}</em>
+  GeneratorMethod
   <em class="k">get</em> PropertyName <em class="p">( ) {</em> FunctionBody <em class="p">}</em>
   <em class="k">set</em> PropertyName <em class="p">(</em> PropertySetParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
 
@@ -1441,13 +1443,16 @@ PropertySetParameterList:
   </section>
 
   <section>
-    <h3 id="13.4">Generator Definitions</h3>
+    <h3 id="13.4">Generator Function Definitions</h3>
     <pre>
+GeneratorMethod:
+  <em class="p">*</em> PropertyName <em class="p">(</em> StrictFormalParameters <em class="p">) {</em> FunctionBody <em class="p">}</em>
+
 GeneratorDeclaration:
-  <em class="k">function</em> <em class="p">*</em> BindingIdentifier <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
+  <em class="k">function</em> <em class="p">*</em> BindingIdentifier <em class="p">(</em> FormalParameters <em class="p">) {</em> FunctionBody <em class="p">}</em>
 
 GeneratorExpression:
-  <em class="k">function</em> <em class="p">*</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameterList <em class="p">) {</em> FunctionBody <em class="p">}</em>
+  <em class="k">function</em> <em class="p">*</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameters <em class="p">) {</em> FunctionBody <em class="p">}</em>
 
 YieldExpression:
   <em class="k">yield</em> YieldDelegator<sub>opt</sub> <small>[Lexical goal InputElementRegExp]</small> AssignmentExpression
@@ -1526,7 +1531,7 @@ OuterItem:
     <datalist id="syntaxName"></datalist>
   </form>
   <ul>
-    <li><a href="#6">6 Source Text</li>
+    <li><a href="#6">6 Source Text</a></li>
     <li><a href="#7">7 Lexical Conventions</a>
       <ul>
         <li><a href="#7.1">7.1 Unicode Format-Control Characters</a></li>
@@ -1622,7 +1627,7 @@ OuterItem:
         <li><a href="#13.1">13.1 Function Definitions</a></li>
         <li><a href="#13.2">13.2 Arrow Function Definitions</a></li>
         <li><a href="#13.3">13.3 Method Definitions</a></li>
-        <li><a href="#13.4">13.4 Generator Definitions</a></li>
+        <li><a href="#13.4">13.4 Generator Function Definitions</a></li>
         <li><a href="#13.5">13.5 Class Definitions</a></li>
       </ul>
     </li>
