@@ -620,10 +620,9 @@ PrimaryExpression:
   GeneratorExpression
   GeneratorComprehension
   TemplateLiteral
-  CoverParenthesizedExpressionAndArrowParametersList
-  <em class="p">(</em> Expression <em class="p">)</em>
+  CoverParenthesisedExpressionAndArrowParametersList
 
-CoverParenthesizedExpressionAndArrowParametersList:
+CoverParenthesisedExpressionAndArrowParametersList:
   <em class="p">(</em> Expression <em class="p">)</em>
   <em class="p">( )</em>
   <em class="p">( ...</em> Identifier <em class="p">)</em>
@@ -632,7 +631,7 @@ CoverParenthesizedExpressionAndArrowParametersList:
 
     <section>
       <h4>Supplemental Syntax</h4>
-      <p>When processing the production <code>PrimaryExpression</code> : <code>CoverParenthesizedExpressionAndArrowParametersList</code> the following grammar is used to refine the interpretation of <code>CoverParenthesizedExpressionAndArrowParametersList</code>.</p>
+      <p>When processing the production <code>PrimaryExpression</code> : <code>CoverParenthesisedExpressionAndArrowParametersList</code> the following grammar is used to refine the interpretation of <code>CoverParenthesisedExpressionAndArrowParametersList</code>.</p>
       <pre>
 ParenthesizedExpression:
   <em class="p">(</em> FormalParameterList <em class="p">)</em>
@@ -1414,14 +1413,11 @@ ArrowFunction:
 
 ArrowParameters:
   BindingIdentifier
-  CoverParenthesizedExpressionAndArrowParametersList
+  CoverParenthesisedExpressionAndArrowParametersList
 
 ConciseBody:
   <small>[lookahead &notin; { <em class="p">{</em> }]</small> AssignmentExpression
   <em class="p">{</em> FunctionBody <em class="p">}</em>
-
-CoverFormalList:
-  Expression
     </pre>
   </section>
 
