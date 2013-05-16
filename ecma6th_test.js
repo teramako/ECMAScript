@@ -268,7 +268,8 @@
     [
       "getPrototypeOf", "getOwnPropertyDescriptor", "getOwnPropertyNames", "create",
       "defineProperty", "defineProperties", "seal", "freeze", "preventExtensions", "isSealed",
-      "isFrozen", "isExtensible", "keys", "getOwnPropertyKeys", "is", "assign", "mixin"
+      "isFrozen", "isExtensible", "keys", "getOwnPropertyKeys", "is", "assign", "mixin",
+      "setPrototypeOf",
     ].forEach(function(prop) {
       ok(typeof Object[prop] === "function", "Object." + prop);
     })
@@ -310,7 +311,7 @@
     [
       "toString", "toLocaleString", "concat", "join", "pop", "push", "reverse", "shift", "slice",
       "sort", "splice", "unshift", "indexOf", "lastIndexOf", "every", "some", "forEach", "map",
-      "filter", "reduce", "reduceRight", "entries", "keys", "values"
+      "filter", "reduce", "reduceRight", "find", "findIndex", "entries", "keys", "values"
     ].forEach(function(prop) {
       ok(typeof Array.prototype[prop] === "function", "Array.prototype." + prop);
     });
