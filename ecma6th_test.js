@@ -532,7 +532,7 @@
   test("15.16 Set", function () {
     if (typeof Set === "function") {
       strictEqual(Set.prototype.constructor, Set, "Set.prototype.constructor");
-      ["add", "clear", "delete", "entries", "forEach", "has", "keys", "values"].forEach(function(prop) {
+      ["add", "clear", "delete", "entries", "forEach", "has", "values"].forEach(function(prop) {
         ok(typeof Set.prototype[prop] === "function", "Set.prototype." + prop);
       });
       var sizeDesc = Object.getOwnPropertyDescriptor(Set.prototype, "size");
