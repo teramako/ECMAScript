@@ -364,7 +364,7 @@
     [
       "abs", "acos", "asin", "atan", "atan2", "ceil", "cos", "exp", "floor", "log", "max", "min", "pow",
       "random", "round", "sin", "sqrt", "tan", "log10", "log2", "log1p", "expm1", "cosh", "sinh", "tanh",
-      "acosh", "asinh", "atanh", "hypot", "trunc", "sign", "cbrt"
+      "acosh", "asinh", "atanh", "hypot", "trunc", "sign", "cbrt", "imul",
     ].forEach(function(prop) {
       ok(typeof Math[prop] === "function", "Math." + prop);
     });
@@ -447,6 +447,7 @@
 
   test("15.13 Binary Data", function () {
     if (typeof ArrayBuffer === "function") {
+      ok(typeof ArrayBuffer.isView === "function", "ArrayBuffer.isView");
       ok(typeof ArrayBuffer.prototype.slice === "function", "ArrayBuffer.prototype.slice");
       ok((new ArrayBuffer).byteLength === 0, "ArrayBuffer#.byteLength");
     } else {
