@@ -113,8 +113,13 @@
 
   test("12.2.1 const", function () {
     "use strict";
-    const CONST = "CONST";
-    strictEqual(CONST, "CONST", "supports const");
+    try {
+      var code = 'cont CONST = "CONST"; CONST;';
+      strictEqual(eval(code), "CONST", "supports const basically");
+    } catch (e) {
+      ok(false, "cont not supported");
+      return;
+    }
     throws(function(){ eval('const CONST = "a"; const CONST = "b";'); }, 'cannot redecralation: const CONST = "THROWS"');
 
     try {
@@ -127,8 +132,13 @@
 
   test("12.2.1 let", function () {
     "use strict";
-    let letValue = 10;
-    strictEqual(letValue, 10, "supports let");
+    try {
+      var code = 'let letValue = 10; letValue;';
+      strictEqual(eval(code), 10, "supports let basically");
+    } catch (e) {
+      ok(false, "let not supported");
+      return;
+    }
     ok(eval('let value = 10; { let value = 20; } value === 10;'), "block scope");
   });
 
