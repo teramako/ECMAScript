@@ -114,10 +114,10 @@
   test("12.2.1 const", function () {
     "use strict";
     try {
-      var code = 'cont CONST = "CONST"; CONST;';
+      var code = 'const CONST = "CONST"; CONST;';
       strictEqual(eval(code), "CONST", "supports const basically");
     } catch (e) {
-      ok(false, "cont not supported");
+      ok(false, "const not supported");
       return;
     }
     throws(function(){ eval('const CONST = "a"; const CONST = "b";'); }, 'cannot redecralation: const CONST = "THROWS"');
