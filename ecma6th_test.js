@@ -466,7 +466,7 @@
     if (typeof ArrayBuffer === "function") {
       ok(typeof ArrayBuffer.isView === "function", "ArrayBuffer.isView");
       ok(typeof ArrayBuffer.prototype.slice === "function", "ArrayBuffer.prototype.slice");
-      ok((new ArrayBuffer).byteLength === 0, "ArrayBuffer#.byteLength");
+      ok((new ArrayBuffer).byteLength === 0, "ArrayBuffer#byteLength");
     } else {
       ok(false, "not supported: ArrayBuffer");
       return;
