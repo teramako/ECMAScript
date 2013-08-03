@@ -5,6 +5,17 @@
   // ---------------------------------------------------------------------------
   module("Syntax Grammar");
 
+  test("07.8.3 Numeric Literals", function () {
+    ['0b0', '0B0', '0o0', '0O0'].forEach(function (literal) {
+      try {
+        var res = eval(literal);
+        strictEqual(res, 0, literal);
+      } catch (e) {
+        ok(false, "not supported: " + e);
+      }
+    });
+  });
+
   test("11.1.4.1 spread array(...) operator", function () {
     var code = '[...[1,2,3]].join("")';
     try {
