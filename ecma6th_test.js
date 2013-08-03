@@ -195,20 +195,27 @@
   });
 
   test("13.4 Generator (yield)", function () {
-    var code1 = '(function * foo(){ yield 5; })',
-        code2 = '(function foo(){ yield 5; })';
+    var newCode1 = '(function * foo(){ yield 5; })',
+        newCode2 = '(function * foo(){ yield * 5; })',
+        oldCode = '(function foo(){ yield 5; })';
     try {
-      var res = eval(code1);
-      strictEqual(typeof res, "function", code1);
+      var res = eval(newCode1);
+      strictEqual(typeof res, "function", newCode1);
+      try {
+        var res = eval(newCode2);
+        strictEqual(typeof res, "function", newCode2);
+      } catch (e) {
+        ok(false, "not supported: " + newCode2 + " : " + e);
+      }
       return;
     } catch (e) {
-      ok(false, "not supported: " + code1 + " : " + e);
+      ok(false, "not supported: " + newCode1 + " : " + e);
     }
     try {
-      var res = eval(code2);
-      strictEqual(typeof res, "function", "supported: " + code2);
+      var res = eval(oldCode);
+      strictEqual(typeof res, "function", "supported: " + oldCode);
     } catch(e) {
-      ok(false, "not supported: " + code2 + " : " + e);
+      ok(false, "not supported: " + oldCode + " : " + e);
     }
   });
 
