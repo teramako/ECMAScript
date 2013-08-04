@@ -211,22 +211,22 @@
         oldCode = '(function foo(){ yield 5; })';
     try {
       var res = eval(newCode1);
-      strictEqual(typeof res, "function", newCode1);
+      strictEqual(typeof res, "function", "supported new syntax: " + newCode1);
       try {
         var res = eval(newCode2);
-        strictEqual(typeof res, "function", newCode2);
+        strictEqual(typeof res, "function", "supported new syntax: " + newCode2);
       } catch (e) {
-        ok(false, "not supported: " + newCode2 + " : " + e);
+        ok(false, "not supported new syntax: " + newCode2 + " : " + e);
       }
       return;
     } catch (e) {
-      ok(false, "not supported: " + newCode1 + " : " + e);
+      ok(false, "not supported new syntax: " + newCode1 + " : " + e);
     }
     try {
       var res = eval(oldCode);
-      strictEqual(typeof res, "function", "supported: " + oldCode);
+      strictEqual(typeof res, "function", "supported old syntax: " + oldCode);
     } catch(e) {
-      ok(false, "not supported: " + oldCode + " : " + e);
+      ok(false, "not supported old syntax: " + oldCode + " : " + e);
     }
   });
 
