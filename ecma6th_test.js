@@ -5,6 +5,17 @@
   // ---------------------------------------------------------------------------
   module("Syntax Grammar");
 
+  test("07.8.3 Numeric Literals", function () {
+    ['0b0', '0B0', '0o0', '0O0'].forEach(function (literal) {
+      try {
+        var res = eval(literal);
+        strictEqual(res, 0, literal);
+      } catch (e) {
+        ok(false, "not supported: " + e);
+      }
+    });
+  });
+
   test("11.1.4.1 spread array(...) operator", function () {
     var code = '[...[1,2,3]].join("")';
     try {
@@ -195,20 +206,27 @@
   });
 
   test("13.4 Generator (yield)", function () {
-    var code1 = '(function * foo(){ yield 5; })',
-        code2 = '(function foo(){ yield 5; })';
+    var newCode1 = '(function * foo(){ yield 5; })',
+        newCode2 = '(function * foo(){ yield * 5; })',
+        oldCode = '(function foo(){ yield 5; })';
     try {
-      var res = eval(code1);
-      strictEqual(typeof res, "function", code1);
+      var res = eval(newCode1);
+      strictEqual(typeof res, "function", "supported new syntax: " + newCode1);
+      try {
+        var res = eval(newCode2);
+        strictEqual(typeof res, "function", "supported new syntax: " + newCode2);
+      } catch (e) {
+        ok(false, "not supported new syntax: " + newCode2 + " : " + e);
+      }
       return;
     } catch (e) {
-      ok(false, "not supported: " + code1 + " : " + e);
+      ok(false, "not supported new syntax: " + newCode1 + " : " + e);
     }
     try {
-      var res = eval(code2);
-      strictEqual(typeof res, "function", "supported: " + code2);
+      var res = eval(oldCode);
+      strictEqual(typeof res, "function", "supported old syntax: " + oldCode);
     } catch(e) {
-      ok(false, "not supported: " + code2 + " : " + e);
+      ok(false, "not supported old syntax: " + oldCode + " : " + e);
     }
   });
 
@@ -459,7 +477,7 @@
     if (typeof ArrayBuffer === "function") {
       ok(typeof ArrayBuffer.isView === "function", "ArrayBuffer.isView");
       ok(typeof ArrayBuffer.prototype.slice === "function", "ArrayBuffer.prototype.slice");
-      ok((new ArrayBuffer).byteLength === 0, "ArrayBuffer#.byteLength");
+      ok((new ArrayBuffer).byteLength === 0, "ArrayBuffer#byteLength");
     } else {
       ok(false, "not supported: ArrayBuffer");
       return;
@@ -467,9 +485,18 @@
     function typedArrayTest (name, size) {
       var TypedArray = global[name];
       if (typeof TypedArray === "function") {
+        ok(typeof TypedArray.prototype.of === "function", name + ".of");
+        ok(typeof TypedArray.prototype.from === "function", name + ".from");
         strictEqual(TypedArray.BYTES_PER_ELEMENT, size, name + ".BYTES_PER_ELEMENT");
         ok(typeof TypedArray.prototype.set      === "function", name + ".prototype.set");
         ok(typeof TypedArray.prototype.subarray === "function", name + ".prototype.subarray");
+        [
+          "toString", "toLocaleString", "join", "reverse", "slice", "sort",
+          "indexOf", "lastIndexOf", "every", "some", "forEach", "map", "filter",
+          "reduce", "reduceRight", "find", "findIndex", "entries", "keys", "values"
+        ].forEach(function(prop) {
+          ok(typeof TypedArray.prototype[prop] === "function", name + ".prototype." + prop);
+        });
         var tArray = new TypedArray;
         ok(tArray.buffer instanceof ArrayBuffer, "buffer instanceof ArrayBuffer");
         ["byteLength", "byteOffset", "length"].forEach(function(prop) {
@@ -561,12 +588,31 @@
     }
   });
 
-  test("15.17 Reflect", function () {
+  test("15.17 WeakSet", function () {
+    if (typeof WeakSet === "function") {
+      strictEqual(WeakSet.prototype.constructor, WeakSet, "WeakSet.prototype.constructor");
+      ["add", "clear", "delete", "has"].forEach(function(prop) {
+        ok(typeof WeakSet.prototype[prop] === "function", "WeakSet.prototype." + prop);
+      });
+      var o = {};
+      var s = new WeakSet(["a", 0, -0]);
+      s.add(o);
+      ok(s.has("a"), 's.has("a")');
+      ok(s.has(0), "s.has(0)");
+      ok(s.has(-0), "s.has(-0)");
+      ok(s.has(o), "s.has(o)");
+      ok(s.has({}) === false, "s.has({}) is false");
+    } else {
+      ok(false, "not supported: WeakSet");
+    }
+  });
+
+  test("15.18.1 Reflect", function () {
     if (typeof Reflect !== "undefined") {
       [
         "getPrototypeOf", "setPrototypeOf", "isExtensible", "preventExtensions", "has", "hasOwn",
-        "getOwnPropertyDescriptor", "get", "set", "deleteProperty", "defineProperty", "enumerate",
-        "ownKeys", "freeze", "seal", "isFrozen", "isSealed"
+        "getOwnPropertyDescriptor", "get", "set", "invoke", "deleteProperty", "defineProperty", "enumerate",
+        "ownKeys"
       ].forEach(function(prop) {
         ok(typeof Reflect[prop] === "function", "Reflect." + prop);
       });
@@ -575,7 +621,7 @@
     }
   });
 
-  test("15.18 Proxy", function () {
+  test("15.18.2 Proxy", function () {
     if (typeof Proxy !== "undefined") {
       var code1 = 'new Proxy({}, { get: function(){ return "OK" } })',
           code2 = 'Proxy.create({ get: function(){ return "OK" } })';
@@ -595,6 +641,20 @@
     } else {
       ok(false, "not supported: Proxy");
     }
+  });
+
+  test("15.19.4 Generator Objects", function () {
+    var code = '(function * foo(){ yield 5; }())', res;
+    try {
+      res = eval(code);
+    } catch (e) {
+      ok(false, "not supported: Generator Object");
+      return;
+    }
+
+    var generator = res.constructor;
+    ok(typeof generator.prototype.next === "function", "Generator.prototype.next");
+    ok(typeof generator.prototype.throw === "function", "Generator.prototype.throw");
   });
 
 })(this);
