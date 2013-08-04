@@ -485,9 +485,18 @@
     function typedArrayTest (name, size) {
       var TypedArray = global[name];
       if (typeof TypedArray === "function") {
+        ok(typeof TypedArray.prototype.of === "function", name + ".of");
+        ok(typeof TypedArray.prototype.from === "function", name + ".from");
         strictEqual(TypedArray.BYTES_PER_ELEMENT, size, name + ".BYTES_PER_ELEMENT");
         ok(typeof TypedArray.prototype.set      === "function", name + ".prototype.set");
         ok(typeof TypedArray.prototype.subarray === "function", name + ".prototype.subarray");
+        [
+          "toString", "toLocaleString", "join", "reverse", "slice", "sort",
+          "indexOf", "lastIndexOf", "every", "some", "forEach", "map", "filter",
+          "reduce", "reduceRight", "find", "findIndex", "entries", "keys", "values"
+        ].forEach(function(prop) {
+          ok(typeof TypedArray.prototype[prop] === "function", name + ".prototype." + prop);
+        });
         var tArray = new TypedArray;
         ok(tArray.buffer instanceof ArrayBuffer, "buffer instanceof ArrayBuffer");
         ["byteLength", "byteOffset", "length"].forEach(function(prop) {
@@ -579,12 +588,31 @@
     }
   });
 
-  test("15.17 Reflect", function () {
+  test("15.17 WeakSet", function () {
+    if (typeof WeakSet === "function") {
+      strictEqual(WeakSet.prototype.constructor, WeakSet, "WeakSet.prototype.constructor");
+      ["add", "clear", "delete", "has"].forEach(function(prop) {
+        ok(typeof WeakSet.prototype[prop] === "function", "WeakSet.prototype." + prop);
+      });
+      var o = {};
+      var s = new WeakSet(["a", 0, -0]);
+      s.add(o);
+      ok(s.has("a"), 's.has("a")');
+      ok(s.has(0), "s.has(0)");
+      ok(s.has(-0), "s.has(-0)");
+      ok(s.has(o), "s.has(o)");
+      ok(s.has({}) === false, "s.has({}) is false");
+    } else {
+      ok(false, "not supported: WeakSet");
+    }
+  });
+
+  test("15.18.1 Reflect", function () {
     if (typeof Reflect !== "undefined") {
       [
         "getPrototypeOf", "setPrototypeOf", "isExtensible", "preventExtensions", "has", "hasOwn",
-        "getOwnPropertyDescriptor", "get", "set", "deleteProperty", "defineProperty", "enumerate",
-        "ownKeys", "freeze", "seal", "isFrozen", "isSealed"
+        "getOwnPropertyDescriptor", "get", "set", "invoke", "deleteProperty", "defineProperty", "enumerate",
+        "ownKeys"
       ].forEach(function(prop) {
         ok(typeof Reflect[prop] === "function", "Reflect." + prop);
       });
@@ -593,7 +621,7 @@
     }
   });
 
-  test("15.18 Proxy", function () {
+  test("15.18.2 Proxy", function () {
     if (typeof Proxy !== "undefined") {
       var code1 = 'new Proxy({}, { get: function(){ return "OK" } })',
           code2 = 'Proxy.create({ get: function(){ return "OK" } })';
