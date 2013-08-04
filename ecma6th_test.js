@@ -643,5 +643,19 @@
     }
   });
 
+  test("15.19.4 Generator Objects", function () {
+    var code = '(function * foo(){ yield 5; }())', res;
+    try {
+      res = eval(code);
+    } catch (e) {
+      ok(false, "not supported: Generator Object");
+      return;
+    }
+
+    var generator = res.constructor;
+    ok(typeof generator.prototype.next === "function", "Generator.prototype.next");
+    ok(typeof generator.prototype.throw === "function", "Generator.prototype.throw");
+  });
+
 })(this);
 
