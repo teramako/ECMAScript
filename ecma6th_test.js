@@ -583,13 +583,11 @@
       ["add", "clear", "delete", "has"].forEach(function(prop) {
         ok(typeof WeakSet.prototype[prop] === "function", "WeakSet.prototype." + prop);
       });
-      var o = {};
-      var s = new WeakSet(["a", 0, -0]);
-      s.add(o);
-      ok(s.has("a"), 's.has("a")');
-      ok(s.has(0), "s.has(0)");
-      ok(s.has(-0), "s.has(-0)");
-      ok(s.has(o), "s.has(o)");
+      var o1 = {}, o2 = {};
+      var s = new WeakSet([o1]);
+      s.add(o2);
+      ok(s.has(o1), "s.has(o1)");
+      ok(s.has(o2), "s.has(o2)");
       ok(s.has({}) === false, "s.has({}) is false");
     } else {
       ok(false, "not supported: WeakSet");
