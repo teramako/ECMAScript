@@ -8,8 +8,8 @@
 <body>
 <header>
   <h1>ECMAScript 6th Syntax Grammar</h1>
-  <h2>6th Edition / Draft May 14, 2013</h2>
-  <p>この文章は <a href="http://wiki.ecmascript.org/lib/exe/fetch.php?id=harmony%3Aspecification_drafts&cache=cache&media=harmony:working_draft_ecma-262_edition_6_05-14-13rev15markup.pdf">working_draft_ecma-262_edition_6_05-14-13rev15markup.pdf</a> の構文部分の一部を抜き取り、編集したものです。<br/>
+  <h2>6th Edition / Draft September 27, 2013</h2>
+  <p>この文章は <a href="http://wiki.ecmascript.org/lib/exe/fetch.php?id=harmony%3Aspecification_drafts&cache=cache&media=harmony:working_draft_ecma-262_edition_6_09-27-13-rev19markup.pdf">working_draft_ecma-262_edition_6_09-27-13-rev19markup.pdf</a> の構文部分の一部を抜き取り、編集したものです。<br/>
   次期ECMAScriptのドラフトの最新版は<a href="http://wiki.ecmascript.org/doku.php?id=harmony:specification_drafts">harmony:specification_drafts [ES Wiki]</a>にあげられるはずです。</p>
 </header>
 
@@ -17,10 +17,10 @@
 <article>
 
 <!-- ==============================================================
-  Source Text
+  10. ECMAScript Language: Source Code
   ============================================================= -->
 <section>
-  <h2 id="6">Source Text</h2>
+  <h2 id="10">Source Code</h2>
   <pre>
 SourceCharacter:
   any Unicode character
@@ -29,10 +29,10 @@ SourceCharacter:
 
 
 <!-- ==============================================================
-  Lexical Conventions
+  11. ECMAScript Language: Lexical Grammar
   ============================================================= -->
 <section>
-  <h2 id="7">Lexical Conventions</h2>
+  <h2 id="11">Lexical Grammar</h2>
   <pre>
 InputElementDiv:
   WhiteSpace
@@ -59,9 +59,9 @@ InputElementTemplateTail:
   TemplateSubstitutionTail
   </pre>
   <section>
-    <h3 id="7.1">Unicode Format-Control Characters</h3>
+    <h3 id="11.1">Unicode Format-Control Characters</h3>
     <table>
-      <caption>Table 1: Format-Control Character Usage</caption>
+      <caption>Format-Control Character Usage</caption>
       <thead>
         <tr><th>Code Point</th><th>Name</th><th>Formal Name</th><th>Usage</th></tr>
       </thead>
@@ -78,9 +78,9 @@ InputElementTemplateTail:
   </section>
 
   <section>
-    <h3 id="7.2">White Space</h3>
+    <h3 id="11.2">White Space</h3>
     <table>
-      <caption>Table 2: Whitespace Characters</caption>
+      <caption>Whitespace Characters</caption>
       <thead>
         <tr><th>Code Point</th><th>Name</th><th>Formal Name</th></tr>
       </thead>
@@ -115,9 +115,9 @@ WhiteSpace:
   </section>
 
   <section>
-    <h3 id="7.3">Line Terminators</h3>
+    <h3 id="11.3">Line Terminators</h3>
     <table>
-      <caption>Table 3: Line Terminator Characters</caption>
+      <caption>Line Terminator Characters</caption>
       <thead>
         <tr>
           <th>Code Point</th>
@@ -165,7 +165,7 @@ LineTerminatorSequence:
   </section>
 
   <section>
-    <h3 id="7.4">Comments</h3>
+    <h3 id="11.4">Comments</h3>
     <pre>
 Comment:
   MultiLineComment
@@ -200,7 +200,7 @@ SingleLineCommentChar:
   </section>
 
   <section>
-    <h3 id="7.5">Tokens</h3>
+    <h3 id="11.5">Tokens</h3>
     <pre>
 Token:
   IdentifierName
@@ -215,10 +215,10 @@ Token:
   </section>
 
   <section>
-    <h3 id="7.6">Identifier Names and Identifiers</h3>
+    <h3 id="11.6">Names and Keywords</h3>
     <pre>
 Identifier:
-  IdentfierName <b>but not</b> ReservedWord
+  IdentifierName <b>but not</b> ReservedWord
 
 IdentifierName:
   IdentifierStart
@@ -246,7 +246,7 @@ UnicodeIDContinue:
     </pre>
 
     <section>
-      <h4 id="7.6.1">Reserved Words</h4>
+      <h4 id="11.6.2">Reserved Words</h4>
       <pre>
 ReservedWord:
   Keyword
@@ -256,40 +256,41 @@ ReservedWord:
       </pre>
 
       <section>
-        <h5 id="7.6.1.1">Keywords</h5>
+        <h5 id="11.6.2.1">Keywords</h5>
         <pre>
 Keyword: <b>one of</b>
-  <em class="k oneof">break delete import this</em>
-  <em class="k oneof">case do in throw</em>
-  <em class="k oneof">catch else instanceof try</em>
-  <em class="k oneof">class export let typeof</em>
-  <em class="k oneof">continue finally new var</em>
-  <em class="k oneof">const for return void</em>
-  <em class="k oneof">debugger function super while</em>
-  <em class="k oneof">default if switch with</em>
+  <em class="k oneof">break do instanceof typeof</em>
+  <em class="k oneof">case else let var</em>
+  <em class="k oneof">catch export new void</em>
+  <em class="k oneof">class finally return while</em>
+  <em class="k oneof">const for super with</em>
+  <em class="k oneof">continue function switch yield</em>
+  <em class="k oneof">debugger if this</em>
+  <em class="k oneof">default import throw</em>
+  <em class="k oneof">delete in try</em>
         </pre>
       </section>
 
       <section>
-        <h5 id="7.6.1.2">Future Reserved Words</h5>
+        <h5 id="11.6.2.2">Future Reserved Words</h5>
         <pre>
 FutureReservedWord: <b>one of</b>
   <em class="k oneof">enum extends</em>
         </pre>
         <p>The following tokens are also considered to be <code>FutureReservedWord</code> when they occure within strict mode code</p>
         <pre>
-<em class="k oneof">implements private public yield</em>
-<em class="k oneof">interface package protected static</em>
+<em class="k oneof">implements package protected static</em>
+<em class="k oneof">interface private public</em>
         </pre>
       </section>
     </section>
 
     <section>
-      <h3 id="7.7">Punctuators</h3>
+      <h3 id="11.7">Punctuators</h3>
       <pre>
 Punctuator: <b>one of</b>
-  <em class="p oneof">{ ( ) [ ]</em>
-  <em class="p oneof">. ; , &lt; &gt; &lt;=</em>
+  <em class="p oneof">{ ( ) [ ] .</em>
+  <em class="p oneof">... ; , &lt; &gt; &lt;=</em>
   <em class="p oneof">&gt;= == != === !==</em>
   <em class="p oneof">+ - * % ++ --</em>
   <em class="p oneof">&lt;&lt; &gt;&gt; &gt;&gt;&gt; &amp; | ^</em>
@@ -307,10 +308,10 @@ RightBracePunctuator:
 
 
     <section>
-      <h3 id="7.8">Literals</h3>
+      <h3 id="11.8">Literals</h3>
 
       <section>
-        <h4 id="7.8.1">Null Literals</h4>
+        <h4 id="11.8.1">Null Literals</h4>
         <pre>
 NullLiteral:
   <em class="k">null</em>
@@ -318,7 +319,7 @@ NullLiteral:
       </section>
 
       <section>
-        <h4 id="7.8.2">Boolean Literals</h4>
+        <h4 id="11.8.2">Boolean Literals</h4>
         <pre>
 BooleanLiteral:
   <em class="k">true</em>
@@ -327,7 +328,7 @@ BooleanLiteral:
       </section>
 
       <section>
-        <h4 id="7.8.3">Numeric Literals</h4>
+        <h4 id="11.8.3">Numeric Literals</h4>
         <pre>
 NumericLiteral:
   DecimalLiteral
@@ -366,17 +367,23 @@ SignedInteger:
   <em class="p">-</em> DecimalDigits
 
 BinaryIntegerLiteral:
-  <em class="p">0b</em> BinaryDegit
-  <em class="p">0B</em> BinaryDegit
-  BinaryIntegerLiteral BinaryDegit
+  <em class="p">0b</em> BinaryDigits
+  <em class="p">0B</em> BinaryDigits
 
-BinaryDegit: <b>one of</b>
+BinaryDigits:
+  BinaryDigit
+  BinaryDigits BinaryDigit
+
+BinaryDigit: <b>one of</b>
   <em class="oneof">0 1</em>
 
 OctalIntegerLiteral:
-  <em class="p">0o</em> OctalDigit
-  <em class="p">0O</em> OctalDigit
-  OctalIntegerLiteral OctalDigit
+  <em class="p">0o</em> OctalDigits
+  <em class="p">0O</em> OctalDigits
+
+OctalDigits:
+  OctalDigit
+  OctalDigits OctalDigit
 
 OctalDigit: <b>one of</b>
   <em class="oneof">0 1 2 3 4 5 6 7</em>
@@ -384,7 +391,6 @@ OctalDigit: <b>one of</b>
 HexIntegerLiteral:
   0x HexDigits
   0X HexDigits
-  HexIntegerLiteral HexDigit
 
 HexDigits:
   HexDigit
@@ -397,7 +403,7 @@ HexDigit: <b>one of</b>
       </section>
 
       <section>
-        <h3 id="7.8.4">String Literal</h3>
+        <h3 id="11.8.4">String Literal</h3>
         <pre>
 StringLiteral:
   <em class="p">"</em> DoubleStringCharacters<sub>opt</sub> <em class="p">"</em>
@@ -453,7 +459,7 @@ UnicodeEscapeSequence:
         </pre>
 
         <table>
-          <caption>Table 4: String Single Character Escape Sequences</caption>
+          <caption>String Single Character Escape Sequences</caption>
           <thead>
             <tr>
               <th>Escape Sequence</th>
@@ -514,7 +520,7 @@ UnicodeEscapeSequence:
       </section>
 
       <section>
-        <h3 id="7.8.5">Regular Expression Literals</h3>
+        <h3 id="11.8.5">Regular Expression Literals</h3>
         <pre>
 RegularExpressionLiteral:
   <em class="p">/</em> RegularExpressionBody <em class="p">/</em> RegularExpressionFlags
@@ -564,7 +570,7 @@ RegularExpressionFlags:
       </section>
 
       <section>
-        <h3 id="7.8.6">Template Literal Lexical Components</h3>
+        <h3 id="11.8.6">Template Literal Lexical Components</h3>
         <pre>
 Template:
   NoSubstitutionTemplate
@@ -590,10 +596,11 @@ TemplateCharacters:
   TemplateCharacter TemplateCharacters<sub>opt</sub>
 
 TemplateCharacter:
-  SourceCharacter <b>but not one of <em class="p">`</em> or <em class="p">\</em> or <em class="p">$</em></b>
+  SourceCharacter <b>but not one of <em class="p">`</em> or <em class="p">\</em> or <em class="p">$</em> or</b> LineTerminatorSequence
   <em class="p">$</em> <small>[lookahead &notin; <em class="p">{</em>]</small>
   <em class="p">\</em> EscapeSequence
   LineContinuation
+  LineTerminatorSequence
         </pre>
       </section>
     </section>
@@ -602,16 +609,16 @@ TemplateCharacter:
 
 
 <!-- ==============================================================
-  Expressions
+  12. ECMAScript Language: Expressions
   ============================================================= -->
 <section>
-  <h2 id="11">Expressions</h2>
+  <h2 id="12">Expressions</h2>
   <section>
-    <h3 id="11.1">Primary Expressions</h3>
+    <h3 id="12.1">Primary Expressions</h3>
     <pre>
 PrimaryExpression:
   <em class="k">this</em>
-  Identifier
+  IdentifierReference
   Literal
   ArrayInitialiser
   ObjectLiteral
@@ -639,7 +646,16 @@ ParenthesizedExpression:
     </section>
 
     <section>
-      <h4 id="11.1.3">Literals</h4>
+      <h4 id="12.1.2">Identifier Reference</h4>
+      <pre>
+IdentifierReference:
+  Identifier
+  <small>[Only match if not within the FunctionBody of a GeneratorMethod, GeneratorDeclaration or GeneratorExpression]</small> <em class="k">yield</em>
+      </pre>
+    </section>
+
+    <section>
+      <h4 id="12.1.3">Literals</h4>
       <pre>
 Literal:
   NullLiteral
@@ -653,7 +669,7 @@ ValueLiteral:
     </section>
 
     <section>
-      <h4 id="11.1.4">Array Initialiser</h4>
+      <h4 id="12.1.4">Array Initialiser</h4>
       <pre>
 ArrayInitialiser:
   ArrayLiteral
@@ -661,7 +677,7 @@ ArrayInitialiser:
       </pre>
 
       <section>
-        <h5 id="11.1.4.1">Array Literal</h5>
+        <h5 id="12.1.4.1">Array Literal</h5>
         <pre>
 ArrayLiteral:
   <em class="p">[</em> Elision<sub>opt</sub> <em class="p">]</em>
@@ -684,21 +700,18 @@ SpreadElement:
       </section>
 
       <section>
-        <h5 id="11.1.4.2">Array Comprehension</h5>
+        <h5 id="12.1.4.2">Array Comprehension</h5>
         <pre>
 ArrayComprehension:
   <em class="p">[</em> Comprehension <em class="p">]</em>
 
 Comprehension:
-  ComprehensionFor ComprehensionQualifierTail
+  ComprehensionFor ComprehensionTail
 
-ComprehensionQualifierTail:
+ComprehensionTail:
   AssignmentExpression
-  ComprehensionQualifier ComprehensionQualifierTail
-
-ComprehensionQualifier:
-  ComprehensionFor
-  ComprehensionIf
+  ComprehensionFor ComprehensionTail
+  ComprehensionIf ComprehensionTail
 
 ComprehensionFor:
   <em class="k">for</em> <em class="p">(</em> ForBinding <em class="k">of</em> AssignmentExpression <em class="p">)</em>
@@ -714,7 +727,7 @@ ForBinding:
     </section>
 
     <section>
-      <h4 id="11.1.5">Object Initialiser</h4>
+      <h4 id="12.1.5">Object Initialiser</h4>
       <pre>
 ObjectLiteral:
   <em class="p">{ }</em>
@@ -732,9 +745,16 @@ PropertyDefinition:
   MethodDefinition
 
 PropertyName:
+  LiteralPropertyName
+  ComputedPropertyName
+
+LiteralPropertyName:
   IdentifierName
   StringLiteral
   NumericLiteral
+
+ComputedPropertyName:
+  <em class="p">[</em> AssignmentExpression <em class="p">]</em>
 
 CoverInitialisedName:
   IdentifierName Initialiser
@@ -743,19 +763,18 @@ Initialiser:
   <em class="p">=</em> AssignmentExpression
       </pre>
     </section>
-  </section>
 
-  <section>
-    <h4 id="11.1.7">Generator Comprehensions</h4>
-    <pre>
+    <section>
+      <h4 id="12.1.7">Generator Comprehensions</h4>
+      <pre>
 GeneratorComprehension:
   <em class="p">(</em> Comprehension <em class="p">)</em>
-    </pre>
-  </section>
+      </pre>
+    </section>
 
-  <section>
-    <h4 id="11.1.9">Template Literals</h4>
-    <pre>
+    <section>
+      <h4 id="12.1.9">Template Literals</h4>
+      <pre>
 TemplateLiteral:
   NoSubstitutionTemplate
   TemplateHead Expression <small>[Lexical goal InputElementTemplateTail]</small> TemplateSpans
@@ -767,11 +786,12 @@ TemplateSpans:
 TemplateMiddleList:
   TemplateMiddle Expression
   TemplateMiddleList <small>[Lexical goal InputElementTemplateTail]</small> TemplateMiddle Expression
-    </pre>
+      </pre>
+    </section>
   </section>
 
   <section>
-    <h3 id="11.2">Left-Hand-Side Expressions</h3>
+    <h3 id="12.2">Left-Hand-Side Expressions</h3>
     <pre>
 MemberExpression:
   <small>[Lexical goal InputElementRegExp]</small> PrimaryExpression
@@ -812,7 +832,7 @@ LeftHandSideExpression:
   </section>
 
   <section>
-    <h3 id="11.3">Postfix Expressions</h3>
+    <h3 id="12.3">Postfix Expressions</h3>
     <pre>
 PostfixExpression:
   LeftHandSideExpression
@@ -822,7 +842,7 @@ PostfixExpression:
   </section>
 
   <section>
-    <h3 id="11.4">Unary Operators</h3>
+    <h3 id="12.4">Unary Operators</h3>
     <pre>
 UnaryExpression:
   PostfixExpression
@@ -839,7 +859,7 @@ UnaryExpression:
   </section>
 
   <section>
-    <h3 id="11.5">Multiplicative Operators</h3>
+    <h3 id="12.5">Multiplicative Operators</h3>
     <pre>
 MultiplicativeExpression:
   UnaryExpression
@@ -850,7 +870,7 @@ MultiplicativeExpression:
   </section>
 
   <section>
-    <h3 id="11.6">Additive Operators</h3>
+    <h3 id="12.6">Additive Operators</h3>
     <pre>
 AdditiveExpression:
   MultiplicativeExpression
@@ -860,7 +880,7 @@ AdditiveExpression:
   </section>
 
   <section>
-    <h3 id="11.7">Bitwise Shift Operators</h3>
+    <h3 id="12.7">Bitwise Shift Operators</h3>
     <pre>
 ShiftExpression:
   AdditiveExpression
@@ -871,7 +891,7 @@ ShiftExpression:
   </section>
 
   <section>
-    <h3 id="11.8">Relational Operators</h3>
+    <h3 id="12.8">Relational Operators</h3>
     <pre>
 RelationalExpression:
   ShiftExpression
@@ -897,7 +917,7 @@ RelationalExpressionNoIn:
   </section>
 
   <section>
-    <h3 id="11.9">Equality Operators</h3>
+    <h3 id="12.9">Equality Operators</h3>
     <pre>
 EqualityExpression:
   RelationalExpression
@@ -917,7 +937,7 @@ EqualityExpressionNoIn:
   </section>
 
   <section>
-    <h3 id="11.10">Binary Bitwise Operators</h3>
+    <h3 id="12.10">Binary Bitwise Operators</h3>
     <pre>
 BitwiseANDExpression:
   EqualityExpression
@@ -946,7 +966,7 @@ BitwiseORExpressionNoIn:
   </section>
 
   <section>
-    <h3 id="11.11">Binary Logical Operators</h3>
+    <h3 id="12.11">Binary Logical Operators</h3>
     <pre>
 LogicalANDExpression:
   BitwiseXORExpression
@@ -967,7 +987,7 @@ LogicalORExpressionNoIn:
   </section>
 
   <section>
-    <h3 id="11.12">Conditional Operator</h3>
+    <h3 id="12.12">Conditional Operator</h3>
     <pre>
 ConditionalExpression:
   LogicalORExpression
@@ -980,19 +1000,19 @@ ConditionalExpressionNoIn:
   </section>
 
   <section>
-    <h3 id="11.13">Assignment Operators</h3>
+    <h3 id="12.13">Assignment Operators</h3>
     <pre>
 AssignmentExpression:
   ConditionalExpression
-  YieldExpression
+  <small>[Only match if within the FunctionBody of a GeneratorMethod, GeneratorDeclaration or GeneratorExpression]</small> YieldExpression
   ArrowFunction
   LeftHandSideExpression <em class="p">=</em> AssignmentExpression
   LeftHandSideExpression AssignmentOperator AssignmentExpression
 
 AssignmentExpressionNoIn:
   ConditionalExpressionNoIn
-  YieldExpression
-  ArrowFunction
+  YieldExpressionNoIn
+  ArrowFunctionNoIn
   LeftHandSideExpression <em class="p">=</em> AssignmentExpressionNoIn
   LeftHandSideExpression AssignmentOperator AssignmentExpressionNoIn
 
@@ -1001,7 +1021,7 @@ AssignmentOperator: <b>one of</b>
   </pre>
 
     <section>
-      <h4 id="11.13.1">Destructuring Assingment</h4>
+      <h4 id="12.13.4">Destructuring Assingment</h4>
       <pre>
 AssignmentPattern:
   ObjectAssignmentPattern
@@ -1042,7 +1062,7 @@ DestructuringAssignmentTarget:
   </section>
 
   <section>
-    <h3 id="11.14">Comma Operator</h3>
+    <h3 id="12.14">Comma Operator</h3>
     <pre>
 Expression:
   AssignmentExpression
@@ -1055,10 +1075,10 @@ ExpressionNoIn:
   </section>
 </section>
 <!-- ==============================================================
-  Statements and Declarations
+  13. ECMAScript Language: Statements and Declarations
   ============================================================= -->
 <section>
-  <h2 id="12">Statements and Declarations</h2>
+  <h2 id="13">Statements and Declarations</h2>
   <pre>
 Statement:
   BlockStatement
@@ -1087,7 +1107,7 @@ BreakableStatement:
   SwitchStatement
   </pre>
   <section>
-    <h3 id="12.1">Block</h3>
+    <h3 id="13.1">Block</h3>
     <pre>
 BlockStatement:
   Block
@@ -1105,9 +1125,9 @@ StatementListItem:
     </pre>
   </section>
   <section>
-    <h3 id="12.2">Declarations and the Variable Statement</h3>
+    <h3 id="13.2">Declarations and the Variable Statement</h3>
     <section>
-      <h4 id="12.2.1">Let and Const Declarations</h4>
+      <h4 id="13.2.1">Let and Const Declarations</h4>
       <pre>
 LexicalDeclaration:
   LetOrConst BindingList <em class="p">;</em>
@@ -1136,10 +1156,9 @@ LexicalBindingNoIn:
   BindingPattern InitialiserNoIn
 
 BindingIdentifier:
+  <em class="k">default</em>
+  <em class="k">yield</em>
   Identifier
-
-Initialiser:
-  <em class="p">=</em> AssignmentExpression
 
 InitialiserNoIn:
   <em class="p">=</em> AssignmentExpressionNoIn
@@ -1147,7 +1166,7 @@ InitialiserNoIn:
     </section>
 
     <section>
-      <h4 id="12.2.2">Variable Statement</h4>
+      <h4 id="13.2.2">Variable Statement</h4>
       <pre>
 VariableStatement:
   <em class="k">var</em> VariableDeclarationList <em class="p">;</em>
@@ -1171,7 +1190,7 @@ VariableDeclarationNoIn:
     </section>
 
     <section>
-      <h4 id="12.2.4">Destructuring Binding Pattern</h4>
+      <h4 id="13.2.3">Destructuring Binding Pattern</h4>
       <pre>
 BindingPattern:
   ObjectBindingPattern
@@ -1213,7 +1232,7 @@ BindingRestElement:
   </section>
 
   <section>
-    <h3 id="12.3">Empty Statement</h3>
+    <h3 id="13.3">Empty Statement</h3>
     <pre>
 EmptyStatement:
   <em class="p">;</em>
@@ -1221,7 +1240,7 @@ EmptyStatement:
   </section>
 
   <section>
-    <h3 id="12.4">Expression Statement</h3>
+    <h3 id="13.4">Expression Statement</h3>
     <pre>
 ExpressionStatement:
   <small>[lookahead &notin; {<em class="p">{</em>, <em class="k">function</em>, <em class="k">class</em>}]</small> Expression <em class="p">;</em>
@@ -1232,7 +1251,7 @@ ExpressionStatement:
   </section>
 
   <section>
-    <h3 id="12.5">The <code>if</code> Statement</h3>
+    <h3 id="13.5">The <code>if</code> Statement</h3>
     <pre>
 IfStatement:
   <em class="k">if</em> <em class="p">(</em> Expression <em class="p">)</em> Statement <em class="k">else</em> Statement
@@ -1241,7 +1260,7 @@ IfStatement:
   </section>
 
   <section>
-    <h3 id="12.6">Iteration Statements</h3>
+    <h3 id="13.6">Iteration Statements</h3>
     <pre>
 IterationStatement:
   <em class="k">do</em> Statement <em class="k">while</em> <em class="p">(</em> Expression <em class="p">)</em>
@@ -1262,7 +1281,7 @@ ForDeclaration:
   </section>
 
   <section>
-    <h3 id="12.7">The <code>continue</code> Statement</h3>
+    <h3 id="13.7">The <code>continue</code> Statement</h3>
     <pre>
 ContinueStatement:
   <em class="k">continue</em> <em class="p">;</em>
@@ -1271,7 +1290,7 @@ ContinueStatement:
   </section>
 
   <section>
-    <h3 id="12.8">The <code>break</code> Statement</h3>
+    <h3 id="13.8">The <code>break</code> Statement</h3>
     <pre>
 BreakStatement:
   <em class="k">break</em> <em class="p">;</em>
@@ -1280,7 +1299,7 @@ BreakStatement:
   </section>
 
   <section>
-    <h3 id="12.9">The <code>return</code> Statement</h3>
+    <h3 id="13.9">The <code>return</code> Statement</h3>
     <pre>
 ReturnStatement:
   <em class="k">return</em> <em class="p">;</em>
@@ -1289,7 +1308,7 @@ ReturnStatement:
   </section>
 
   <section>
-    <h3 id="12.10">The <code>with</code> Statement</h3>
+    <h3 id="13.10">The <code>with</code> Statement</h3>
     <pre>
 WithStatement:
   <em class="k">with</em> <em class="p">(</em> Expression <em class="p">)</em> Statement
@@ -1300,7 +1319,7 @@ WithStatement:
   </section>
 
   <section>
-    <h3 id="12.11">The <code>switch</code> Statement</h3>
+    <h3 id="13.11">The <code>switch</code> Statement</h3>
     <pre>
 SwitchStatement:
   <em class="k">switch</em> <em class="p">(</em> Expression <em class="p">)</em> CaseBlock
@@ -1322,7 +1341,7 @@ DefaultClause:
   </section>
 
   <section>
-    <h3 id="12.12">Labelled Statements</h3>
+    <h3 id="13.12">Labelled Statements</h3>
     <pre>
 LabelledStatement:
   Identifier <em class="p">:</em> Statement
@@ -1330,7 +1349,7 @@ LabelledStatement:
   </section>
 
   <section>
-    <h3 id="12.13">The <code>throw</code> Statement</h3>
+    <h3 id="13.13">The <code>throw</code> Statement</h3>
     <pre>
 ThrowStatement:
   <em class="k">throw</em> <small>[no LineTerminator here]</small> Expression <em class="p">;</em>
@@ -1338,7 +1357,7 @@ ThrowStatement:
   </section>
 
   <section>
-    <h3 id="12.14">The <code>try</code> Statement</h3>
+    <h3 id="13.14">The <code>try</code> Statement</h3>
     <pre>
 TryStatement:
   <em class="k">try</em> Block Catch
@@ -1358,7 +1377,7 @@ CatchParameter:
   </section>
 
   <section>
-    <h3 id="12.15">The <code>debugger</code> Statement</h3>
+    <h3 id="13.15">The <code>debugger</code> Statement</h3>
     <pre>
 DebuggerStatement:
   <em class="k">debugger</em> <em class="p">;</em>
@@ -1368,12 +1387,12 @@ DebuggerStatement:
 
 
 <!-- ==============================================================
-  Function Declaration
+  14. ECMAScript Language: Functions and Classes
   ============================================================= -->
 <section>
-  <h2 id="13">Function and Generators</h2>
+  <h2 id="14">Functions and Classes</h2>
   <section>
-    <h3 id="13.1">Function Definitions</h3>
+    <h3 id="14.1">Function Definitions</h3>
     <pre>
 FunctionDeclaration:
   <em class="k">function</em> BindingIdentifier <em class="p">(</em> FormalParameters <em class="p">)</em> <em class="p">{</em> FunctionBody <em class="p">}</em>
@@ -1412,10 +1431,13 @@ FunctionStatementList:
   </section>
 
   <section>
-    <h2 id="13.2">Arrow Function Definitions</h2>
+    <h2 id="14.2">Arrow Function Definitions</h2>
     <pre>
 ArrowFunction:
   ArrowParameters <em class="p">=></em> ConciseBody
+
+ArrowFunctionNoIn:
+  ArrowParameters <em class="p">=></em> ConciseBodyNoIn
 
 ArrowParameters:
   BindingIdentifier
@@ -1424,11 +1446,15 @@ ArrowParameters:
 ConciseBody:
   <small>[lookahead &notin; { <em class="p">{</em> }]</small> AssignmentExpression
   <em class="p">{</em> FunctionBody <em class="p">}</em>
+
+ConciseBodyNoIn:
+  <small>[lookahead &notin; { <em class="p">{</em> }]</small> AssignmentExpressionNoIn
+  <em class="p">{</em> FunctionBody <em class="p">}</em>
     </pre>
   </section>
 
   <section>
-    <h2 id="13.3">Method Definitions</h2>
+    <h2 id="14.3">Method Definitions</h2>
     <pre>
 MethodDefinition:
   PropertyName <em class="p">(</em> StrictFormalParameters <em class="p">) {</em> FunctionBody <em class="p">}</em>
@@ -1443,7 +1469,7 @@ PropertySetParameterList:
   </section>
 
   <section>
-    <h3 id="13.4">Generator Function Definitions</h3>
+    <h3 id="14.4">Generator Function Definitions</h3>
     <pre>
 GeneratorMethod:
   <em class="p">*</em> PropertyName <em class="p">(</em> StrictFormalParameters <em class="p">) {</em> FunctionBody <em class="p">}</em>
@@ -1455,15 +1481,19 @@ GeneratorExpression:
   <em class="k">function</em> <em class="p">*</em> BindingIdentifier<sub>opt</sub> <em class="p">(</em> FormalParameters <em class="p">) {</em> FunctionBody <em class="p">}</em>
 
 YieldExpression:
-  <em class="k">yield</em> YieldDelegator<sub>opt</sub> <small>[Lexical goal InputElementRegExp]</small> AssignmentExpression
+  <em class="k">yield</em>
+  <em class="k">yield</em> <small>[no LineTerminator here]</small> <small>[Lexical goal InputElementRegExp]</small> AssignmentExpression
+  <em class="k">yield</em> <em class="p">*</em> <small>[Lexical goal InputElementRegExp]</small> AssignmentExpression
 
-YieldDelegator:
-  <em class="p">*</em>
+YieldExpressionNoIn:
+  <em class="k">yield</em>
+  <em class="k">yield</em> <small>[no LineTerminator here]</small> <small>[Lexical goal InputElementRegExp]</small> AssignmentExpressionNoIn
+  <em class="k">yield</em> <em class="p">*</em> <small>[Lexical goal InputElementRegExp]</small> AssignmentExpressionNoIn
     </pre>
   </section>
 
   <section>
-    <h3 id="13.5">Class Definitions</h3>
+    <h3 id="14.5">Class Definitions</h3>
     <pre>
 ClassDeclaration:
   <em class="k">class</em> BindingIdentifier ClassTail
@@ -1497,28 +1527,102 @@ ClassElement:
 
 
 <!-- ==============================================================
-  Program
+  15. ECMAScript Language: Modules and Scripts
   ============================================================= -->
 <section>
-  <h2 id="14">Scripts and Modules</h2>
+  <h2 id="15">Modules and Scripts</h2>
 
   <section>
-    <h3 id="14.1">Script</h3>
+    <h3 id="15.1">Modules</h3>
+    <pre>
+Module:
+  ModuleBody<sub>opt</sub>
+
+ModuleBody:
+  ModuleItemList
+
+ModuleItemList:
+  ModuleItem
+  ModuleItemList ModuleItem
+
+ModuleItem:
+  ExportDeclaration
+  ScriptItem
+
+ScriptItem:
+  ModuleDeclaration
+  ImportDeclaration
+  StatementListItem
+    </pre>
+
+    <section>
+      <h4 id="15.1.1">Imports</h4>
+      <pre>
+ModuleDeclaration:
+  <em class="k">module</em> <small>[no LineTerminator here]</small> BindingIdentifier FromClause <em class="p">;</em>
+
+ImportDeclaration:
+  <em class="k">import</em> ImportClause FromClause <em class="p">;</em>
+  <em class="k">import</em> ModuleSpecifier <em class="p">;</em>
+
+FromClause:
+  <em class="k">from</em> ModuleSpecifier
+
+ImportClause:
+  BindingIdentifier
+  <em class="p">{ }</em>
+  <em class="p">{</em> ImportsList <em class="p">}</em>
+  <em class="p">{</em> ImportsList <em class="p">, }</em>
+
+ImportsList:
+  ImportSpecifier
+  ImportsList <em class="p">,</em> ImportSpecifier
+
+ImportSpecifier:
+  BindingIdentifier
+  IdentifierName <em class="k">as</em> BindingIdentifier
+
+ModuleSpecifier:
+  StringLiteral
+      </pre>
+    </section>
+
+    <section>
+      <h4 id="15.1.2">Exports</h4>
+      <pre>
+ExportDeclaration:
+  <em class="k">export</em> <em class="p">*</em> FromClause<sub>opt</sub> <em class="p">;</em>
+  <em class="k">export</em> ExportsClause FromClause<sub>opt</sub> <em class="p">;</em>
+  <em class="k">export</em> VariableStatement <em class="p">;</em>
+  <em class="k">export</em> Declaration <em class="p">;</em>
+  <em class="k">export</em> BindingList <em class="p">;</em>
+
+ExportsClause:
+  <em class="p">{ }</em>
+  <em class="p">{</em> ExportsList <em class="p">}</em>
+  <em class="p">{</em> ExportsList <em class="p">, }</em>
+
+ExportsList:
+  ExportSpecifier
+  ExportsList <em class="p">,</em> ExportSpecifier
+
+ExportSpecifier:
+  IdentifierReference
+  IdentifierReference <em class="k">as</em> IdentifierName
+      </pre>
+  </section>
+  <section>
+    <h3 id="15.2">Scripts</h3>
     <pre>
 Script:
   ScriptBody<sub>opt</sub>
 
 ScriptBody:
-  OuterStatementList
+  ScriptItemList
 
-OuterStatementList:
-  OuterItem
-  OuterStatementList OuterItem
-
-OuterItem:
-  ModuleDeclaration
-  ImportDeclaration
-  StatementListItem
+ScriptItemList:
+  ScriptItem
+  ScriptItemList ScriptItem
     </pre>
   </section>
 </section>
@@ -1531,107 +1635,118 @@ OuterItem:
     <datalist id="syntaxName"></datalist>
   </form>
   <ul>
-    <li><a href="#6">6 Source Text</a></li>
-    <li><a href="#7">7 Lexical Conventions</a>
+    <li><a href="#10">10 Source Code</a></li>
+    <li><a href="#11">11 Lexical Grammar</a>
       <ul>
-        <li><a href="#7.1">7.1 Unicode Format-Control Characters</a></li>
-        <li><a href="#7.2">7.2 White Space</a></li>
-        <li><a href="#7.3">7.3 Line Terminators</a></li>
-        <li><a href="#7.4">7.4 Comments</a></li>
-        <li><a href="#7.5">7.5 Tokens</a></li>
-        <li><a href="#7.6">7.6 Identifier Names and Identifiers</a>
+        <li><a href="#11.1">11.1 Unicode Format-Control Characters</a></li>
+        <li><a href="#11.2">11.2 White Space</a></li>
+        <li><a href="#11.3">11.3 Line Terminators</a></li>
+        <li><a href="#11.4">11.4 Comments</a></li>
+        <li><a href="#11.5">11.5 Tokens</a></li>
+        <li><a href="#11.6">11.6 Names and Keywords</a>
           <ul>
-            <li><a href="#7.6.1">7.6.1 Reserved Words</a>
+            <li><a href="#11.6.2">11.6.2 Reserved Words</a>
               <ul>
-                <li><a href="7.6.1.1">7.6.1.1 Keywords</a></li>
-                <li><a href="7.6.1.2">7.6.1.2 Future Reserved Words</a></li>
+                <li><a href="11.6.2.1">11.6.2.1 Keywords</a></li>
+                <li><a href="11.6.2.2">11.6.2.2 Future Reserved Words</a></li>
               </ul>
             </li>
           </ul>
         </li>
-        <li><a href="#7.7">7.7 Punctuators</a></li>
-        <li><a href="#7.8">7.8 Literals</a>
+        <li><a href="#11.7">11.7 Punctuators</a></li>
+        <li><a href="#11.8">11.8 Literals</a>
           <ul>
-            <li><a href="#7.8.1">7.8.1 Null Literals</a></li>
-            <li><a href="#7.8.2">7.8.2 Boolean Literals</a></li>
-            <li><a href="#7.8.3">7.8.3 Numeric Literals</a></li>
-            <li><a href="#7.8.4">7.8.4 String Literal</a></li>
-            <li><a href="#7.8.5">7.8.5 Regular Expression Literals</a></li>
-            <li><a href="#7.8.6">7.8.6 Template Literal Lexical Components</a></li>
+            <li><a href="#11.8.1">11.8.1 Null Literals</a></li>
+            <li><a href="#11.8.2">11.8.2 Boolean Literals</a></li>
+            <li><a href="#11.8.3">11.8.3 Numeric Literals</a></li>
+            <li><a href="#11.8.4">11.8.4 String Literal</a></li>
+            <li><a href="#11.8.5">11.8.5 Regular Expression Literals</a></li>
+            <li><a href="#11.8.6">11.8.6 Template Literal Lexical Components</a></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li><a href="#11">11 Expressions</a>
+    <li><a href="#12">12 Expressions</a>
       <ul>
-        <li><a href="#11.1">11.1 Primary Expressions</a>
+        <li><a href="#12.1">12.1 Primary Expressions</a>
           <ul>
-            <li><a href="#11.1.3">11.1.3 Literals</a>
-            <li><a href="#11.1.4">11.1.4 Array Initialiser</a>
+						<li><a href="#12.1.2">12.1.2 Identifier Reference</a></li>
+            <li><a href="#12.1.3">12.1.3 Literals</a>
+            <li><a href="#12.1.4">12.1.4 Array Initialiser</a>
               <ul>
-                <li><a href="#11.1.4.1">11.1.4.1 Array Literal</a></li>
-                <li><a href="#11.1.4.2">11.1.4.2 Array Comprehension</a></li>
+                <li><a href="#12.1.4.1">12.1.4.1 Array Literal</a></li>
+                <li><a href="#12.1.4.2">12.1.4.2 Array Comprehension</a></li>
               </ul>
             </li>
-            <li><a href="#11.1.5">11.1.5 Object Initialiser</a></li>
-            <li><a href="#11.1.7">11.1.7 Generator Comprehensions</a></li>
-            <li><a href="#11.1.9">11.1.9 Template Literals</a></li>
+            <li><a href="#12.1.5">12.1.5 Object Initialiser</a></li>
+            <li><a href="#12.1.7">12.1.7 Generator Comprehensions</a></li>
+            <li><a href="#12.1.9">12.1.9 Template Literals</a></li>
           </ul>
         </li>
-        <li><a href="#11.2">11.2 Left-Hand-Side Expressions</a></li>
-        <li><a href="#11.3">11.3 Postfix Expressions</a></li>
-        <li><a href="#11.4">11.4 Unary Operators</a></li>
-        <li><a href="#11.5">11.5 Multiplicative Operators</a></li>
-        <li><a href="#11.6">11.6 Additive Operators</a></li>
-        <li><a href="#11.7">11.7 Bitwise Shift Operators</a></li>
-        <li><a href="#11.8">11.8 Relational Operators</a></li>
-        <li><a href="#11.9">11.9 Equality Operators</a></li>
-        <li><a href="#11.10">11.10 Binaly Bitwise Operators</a></li>
-        <li><a href="#11.11">11.11 Binaly Logical Operators</a></li>
-        <li><a href="#11.12">11.12 Conditional Operator</a></li>
-        <li><a href="#11.13">11.13 Assignment Operators</a>
+        <li><a href="#12.2">12.2 Left-Hand-Side Expressions</a></li>
+        <li><a href="#12.3">12.3 Postfix Expressions</a></li>
+        <li><a href="#12.4">12.4 Unary Operators</a></li>
+        <li><a href="#12.5">12.5 Multiplicative Operators</a></li>
+        <li><a href="#12.6">12.6 Additive Operators</a></li>
+        <li><a href="#12.7">12.7 Bitwise Shift Operators</a></li>
+        <li><a href="#12.8">12.8 Relational Operators</a></li>
+        <li><a href="#12.9">12.9 Equality Operators</a></li>
+        <li><a href="#12.10">12.10 Binaly Bitwise Operators</a></li>
+        <li><a href="#12.11">12.11 Binaly Logical Operators</a></li>
+        <li><a href="#12.12">12.12 Conditional Operator</a></li>
+        <li><a href="#12.13">12.13 Assignment Operators</a>
           <ul>
-            <li><a href="#11.13.1">11.13.1 Destructuring Assingment</a></li>
+            <li><a href="#12.13.4">12.13.4 Destructuring Assingment</a></li>
           </ul>
         </li>
-        <li><a href="#11.14">11.14 Comma Operator</a></li>
+        <li><a href="#12.14">12.14 Comma Operator</a></li>
       </ul>
     </li>
-    <li><a href="#12">12 Statements and Declarations</a>
+    <li><a href="#13">13 Statements and Declarations</a>
       <ul>
-        <li><a href="#12.1">12.1 Block</a></li>
-        <li><a href="#12.2">12.2 Declarations and the variable Statement</a>
+        <li><a href="#13.1">13.1 Block</a></li>
+        <li><a href="#13.2">13.2 Declarations and the variable Statement</a>
           <ul>
-            <li><a href="#12.2.1">12.2.1 Let and Const Declarations</a></li>
-            <li><a href="#12.2.2">12.2.2 Variable Statement</a></li>
-            <li><a href="#12.2.4">12.2.4 Destructuring Binding Pattern</a></li>
+            <li><a href="#13.2.1">13.2.1 Let and Const Declarations</a></li>
+            <li><a href="#13.2.2">13.2.2 Variable Statement</a></li>
+            <li><a href="#13.2.3">13.2.3 Destructuring Binding Pattern</a></li>
           </ul>
         </li>
-        <li><a href="#12.3">12.3 Empty Statement</a></li>
-        <li><a href="#12.4">12.4 Expression Statement</a></li>
-        <li><a href="#12.5">12.5 The if Statement</a></li>
-        <li><a href="#12.6">12.6 Iteration Statements</a></li>
-        <li><a href="#12.7">12.7 The continue Statement</a></li>
-        <li><a href="#12.8">12.8 The break Statement</a></li>
-        <li><a href="#12.9">12.9 The return Statement</a></li>
-        <li><a href="#12.10">12.10 The with Statement</a></li>
-        <li><a href="#12.11">12.11 The switch Statement</a></li>
-        <li><a href="#12.12">12.12 Labelled Statement</a></li>
-        <li><a href="#12.13">12.13 The throw Statement</a></li>
-        <li><a href="#12.14">12.14 The try Statement</a></li>
-        <li><a href="#12.15">12.15 The debugger Statement</a></li>
+        <li><a href="#13.3">13.3 Empty Statement</a></li>
+        <li><a href="#13.4">13.4 Expression Statement</a></li>
+        <li><a href="#13.5">13.5 The if Statement</a></li>
+        <li><a href="#13.6">13.6 Iteration Statements</a></li>
+        <li><a href="#13.7">13.7 The continue Statement</a></li>
+        <li><a href="#13.8">13.8 The break Statement</a></li>
+        <li><a href="#13.9">13.9 The return Statement</a></li>
+        <li><a href="#13.10">13.10 The with Statement</a></li>
+        <li><a href="#13.11">13.11 The switch Statement</a></li>
+        <li><a href="#13.12">13.12 Labelled Statement</a></li>
+        <li><a href="#13.13">13.13 The throw Statement</a></li>
+        <li><a href="#13.14">13.14 The try Statement</a></li>
+        <li><a href="#13.15">13.15 The debugger Statement</a></li>
       </ul>
     </li>
-    <li><a href="#13">13 Function and Generators</a>
+    <li><a href="#14">14 Function and Classes</a>
       <ul>
-        <li><a href="#13.1">13.1 Function Definitions</a></li>
-        <li><a href="#13.2">13.2 Arrow Function Definitions</a></li>
-        <li><a href="#13.3">13.3 Method Definitions</a></li>
-        <li><a href="#13.4">13.4 Generator Function Definitions</a></li>
-        <li><a href="#13.5">13.5 Class Definitions</a></li>
+        <li><a href="#14.1">14.1 Function Definitions</a></li>
+        <li><a href="#14.2">14.2 Arrow Function Definitions</a></li>
+        <li><a href="#14.3">14.3 Method Definitions</a></li>
+        <li><a href="#14.4">14.4 Generator Function Definitions</a></li>
+        <li><a href="#14.5">14.5 Class Definitions</a></li>
       </ul>
     </li>
-    <li><a href="#14">14 Scripts and Modules</a></li>
+    <li><a href="#15">15 Modules and Scripts</a>
+			<ul>
+				<li><a href="#15.1">15.1 Modules</a>
+					<ul>
+						<li><a href="#15.1.1">15.1.1 Imports</a></li>
+						<li><a href="#15.1.2">15.1.2 Exports</a></li>
+					</ul>
+				</li>
+				<li><a href="#15.2">15.2 Scripts</a></li>
+			</ul>
+		</li>
   </ul>
 </nav>
 
