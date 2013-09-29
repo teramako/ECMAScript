@@ -5,7 +5,7 @@
   // ---------------------------------------------------------------------------
   module("Syntax Grammar");
 
-  test("07.8.3 Numeric Literals", function () {
+  test("11.8.3 Numeric Literals", function () {
     ['0b0', '0B0', '0o0', '0O0'].forEach(function (literal) {
       try {
         var res = eval(literal);
@@ -16,7 +16,7 @@
     });
   });
 
-  test("11.1.4.1 spread array(...) operator", function () {
+  test("12.1.5.1 spread array(...) operator", function () {
     var code = '[...[1,2,3]].join("")';
     try {
       var res = eval(code);
@@ -26,7 +26,7 @@
     }
   });
 
-  test("11.1.4.2 Array Comprehension", function () {
+  test("12.1.5.2 Array Comprehension", function () {
     var list = ["a", "b", "c"];
     var newCode = '[for (i in list) list[i]]',
         oldCode = '[list[i] for (i in list)]';
@@ -45,7 +45,7 @@
     }
   });
 
-  test("11.1.7 Generator Comprehension", function () {
+  test("12.1.8 Generator Comprehension", function () {
     var list = ["a", "b", "c"];
     var newCode = '(for (i in list) list[i])',
         oldCode = '(list[i] for (i in list))';
@@ -65,7 +65,7 @@
     }
   });
 
-  test("11.1.9 Template Literal(`...`)", function () {
+  test("12.1.10 Template Literal(`...`)", function () {
     var str = "OK";
     var code = '`result is $(str).`';
     try {
@@ -76,7 +76,7 @@
     }
   });
 
-  test("11.2 spread call(...) operator", function () {
+  test("12.2 spread call(...) operator", function () {
     var code = "Math.max(...[1,2,3])";
     try {
       var res = eval(code);
@@ -86,7 +86,7 @@
     }
   });
 
-  test("11.13.1 Array Destructing Assignment", function () {
+  test("12.13.3 Array Destructing Assignment", function () {
     var code1 = 'var [ a, b ] = ["A","B","C"]',
         code2 = 'var [ a, b, ...c] = ["A","B","C","D"]';
     try {
@@ -104,7 +104,7 @@
     }
   });
 
-  test("11.13.1 Object Destructing Assignment", function () {
+  test("12.13.3 Object Destructing Assignment", function () {
     var code1 = 'var { a, b } = { a: "A", b: "B" }',
         code2 = 'var { a: a1, b: b1 } = { a: "A", b: "B" }';
     try {
@@ -122,7 +122,7 @@
     }
   });
 
-  test("12.2.1 const", function () {
+  test("13.3.1 const", function () {
     "use strict";
     try {
       var code = 'const CONST = "CONST"; CONST;';
@@ -141,7 +141,7 @@
     }
   });
 
-  test("12.2.1 let", function () {
+  test("13.3.1 let", function () {
     "use strict";
     try {
       var code = 'let letValue = 10; letValue;';
@@ -153,7 +153,7 @@
     ok(eval('let value = 10; { let value = 20; } value === 10;'), "block scope");
   });
 
-  test("12.6 for-of", function () {
+  test("13.7 for-of", function () {
     var list = ["a", "b", "c"];
     var code = 'var res=[]; for (var item of list){res.push(item);} res;';
     try {
@@ -165,7 +165,7 @@
     }
   });
 
-  test("13.1 function rest parameter", function () {
+  test("14.1 function rest parameter", function () {
     try {
       var func = eval('(function(a, ...args){ return args.join(""); })');
     } catch(e){
@@ -176,7 +176,7 @@
     strictEqual(func('a','b','c'), 'bc', 'func("a", "b", "c")');
   });
 
-  test("13.2 Arrow Function", function () {
+  test("14.2 Arrow Function", function () {
     var code1 = '() => "OK";',
         code2 = '() => { return "OK" };',
         code3 = 'arg => typeof arg;';
@@ -194,7 +194,7 @@
     throws(function(){ new f; }, "Cannot call [[Construct]]");
   });
 
-  test("13.3 Method Defnition", function () {
+  test("14.3 Method Defnition", function () {
     var code1 = '({ m () { return "OK"; } })';
     try {
       var res = eval(code1);
@@ -205,7 +205,7 @@
     }
   });
 
-  test("13.4 Generator (yield)", function () {
+  test("14.4 Generator (yield)", function () {
     var newCode1 = '(function * foo(){ yield 5; })',
         newCode2 = '(function * foo(){ yield * 5; })',
         oldCode = '(function foo(){ yield 5; })';
@@ -230,7 +230,7 @@
     }
   });
 
-  test("13.5 Class Definition", function () {
+  test("14.5 Class Definition", function () {
     var code = "class Foo {}";
     try {
       var res = eval(code);
@@ -240,7 +240,7 @@
     }
   });
 
-  test("function default parameter", function() {
+  test("14.1 function default parameter", function() {
     try {
       var func = eval('(function(arg = "OK"){ return arg; })');
     } catch(e){
@@ -252,7 +252,7 @@
     strictEqual(func("FOO"), "FOO", "specify parameter");
   });
 
-  test("module and export", function () {
+  test("15.1 module and export", function () {
     var code1 = 'module "foo" { }',
         code2 = 'module "bar" { export var b = "OK" }';
     try {
