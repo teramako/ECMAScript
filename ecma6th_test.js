@@ -311,10 +311,10 @@
     })
   });
 
-  test("15.03 Function", function () {
+  test("19.2 Function", function () {
     strictEqual(Function.length, 1, "Function.lenght");
     strictEqual(Function.prototype.constructor, Function, "Function.prototype.constructor");
-    ["toString", "apply", "call", "bind"].forEach(function(prop) {
+    ["apply", "bind", "call", "toString"].forEach(function(prop) {
       ok(typeof Function.prototype[prop] === "function", "Function.prototype." + prop);
     });
   });
