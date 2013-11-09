@@ -292,20 +292,20 @@
     }
   }
 
-  test("15.02 Object", function () {
+  test("19.1 Object", function () {
     [
-      "getPrototypeOf", "getOwnPropertyDescriptor", "getOwnPropertyNames", "create",
-      "defineProperty", "defineProperties", "seal", "freeze", "preventExtensions", "isSealed",
-      "isFrozen", "isExtensible", "keys", "getOwnPropertyKeys", "is", "assign", "mixin",
-      "setPrototypeOf",
+      "assign", "create", "defineProperties", "defineProperty", "freeze",
+      "getOwnPropertyDescriptor", "getOwnPropertyNames", "getOwnPropertySymbols",
+      "getPrototypeOf", "is", "isExtensible", "isFrozen", "isSealed", "keys",
+      "mixin", "preventExtensions", "seal", "setPrototypeOf"
     ].forEach(function(prop) {
       ok(typeof Object[prop] === "function", "Object." + prop);
     })
 
     strictEqual(Object.prototype.constructor, Object, "Object.prototype.constructor");
     [
-      "toString", "toLocaleString", "valueOf", "hasOwnProperty", "isPrototypeOf",
-      "propertyIsEnumerable"
+      "hasOwnProperty", "isPrototypeOf", "propertyIsEnumerable", "toLocaleString",
+      "toString", "valueOf"
     ].forEach(function(prop) {
       ok(typeof Object.prototype[prop] === "function", "Object.prototype." + prop);
     })
