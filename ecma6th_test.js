@@ -418,10 +418,10 @@
     })
   });
 
-  test("15.10 RegExp", function () {
+  test("21.2 RegExp", function () {
     strictEqual(RegExp.prototype.constructor, RegExp, "RegExp.prototype.constructor");
     var reg = /foo/;
-    ["exec", "toString", "match", "replace", "search", "split", "test"].forEach(function(prop) {
+    ["exec", "match", "replace", "search", "split", "test", "toString"].forEach(function(prop) {
       ok(typeof RegExp.prototype[prop] === "function", "RegExp.prototype." + prop);
     });
     allOK("reg.global", [
