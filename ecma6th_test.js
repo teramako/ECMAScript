@@ -384,19 +384,20 @@
     });
   });
 
-  test("15.08 Math", function () {
+  test("20.2 Math", function () {
     ok(Math.E       === 2.7182818284590452354, "Math.E");
     ok(Math.LN10    === 2.302585092994046, "Math.LN10");
+    ok(Math.LOG10E  === 0.4342944819032518, "Math.LOG10E");
     ok(Math.LN2     === 0.6931471805599453, "Math.LN2");
     ok(Math.LOG2E   === 1.4426950408889634, "Math.LOG2E");
-    ok(Math.LOG10E  === 0.4342944819032518, "Math.LOG10E");
     ok(Math.PI      === 3.1415926535897932, "Math.PI");
     ok(Math.SQRT1_2 === 0.7071067811865476, "Math.SQRT1_2");
     ok(Math.SQRT2   === 1.4142135623730951, "Math.SQRT2");
     [
-      "abs", "acos", "asin", "atan", "atan2", "ceil", "cos", "exp", "floor", "log", "max", "min", "pow",
-      "random", "round", "sin", "sqrt", "tan", "log10", "log2", "log1p", "expm1", "cosh", "sinh", "tanh",
-      "acosh", "asinh", "atanh", "hypot", "trunc", "sign", "cbrt", "imul",
+      "abs", "acos", "acosh", "asin", "asinh", "atan", "atanh", "atan2", "cbrt", "cell",
+      "cos", "cosh", "exp", "expm1", "floor", "fround", "hypot", "imul", "log", "log1p",
+      "log10", "log2", "max", "min", "pow", "random", "round", "sign", "sin", "sinh",
+      "sqrt", "tan", "tanh", "trunc"
     ].forEach(function(prop) {
       ok(typeof Math[prop] === "function", "Math." + prop);
     });
