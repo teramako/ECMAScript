@@ -634,6 +634,44 @@
     ]);
   });
 
+  test("25.2 GeneratorFunction", function () {
+    var code = '(function * gene(){ yield 1; })', generatorFunc;
+    try {
+      generatorFunc = eval(code);
+    } catch (e) {
+      ok(false, "not supported: Generator Object");
+      return;
+    }
+    var GeneratorFunction = generatorFunc.constructor;
+    ok(GeneratorFunction.length === 1, "GeneratorFunction.length === 1");
+    hasOwn(GeneratorFunction.prototype, "prototype", "GeneratorFunction.prototype does'nt have \"prototype\" property");
+
+    var generator2 = new GeneratorFunction("yield 2");
+    ok(generator2 instanceof Function, "new Generator() is Function isntance");
+  });
+
+  test("25.3 Generator", function () {
+    var code = '(function * gene(){ yield 1; yield 2; })', generatorFunc;
+    try {
+      generatorFunc = eval(code);
+    } catch (e) {
+      ok(false, "not supported: Generator Object");
+      return;
+    }
+    ["next", "throw"].forEach(function (prop) {
+      ok(typeof generatorFunc.prototype[prop] === "function", "Generator.prototype." + prop);
+    });
+
+    var g = generatorFunc(),
+        v1, v2, v3;
+    v1 = g.next();
+    ok(v1.done === false && v1.value === 1, "g.next() => { done: false, value: 1 }");
+    v2 = g.next();
+    ok(v2.done === false && v2.value === 2, "g.next() => { done: false, value: 2 }");
+    v3 = g.next();
+    ok(v3.done === true, "g.next() => { done: true }");
+  });
+
   test("15.18.1 Reflect", function () {
     if (typeof Reflect !== "undefined") {
       [
@@ -668,20 +706,6 @@
     } else {
       ok(false, "not supported: Proxy");
     }
-  });
-
-  test("15.19.4 Generator Objects", function () {
-    var code = '(function * foo(){ yield 5; }())', res;
-    try {
-      res = eval(code);
-    } catch (e) {
-      ok(false, "not supported: Generator Object");
-      return;
-    }
-
-    var generator = res.constructor;
-    ok(typeof generator.prototype.next === "function", "Generator.prototype.next");
-    ok(typeof generator.prototype.throw === "function", "Generator.prototype.throw");
   });
 
 })(this);
