@@ -319,31 +319,6 @@
     });
   });
 
-  test("15.04 Array", function () {
-    allOK("Array.isArray", [
-      function(){ return typeof Array.isArray === "function";},
-      function(){ return Array.isArray([]); }
-    ]);
-    allOK("Array.of", [
-      function(){ return typeof Array.of === "function"; },
-      function(){ return Array.of("a","b").join("") === "ab"; }
-    ]);
-    allOK("Array.from", [
-      function(){ return typeof Array.from === "function"; },
-      function(){ return Array.from({0:"A",1:"B",length:2}) instanceof Array; },
-      function(){
-        var res = Array.from({0:"A",1:"B",length:2}, function(v){ return v.toLowerCase(); });
-        return res.join("") === "ab";
-      },
-    ]);
-    [
-      "toString", "toLocaleString", "concat", "join", "pop", "push", "reverse", "shift", "slice",
-      "sort", "splice", "unshift", "indexOf", "lastIndexOf", "every", "some", "forEach", "map",
-      "filter", "reduce", "reduceRight", "find", "findIndex", "entries", "keys", "values"
-    ].forEach(function(prop) {
-      ok(typeof Array.prototype[prop] === "function", "Array.prototype." + prop);
-    });
-  });
 
   test("15.05 String", function () {
     ["fromCharCode", "fromCodePoint", "raw"].forEach(function(prop) {
@@ -476,6 +451,33 @@
       function(){ return JSON.stringify({a: "A", b: "B"}) === code; },
       function(){ return JSON.stringify({a: "A", b: "B"}, null, " ") === '{\n "a": "A",\n "b": "B"\n}'; },
     ]);
+  });
+
+  test("22.1 Array", function () {
+    allOK("Array.from", [
+      function(){ return typeof Array.from === "function"; },
+      function(){ return Array.from({0:"A",1:"B",length:2}) instanceof Array; },
+      function(){
+        var res = Array.from({0:"A",1:"B",length:2}, function(v){ return v.toLowerCase(); });
+        return res.join("") === "ab";
+      },
+    ]);
+    allOK("Array.isArray", [
+      function(){ return typeof Array.isArray === "function";},
+      function(){ return Array.isArray([]); }
+    ]);
+    allOK("Array.of", [
+      function(){ return typeof Array.of === "function"; },
+      function(){ return Array.of("a","b").join("") === "ab"; }
+    ]);
+    [
+      "concat", "copyWithin", "entries", "every", "fill", "filter", "find", "findIndex", "forEach",
+      "indexOf", "join", "keys", "lastIndexOf", "map", "pop", "push", "reduce", "reduceRight",
+      "reverse", "shift", "slice", "some", "sort", "splice", "toLocaleString", "toString", "unshift",
+      "values",
+    ].forEach(function(prop) {
+      ok(typeof Array.prototype[prop] === "function", "Array.prototype." + prop);
+    });
   });
 
   test("15.13 Binary Data", function () {
