@@ -672,12 +672,11 @@
     ok(v3.done === true, "g.next() => { done: true }");
   });
 
-  test("15.18.1 Reflect", function () {
+  test("26.1 Reflect", function () {
     if (typeof Reflect !== "undefined") {
       [
-        "getPrototypeOf", "setPrototypeOf", "isExtensible", "preventExtensions", "has", "hasOwn",
-        "getOwnPropertyDescriptor", "get", "set", "invoke", "deleteProperty", "defineProperty", "enumerate",
-        "ownKeys"
+        "defineProperty", "deleteProperty", "enumerate", "get", "getOwnPropertyDescriptor", "getPrototypeOf",
+        "has", "hasOwn", "isExtensible", "ownKeys", "preventExtensions", "set", "setPrototypeOf"
       ].forEach(function(prop) {
         ok(typeof Reflect[prop] === "function", "Reflect." + prop);
       });
