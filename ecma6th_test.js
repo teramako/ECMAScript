@@ -453,20 +453,6 @@
     ok(reg.hasOwnProperty("lastIndex"), "reg.lastIndex");
   });
 
-
-  test("15.12 JSON", function () {
-    var code = '{"a":"A","b":"B"}';
-    allOK("JSON.parse", [
-      function(){ return typeof JSON.parse === "function"; },
-      function(){ return typeof JSON.parse(code) === "object"; },
-    ]);
-    allOK("JSON.stringify", [
-      function(){ return typeof JSON.stringify === "function"; },
-      function(){ return JSON.stringify({a: "A", b: "B"}) === code; },
-      function(){ return JSON.stringify({a: "A", b: "B"}, null, " ") === '{\n "a": "A",\n "b": "B"\n}'; },
-    ]);
-  });
-
   test("22.1 Array", function () {
     allOK("Array.from", [
       function(){ return typeof Array.from === "function"; },
@@ -626,6 +612,19 @@
     } else {
       ok(false, "not supported: WeakSet");
     }
+  });
+
+  test("24.3 JSON", function () {
+    var code = '{"a":"A","b":"B"}';
+    allOK("JSON.parse", [
+      function(){ return typeof JSON.parse === "function"; },
+      function(){ return typeof JSON.parse(code) === "object"; },
+    ]);
+    allOK("JSON.stringify", [
+      function(){ return typeof JSON.stringify === "function"; },
+      function(){ return JSON.stringify({a: "A", b: "B"}) === code; },
+      function(){ return JSON.stringify({a: "A", b: "B"}, null, " ") === '{\n "a": "A",\n "b": "B"\n}'; },
+    ]);
   });
 
   test("15.18.1 Reflect", function () {
