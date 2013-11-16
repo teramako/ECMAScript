@@ -595,7 +595,7 @@
     }
   });
 
-  test("15.17 WeakSet", function () {
+  test("23.4 WeakSet", function () {
     if (typeof WeakSet === "function") {
       strictEqual(WeakSet.prototype.constructor, WeakSet, "WeakSet.prototype.constructor");
       ["add", "clear", "delete", "has"].forEach(function(prop) {
