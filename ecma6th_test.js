@@ -403,19 +403,19 @@
     });
   });
 
-  test("15.09 Date", function () {
-    ["parse", "UTC", "now"].forEach(function(prop) {
+  test("20.3 Date", function () {
+    ["now", "parse", "UTC"].forEach(function(prop) {
       ok(typeof Date[prop] === "function", "Date." + prop);
     });
     strictEqual(Date.prototype.constructor, Date, "Date.prototype.constructor");
     [
-      "toString", "toDateString", "toTimeString", "toLocaleString", "toLocaleDateString", "toLocaleTimeString",
-      "valueOf", "getTime", "getFullYear", "getUTCFullYear", "getMonth", "getUTCMonth", "getDate", "getUTCDate",
-      "getDay", "getUTCDay", "getHours", "getUTCHours", "getMinutes", "getUTCMinutes", "getSeconds",
-      "getUTCSeconds", "getMilliseconds", "getUTCMilliseconds", "getTimezoneOffset", "setTime", "setMilliseconds",
-      "setUTCMilliseconds", "setSeconds", "setUTCSeconds", "setMinutes", "setUTCMinutes", "setHours", "setUTCHours",
-      "setDate", "setUTCDate", "setMonth", "setUTCMonth", "setFullYear", "setUTCFullYear", "toUTCString",
-      "toISOString", "toJSON",
+      "getDate", "getDay", "getFullYear", "getHours", "getMilliseconds", "getMinutes", "getMonth",
+      "getSeconds", "getTime", "getTimezoneOffset", "getUTCDate", "getUTCDay", "getUTCFullYear",
+      "getUTCHours", "getUTCMilliseconds", "getUTCMinutes", "getUTCMonth", "getUTCSeconds",
+      "setDate", "setFullYear", "setHours", "setMilliseconds", "setMinutes", "setMonth", "setSeconds",
+      "setTime", "setUTCDate", "setUTCFullYear", "setUTCHours", "setUTCMilliseconds", "setUTCMinutes",
+      "setUTCMonth", "setUTCSeconds", "toDateString", "toISOString", "toJSON", "toLocaleDateString",
+      "toLocaleString", "toLocaleTimeString", "toSting", "toTimeString", "toUTCString", "valueOf"
     ].forEach(function(prop) {
       ok(typeof Date.prototype[prop] === "function", "Date.prototype." + prop);
     });
