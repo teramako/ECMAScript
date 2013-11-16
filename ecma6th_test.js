@@ -555,24 +555,6 @@
     }
   });
 
-  test("15.15 WeakMap", function () {
-    if (typeof WeakMap === "function") {
-      strictEqual(WeakMap.prototype.constructor, WeakMap, "WeakMap.prototype.constructor");
-      ["clear", "delete", "get", "has", "set"].forEach(function(prop) {
-        ok(typeof WeakMap.prototype[prop] === "function", "WeakMap.prototype." + prop);
-      });
-      var o = {}, o2 = {};
-      var wm = new WeakMap([[o, "OK"]]);
-      strictEqual(wm.get(o), o2, "initial value wm.get(o)");
-      wm.set(o2, o);
-      strictEqual(wm.get(o2), o, "wm.get(o2)");
-      throws(function(){ wm.set(null, ""); }, "throws Error when set null");
-      throws(function(){ wm.set("a", ""); }, "throws Error when set a primitive value");
-    } else {
-      ok(false, "not supported: WeakMap");
-    }
-  });
-
   test("23.2 Set", function () {
     if (typeof Set === "function") {
       strictEqual(Set.prototype.constructor, Set, "Set.prototype.constructor");
@@ -592,6 +574,24 @@
       ok(s.has({}) === false, "s.has({}) is false");
     } else {
       ok(false, "not supported: Set");
+    }
+  });
+
+  test("23.3 WeakMap", function () {
+    if (typeof WeakMap === "function") {
+      strictEqual(WeakMap.prototype.constructor, WeakMap, "WeakMap.prototype.constructor");
+      ["clear", "delete", "get", "has", "set"].forEach(function(prop) {
+        ok(typeof WeakMap.prototype[prop] === "function", "WeakMap.prototype." + prop);
+      });
+      var o = {}, o2 = {};
+      var wm = new WeakMap([[o, "OK"]]);
+      strictEqual(wm.get(o), o2, "initial value wm.get(o)");
+      wm.set(o2, o);
+      strictEqual(wm.get(o2), o, "wm.get(o2)");
+      throws(function(){ wm.set(null, ""); }, "throws Error when set null");
+      throws(function(){ wm.set("a", ""); }, "throws Error when set a primitive value");
+    } else {
+      ok(false, "not supported: WeakMap");
     }
   });
 
