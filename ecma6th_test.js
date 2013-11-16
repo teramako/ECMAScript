@@ -685,23 +685,23 @@
     }
   });
 
-  test("15.18.2 Proxy", function () {
+  test("26.2 Proxy", function () {
     if (typeof Proxy !== "undefined") {
       var code1 = 'new Proxy({}, { get: function(){ return "OK" } })',
           code2 = 'Proxy.create({ get: function(){ return "OK" } })';
       try {
         var res = eval(code1);
         strictEqual(res.foo, "OK", code1);
-        return;
       } catch(e) {
         ok(false, "not supported: Direct Proxy: " + code1 + " : " + e);
+        try {
+          var res = eval(code2);
+          strictEqual(res.foo, "OK", code2);
+        } catch(e) {
+          ok(false, "not supported: " + code2 + " : " + e);
+        }
       }
-      try {
-        var res = eval(code2);
-        strictEqual(res.foo, "OK", code2);
-      } catch(e) {
-        ok(false, "not supported: " + code2 + " : " + e);
-      }
+      ok(typeof Proxy.revocable === "function", "Proxy.revocable");
     } else {
       ok(false, "not supported: Proxy");
     }
