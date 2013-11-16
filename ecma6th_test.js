@@ -360,21 +360,25 @@
     })
   });
 
-  test("15.07 Number", function () {
+  test("20.1 Number", function () {
+    ok(Number.EPSILON === 2.2204460492503130808472633361816e-16, "Number.EPSILON");
+    ok(Number.MAX_SAFE_INTEGER === 9007199254740991, "Number.MAX_SAFE_INTEGER");
     ok(Number.MAX_VALUE === 1.7976931348623157e+308, "Number.MAX_VALUE");
-    ok(Number.MIN_VALUE === 5e-324, "Number.MIN_VALUE");
     ok(isNaN(Number.NaN), "Number.NaN");
     ok(Number.NEGATIVE_INFINITY === -Infinity, "Number.NEGATIVE_INFINITY");
+    ok(Number.MIN_SAFE_INTEGER === -9007199254740991, "Number.MIN_SAFE_INTEGER");
+    ok(Number.MIN_VALUE === 5e-324, "Number.MIN_VALUE");
     ok(Number.POSITIVE_INFINITY === Infinity, "Number.POSITIVE_INFINITY");
-    ok(Number.EPSILON === 2.2204460492503130808472633361816e-16, "Number.EPSILON");
     ok(Number.MAX_INTEGER === 9007199254740991, "Number.MAX_INTEGER");
-    ["parseInt", "parseFloat", "isNaN", "isFinate", "isInteger", "toInteger"].forEach(function(prop) {
+    [
+      "isFinate", "isInteger", "isNaN", "isSafeInteger", "paseFloat", "paseInt"
+    ].forEach(function(prop) {
       ok(typeof Number[prop] === "function", "Number." + prop);
     });
     strictEqual(Number.prototype.constructor, Number, "Number.prototype.constructor");
     [
-      "toString", "toLocaleString", "valueOf", "toFixed", "toExponential",
-      "toPrecision", "clz"
+      "clz", "toExponential", "toFixed", "toLocaleString", "toPrecision", "toString",
+      "valueOf"
     ].forEach(function(prop) {
       ok(typeof Number.prototype[prop] === "function", "Number.prototype." + prop);
     });
