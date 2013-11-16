@@ -533,10 +533,10 @@
     }
   });
 
-  test("15.14 Map", function () {
+  test("23.1 Map", function () {
     if (typeof Map === "function") {
       strictEqual(Map.prototype.constructor, Map, "Map.prototype.constructor");
-      ["clear", "delete", "forEach", "get", "has", "entries", "keys", "set", "values"].forEach(function(prop) {
+      ["clear", "delete", "entries", "forEach", "get", "has", "keys", "set", "values"].forEach(function(prop) {
         ok(typeof Map.prototype[prop] === "function", "Map.prototype." + prop);
       });
       var sizeDesc = Object.getOwnPropertyDescriptor(Map.prototype, "size");
