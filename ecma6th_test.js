@@ -335,6 +335,21 @@
     })
   });
 
+  test("19.4 Symbols", function () {
+    if (typeof Symbol === "undefined") {
+      ok(false, "Symbol is undefined");
+      return;
+    }
+    strictEqual(typeof new Symbol, "symbol", "typeof symbol is \"symbol\"");
+    [
+      "create", "hasInstance", "isRegExp", "iterator", "toPrimitive", "toStringTag",
+      "unscopables"
+    ].forEach(function(prop) {
+      hasOwn(Symbol, "prop", "Symbol." + prop);
+    });
+  });
+
+
   test("20.1 Number", function () {
     ok(Number.EPSILON === 2.2204460492503130808472633361816e-16, "Number.EPSILON");
     ok(Number.MAX_SAFE_INTEGER === 9007199254740991, "Number.MAX_SAFE_INTEGER");
