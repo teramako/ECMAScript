@@ -480,15 +480,16 @@
     });
   });
 
-  test("15.13 Binary Data", function () {
-    if (typeof ArrayBuffer === "function") {
-      ok(typeof ArrayBuffer.isView === "function", "ArrayBuffer.isView");
-      ok(typeof ArrayBuffer.prototype.slice === "function", "ArrayBuffer.prototype.slice");
-      ok((new ArrayBuffer).byteLength === 0, "ArrayBuffer#byteLength");
-    } else {
-      ok(false, "not supported: ArrayBuffer");
-      return;
-    }
+  test("22.2 TypedArray", function () {
+    var existsArrayBuffer = typeof ArrayBuffer === "function";
+
+    [
+      ["Int8Array", 1], ["Uint8Array", 1], ["Uint8ClampedArray", 1],
+      ["Int16Array", 2], ["Uint16Array", 2],
+      ["Int32Array", 4], ["Uint32Array", 4],
+      ["Float32Array", 4], ["Float64Array", 8]
+    ].forEach(function (v) { typedArrayTest(v[0], v[1]); });
+
     function typedArrayTest (name, size) {
       var TypedArray = global[name];
       if (typeof TypedArray === "function") {
@@ -505,31 +506,13 @@
           ok(typeof TypedArray.prototype[prop] === "function", name + ".prototype." + prop);
         });
         var tArray = new TypedArray;
-        ok(tArray.buffer instanceof ArrayBuffer, "buffer instanceof ArrayBuffer");
+        ok(existsArrayBuffer && tArray.buffer instanceof ArrayBuffer, "buffer instanceof ArrayBuffer");
         ["byteLength", "byteOffset", "length"].forEach(function(prop) {
           ok(tArray[prop] === 0, name + "#" + prop);
         });
       } else {
         ok(false, "not supported: " + name);
       }
-    }
-    [
-      ["Int8Array", 1], ["Uint8Array", 1], ["Uint8ClampedArray", 1],
-      ["Int16Array", 2], ["Uint16Array", 2],
-      ["Int32Array", 4], ["Uint32Array", 4],
-      ["Float32Array", 4], ["Float64Array", 8]
-    ].forEach(function (v) { typedArrayTest(v[0], v[1]); });
-
-    if (typeof DataView === "function") {
-      ok(DataView.prototype.constructor === DataView, "DataView.prototype.constructor");
-      [
-        "getInt8", "getUint8", "getInt16", "getUint16", "getInt32", "getUint32", "getFloat32", "getFloat64",
-        "setInt8", "setUint8", "setInt16", "setUint16", "setInt32", "setUint32", "setFloat32", "setFloat64"
-      ].forEach(function(prop) {
-        ok(typeof DataView.prototype[prop] === "function", "DataView.prototype." + prop);
-      });
-    } else {
-      ok(false, "not supported: DataView");
     }
   });
 
@@ -611,6 +594,30 @@
       ok(s.has({}) === false, "s.has({}) is false");
     } else {
       ok(false, "not supported: WeakSet");
+    }
+  });
+
+  test("24.1 ArrayBuffer", function () {
+    if (typeof ArrayBuffer === "function") {
+      ok(typeof ArrayBuffer.isView === "function", "ArrayBuffer.isView");
+      ok((new ArrayBuffer).byteLength === 0, "ArrayBuffer#byteLength");
+      ok(typeof ArrayBuffer.prototype.slice === "function", "ArrayBuffer.prototype.slice");
+    } else {
+      ok(false, "not supported: ArrayBuffer");
+    }
+  });
+
+  test("24.2 DataView", function () {
+    if (typeof DataView === "function") {
+      ok(DataView.prototype.constructor === DataView, "DataView.prototype.constructor");
+      [
+        "getInt8", "getUint8", "getInt16", "getUint16", "getInt32", "getUint32", "getFloat32", "getFloat64",
+        "setInt8", "setUint8", "setInt16", "setUint16", "setInt32", "setUint32", "setFloat32", "setFloat64"
+      ].forEach(function(prop) {
+        ok(typeof DataView.prototype[prop] === "function", "DataView.prototype." + prop);
+      });
+    } else {
+      ok(false, "not supported: DataView");
     }
   });
 
