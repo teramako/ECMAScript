@@ -319,22 +319,6 @@
     });
   });
 
-
-  test("15.05 String", function () {
-    ["fromCharCode", "fromCodePoint", "raw"].forEach(function(prop) {
-      ok(typeof String[prop] === "function", "String." + prop);
-    });
-    strictEqual(String.prototype.constructor, String, "String.prototype.constructor");
-    [
-      "toString", "valueOf", "charAt", "charCodeAt", "concat", "indexOf", "lastIndexOf", "localeCompare",
-      "match", "replace", "search", "slice", "split", "substring", "toLowerCase", "toLocaleLowerCase",
-      "toUpperCase", "toLocaleUpperCase", "trim", "repeat", "startsWith", "endsWith", "contains",
-      "codePointAt", "normalize",
-    ].forEach(function(prop) {
-      ok(typeof String.prototype[prop] === "function", "String.prototype." + prop);
-    })
-  });
-
   test("19.4 Symbols", function () {
     if (typeof Symbol === "undefined") {
       ok(false, "Symbol is undefined");
@@ -417,6 +401,21 @@
     ].forEach(function(prop) {
       ok(typeof Date.prototype[prop] === "function", "Date.prototype." + prop);
     });
+  });
+
+  test("21.1 String", function () {
+    ["fromCharCode", "fromCodePoint", "raw"].forEach(function(prop) {
+      ok(typeof String[prop] === "function", "String." + prop);
+    });
+    strictEqual(String.prototype.constructor, String, "String.prototype.constructor");
+    [
+      "charAt", "charCodeAt", "codePointAt", "concat", "contains", "endsWith", "indexOf", "lastIndexOf",
+      "localeCompare", "match", "normalize", "repeat", "replace", "search", "slice", "split",
+      "startsWith", "substring", "toLocaleLowerCase", "toLocaleUpperCase", "toLowerCase", "toString",
+      "toUpperCase", "trim", "valueOf",
+    ].forEach(function(prop) {
+      ok(typeof String.prototype[prop] === "function", "String.prototype." + prop);
+    })
   });
 
   test("15.10 RegExp", function () {
