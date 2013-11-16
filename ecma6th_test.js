@@ -573,7 +573,7 @@
     }
   });
 
-  test("15.16 Set", function () {
+  test("23.2 Set", function () {
     if (typeof Set === "function") {
       strictEqual(Set.prototype.constructor, Set, "Set.prototype.constructor");
       ["add", "clear", "delete", "entries", "forEach", "has", "values"].forEach(function(prop) {
