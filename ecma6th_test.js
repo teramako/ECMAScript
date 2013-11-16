@@ -349,6 +349,14 @@
     });
   });
 
+  test("19.5 Error", function () {
+    ok(Error.prototype.constructor === Error, "Error.prototype.constructor");
+    ok(Error.prototype.name === "Error", "Error.prototype.name");
+    ok(typeof Error.prototype.message === "string", "Error.prototype.message");
+    ["EvalError", "RangeError", "ReferenceError", "SyntaxError", "TypeError", "URIError"].forEach(function(f) {
+      ok(typeof global[f] === "function", f);
+    });
+  });
 
   test("20.1 Number", function () {
     ok(Number.EPSILON === 2.2204460492503130808472633361816e-16, "Number.EPSILON");
@@ -446,14 +454,6 @@
     ok(reg.hasOwnProperty("lastIndex"), "reg.lastIndex");
   });
 
-  test("15.11 Error", function () {
-    ok(Error.prototype.constructor === Error, "Error.prototype.constructor");
-    ok(Error.prototype.name === "Error", "Error.prototype.name");
-    ok(typeof Error.prototype.message === "string", "Error.prototype.message");
-    ["EvalError", "RangeError", "ReferenceError", "SyntaxError", "TypeError", "URIError"].forEach(function(f) {
-      ok(typeof global[f] === "function", f);
-    });
-  });
 
   test("15.12 JSON", function () {
     var code = '{"a":"A","b":"B"}';
