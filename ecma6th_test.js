@@ -353,7 +353,7 @@
     ok(Number.POSITIVE_INFINITY === Infinity, "Number.POSITIVE_INFINITY");
     ok(Number.MAX_INTEGER === 9007199254740991, "Number.MAX_INTEGER");
     [
-      "isFinate", "isInteger", "isNaN", "isSafeInteger", "paseFloat", "paseInt"
+      "isFinite", "isInteger", "isNaN", "isSafeInteger", "parseFloat", "parseInt"
     ].forEach(function(prop) {
       ok(typeof Number[prop] === "function", "Number." + prop);
     });
@@ -376,7 +376,7 @@
     ok(Math.SQRT1_2 === 0.7071067811865476, "Math.SQRT1_2");
     ok(Math.SQRT2   === 1.4142135623730951, "Math.SQRT2");
     [
-      "abs", "acos", "acosh", "asin", "asinh", "atan", "atanh", "atan2", "cbrt", "cell",
+      "abs", "acos", "acosh", "asin", "asinh", "atan", "atanh", "atan2", "cbrt", "ceil",
       "cos", "cosh", "exp", "expm1", "floor", "fround", "hypot", "imul", "log", "log1p",
       "log10", "log2", "max", "min", "pow", "random", "round", "sign", "sin", "sinh",
       "sqrt", "tan", "tanh", "trunc"
@@ -397,7 +397,7 @@
       "setDate", "setFullYear", "setHours", "setMilliseconds", "setMinutes", "setMonth", "setSeconds",
       "setTime", "setUTCDate", "setUTCFullYear", "setUTCHours", "setUTCMilliseconds", "setUTCMinutes",
       "setUTCMonth", "setUTCSeconds", "toDateString", "toISOString", "toJSON", "toLocaleDateString",
-      "toLocaleString", "toLocaleTimeString", "toSting", "toTimeString", "toUTCString", "valueOf"
+      "toLocaleString", "toLocaleTimeString", "toString", "toTimeString", "toUTCString", "valueOf"
     ].forEach(function(prop) {
       ok(typeof Date.prototype[prop] === "function", "Date.prototype." + prop);
     });
