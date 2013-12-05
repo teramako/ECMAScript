@@ -351,7 +351,6 @@
     ok(Number.MIN_SAFE_INTEGER === -9007199254740991, "Number.MIN_SAFE_INTEGER");
     ok(Number.MIN_VALUE === 5e-324, "Number.MIN_VALUE");
     ok(Number.POSITIVE_INFINITY === Infinity, "Number.POSITIVE_INFINITY");
-    ok(Number.MAX_INTEGER === 9007199254740991, "Number.MAX_INTEGER");
     [
       "isFinite", "isInteger", "isNaN", "isSafeInteger", "parseFloat", "parseInt"
     ].forEach(function(prop) {
