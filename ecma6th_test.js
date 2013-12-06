@@ -500,7 +500,8 @@
         [
           "toString", "toLocaleString", "join", "reverse", "slice", "sort",
           "indexOf", "lastIndexOf", "every", "some", "forEach", "map", "filter",
-          "reduce", "reduceRight", "find", "findIndex", "entries", "keys", "values"
+          "reduce", "reduceRight", "find", "findIndex", "entries", "keys", "values",
+          "fill", "copyWithin"
         ].forEach(function(prop) {
           ok(typeof TypedArray.prototype[prop] === "function", name + ".prototype." + prop);
         });
