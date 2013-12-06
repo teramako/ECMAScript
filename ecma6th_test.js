@@ -585,11 +585,11 @@
         ok(typeof WeakSet.prototype[prop] === "function", "WeakSet.prototype." + prop);
       });
       var o1 = {}, o2 = {};
-      var s = new WeakSet([o1]);
-      s.add(o2);
-      ok(s.has(o1), "s.has(o1)");
-      ok(s.has(o2), "s.has(o2)");
-      ok(s.has({}) === false, "s.has({}) is false");
+      var ws = new WeakSet([o1]);
+      ws.add(o2);
+      ok(ws.has(o1), "ws.has(o1)");
+      ok(ws.has(o2), "ws.has(o2)");
+      ok(ws.has({}) === false, "ws.has({}) is false");
     } else {
       ok(false, "not supported: WeakSet");
     }
