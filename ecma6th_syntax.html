@@ -186,7 +186,7 @@ MultiLineNotAsteriskChar:
   SourceCharacter <b>but not</b> <em class="p">*</em>
 
 MultiLineNotForwardSlashOrAsteriskChar:
-  SourceCharacter <b>but not one of <em class="p">/</em> or <em class="p">*</em></b>
+  SourceCharacter <b>but not one of</b> <em class="p">/</em> <b>or</b> <em class="p">*</em>
 
 SingleLineComment:
   <em class="p">//</em> SingleLineCommentChars<sub>opt</sub>
@@ -195,7 +195,7 @@ SingleLineCommentChars:
   SingleLineCommentChar SingleLineCommentChars<sub>opt</sub>
 
 SingleLineCommentChar:
-  SourceCharacter <b>but not <em class="k">LineTerminator</em></b>
+  SourceCharacter <b>but not</b> LineTerminator
     </pre>
   </section>
 
@@ -232,8 +232,8 @@ IdentifierStart:
 
 IdentifierPart:
   UnicodeIDContinue
-  $
-  _
+  <em class="p">$</em>
+  <em class="p">_</em>
   <em class="p">\</em> UnicodeEscapeSequence
   &lt;ZWNJ&gt;
   &lt;ZWJ&gt;
@@ -403,7 +403,7 @@ HexDigit: <b>one of</b>
       </section>
 
       <section>
-        <h3 id="11.8.4">String Literal</h3>
+        <h4 id="11.8.4">String Literals</h4>
         <pre>
 StringLiteral:
   <em class="p">"</em> DoubleStringCharacters<sub>opt</sub> <em class="p">"</em>
@@ -416,12 +416,12 @@ SingleStringCharacters:
   SingleStringCharacter SingleStringCharacters<sub>opt</sub>
 
 DoubleStringCharacter:
-  SourceCharacter <b>but not one of <em class="p">"</em> or <em class="p">\</em> or LineTerminator</b>
+  SourceCharacter <b>but not one of</b> <em class="p">"</em> <b>or</b> <em class="p">\</em> <b>or</b> LineTerminator
   <em class="p">\</em> EscapeSequence
   LineContinuation
 
 SingleStringCharacter:
-  SourceCharacter <b>but not one of <em class="p">'</em> or <em class="p">\</em> or LineTerminator</b>
+  SourceCharacter <b>but not one of</b> <em class="p">'</em> <b>or</b> <em class="p">\</em> <b>or</b> LineTerminator
   <em class="p">\</em> EscapeSequence
   LineContinuation
 
@@ -520,7 +520,7 @@ UnicodeEscapeSequence:
       </section>
 
       <section>
-        <h3 id="11.8.5">Regular Expression Literals</h3>
+        <h4 id="11.8.5">Regular Expression Literals</h4>
         <pre>
 RegularExpressionLiteral:
   <em class="p">/</em> RegularExpressionBody <em class="p">/</em> RegularExpressionFlags
@@ -533,12 +533,12 @@ RegularExpressionChars:
   RegularExpressionChars RegularExpressionChar
 
 RegularExpressionFirstChar:
-  RegularExpressionNonTerminator <b>but not one of <em class="p">*</em> or <em class="p">\</em> or <em class="p">/</em> or <emv class="p">[</em></b>
+  RegularExpressionNonTerminator <b>but not one of</b> <em class="p">*</em> <b>or</b> <em class="p">\</em> <b>or</b> <em class="p">/</em> <b>or</b> <em class="p">[</em>
   RegularExpressionBackslashSequence
   RegularExpressionClass
 
 RegularExpressionChar:
-  RegularExpressionNonTerminator <b>but not one of <em class="p">\</em> or <em class="p">/</em> or <emv class="p">[</em></b>
+  RegularExpressionNonTerminator <b>but not one of</b> <em class="p">\</em> <b>or</b> <em class="p">/</em> <b>or</b> <em class="p">[</em>
   RegularExpressionBackslashSequence
   RegularExpressionClass
 
@@ -556,7 +556,7 @@ RegularExpressionClassChars:
   RegularExpressionClassChars RegularExpressionClassChar
 
 RegularExpressionClassChar:
-  RegularExpressionNonTerminator <b>but not one of <em class="p">]</em> or <em class="p">\</em></b>
+  RegularExpressionNonTerminator <b>but not one of</b> <em class="p">]</em> <b>or</b> <em class="p">\</em>
   RegularExpressionBackslashSequence
 
 RegularExpressionFlags:
@@ -570,7 +570,7 @@ RegularExpressionFlags:
       </section>
 
       <section>
-        <h3 id="11.8.6">Template Literal Lexical Components</h3>
+        <h4 id="11.8.6">Template Literal Lexical Components</h4>
         <pre>
 Template:
   NoSubstitutionTemplate
@@ -596,7 +596,7 @@ TemplateCharacters:
   TemplateCharacter TemplateCharacters<sub>opt</sub>
 
 TemplateCharacter:
-  SourceCharacter <b>but not one of <em class="p">`</em> or <em class="p">\</em> or <em class="p">$</em> or</b> LineTerminatorSequence
+  SourceCharacter <b>but not one of</b> <em class="p">`</em> <b>or</b> <em class="p">\</em> <b>or</b> <em class="p">$</em> <b>or</b> LineTerminatorSequence
   <em class="p">$</em> <small>[lookahead &notin; <em class="p">{</em>]</small>
   <em class="p">\</em> EscapeSequence
   LineContinuation
@@ -1190,7 +1190,7 @@ VariableDeclarationNoIn:
     </section>
 
     <section>
-      <h4 id="13.2.3">Destructuring Binding Pattern</h4>
+      <h4 id="13.2.3">Destructuring Binding Patterns</h4>
       <pre>
 BindingPattern:
   ObjectBindingPattern
@@ -1246,7 +1246,7 @@ ExpressionStatement:
   <small>[lookahead &notin; {<em class="p">{</em>, <em class="k">function</em>, <em class="k">class</em>}]</small> Expression <em class="p">;</em>
     </pre>
     <aside class="note">
-      <p>An <em>ExpressionStatement</em> cannot start with an opening curly brace because that might make it ambiguous with a <em>Block</em>. Also, an <em>ExpressionStatement</em> cannot start with the <em class="k">function</em> or <em class="k">class</em> keywords because that would make it ambiguous with a <em>FunctionDeclaration</em>, a <em>GeneratorDeclaration</em> or a <em>ClassDeclaration</em>.
+      <p>An <code>ExpressionStatement</code> cannot start with an opening curly brace because that might make it ambiguous with a <code>Block</code>. Also, an <code>ExpressionStatement</code> cannot start with the <em class="k">function</em> or <em class="k">class</em> keywords because that would make it ambiguous with a <code>FunctionDeclaration</code>, a <code>GeneratorDeclaration</code> or a <code>ClassDeclaration</code>.</p>
     </aside>
   </section>
 
@@ -1431,7 +1431,7 @@ FunctionStatementList:
   </section>
 
   <section>
-    <h2 id="14.2">Arrow Function Definitions</h2>
+    <h3 id="14.2">Arrow Function Definitions</h3>
     <pre>
 ArrowFunction:
   ArrowParameters <em class="p">=></em> ConciseBody
@@ -1454,7 +1454,7 @@ ConciseBodyNoIn:
   </section>
 
   <section>
-    <h2 id="14.3">Method Definitions</h2>
+    <h3 id="14.3">Method Definitions</h3>
     <pre>
 MethodDefinition:
   PropertyName <em class="p">(</em> StrictFormalParameters <em class="p">) {</em> FunctionBody <em class="p">}</em>
@@ -1659,7 +1659,7 @@ ScriptItemList:
             <li><a href="#11.8.1">11.8.1 Null Literals</a></li>
             <li><a href="#11.8.2">11.8.2 Boolean Literals</a></li>
             <li><a href="#11.8.3">11.8.3 Numeric Literals</a></li>
-            <li><a href="#11.8.4">11.8.4 String Literal</a></li>
+            <li><a href="#11.8.4">11.8.4 String Literals</a></li>
             <li><a href="#11.8.5">11.8.5 Regular Expression Literals</a></li>
             <li><a href="#11.8.6">11.8.6 Template Literal Lexical Components</a></li>
           </ul>
@@ -1705,11 +1705,11 @@ ScriptItemList:
     <li><a href="#13">13 Statements and Declarations</a>
       <ul>
         <li><a href="#13.1">13.1 Block</a></li>
-        <li><a href="#13.2">13.2 Declarations and the variable Statement</a>
+        <li><a href="#13.2">13.2 Declarations and the Variable Statement</a>
           <ul>
             <li><a href="#13.2.1">13.2.1 Let and Const Declarations</a></li>
             <li><a href="#13.2.2">13.2.2 Variable Statement</a></li>
-            <li><a href="#13.2.3">13.2.3 Destructuring Binding Pattern</a></li>
+            <li><a href="#13.2.3">13.2.3 Destructuring Binding Patterns</a></li>
           </ul>
         </li>
         <li><a href="#13.3">13.3 Empty Statement</a></li>
