@@ -358,8 +358,7 @@
     });
     strictEqual(Number.prototype.constructor, Number, "Number.prototype.constructor");
     [
-      "clz", "toExponential", "toFixed", "toLocaleString", "toPrecision", "toString",
-      "valueOf"
+      "toExponential", "toFixed", "toLocaleString", "toPrecision", "toString", "valueOf"
     ].forEach(function(prop) {
       ok(typeof Number.prototype[prop] === "function", "Number.prototype." + prop);
     });
@@ -376,9 +375,9 @@
     ok(Math.SQRT2   === 1.4142135623730951, "Math.SQRT2");
     [
       "abs", "acos", "acosh", "asin", "asinh", "atan", "atanh", "atan2", "cbrt", "ceil",
-      "cos", "cosh", "exp", "expm1", "floor", "fround", "hypot", "imul", "log", "log1p",
-      "log10", "log2", "max", "min", "pow", "random", "round", "sign", "sin", "sinh",
-      "sqrt", "tan", "tanh", "trunc"
+      "clz32", "cos", "cosh", "exp", "expm1", "floor", "fround", "hypot", "imul", "log",
+      "log1p", "log10", "log2", "max", "min", "pow", "random", "round", "sign", "sin",
+      "sinh", "sqrt", "tan", "tanh", "trunc"
     ].forEach(function(prop) {
       ok(typeof Math[prop] === "function", "Math." + prop);
     });
