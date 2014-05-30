@@ -314,7 +314,7 @@
   test("19.2 Function", function () {
     strictEqual(Function.length, 1, "Function.length");
     strictEqual(Function.prototype.constructor, Function, "Function.prototype.constructor");
-    ["apply", "bind", "call", "toString"].forEach(function(prop) {
+    ["apply", "bind", "call", "toMethod", "toString"].forEach(function(prop) {
       ok(typeof Function.prototype[prop] === "function", "Function.prototype." + prop);
     });
   });
