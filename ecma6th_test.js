@@ -319,17 +319,24 @@
     });
   });
 
-  test("19.4 Symbols", function () {
+  test("19.4 Symbol", function () {
     if (typeof Symbol === "undefined") {
       ok(false, "Symbol is undefined");
       return;
     }
     strictEqual(typeof Symbol(), "symbol", "typeof symbol is \"symbol\"");
     [
-      "create", "hasInstance", "isRegExp", "iterator", "toPrimitive", "toStringTag",
-      "unscopables"
+      "create", "hasInstance", "isConcatSpreadable", "isRegExp", "iterator", "toPrimitive",
+      "toStringTag", "unscopables"
     ].forEach(function(prop) {
       hasOwn(Symbol, prop, "Symbol." + prop);
+    });
+    ["for", "keyFor"].forEach(function(prop) {
+      ok(typeof Symbol[prop] === "function", "Symbol." + prop);
+    });
+    strictEqual(Symbol.prototype.constructor, Symbol, "Symbol.prototype.constructor");
+    ["toString", "valueOf"].forEach(function(prop) {
+      ok(typeof Symbol.prototype[prop] === "function", "Symbol.prototype." + prop);
     });
   });
 
