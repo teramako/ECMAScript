@@ -312,7 +312,7 @@
   });
 
   test("19.2 Function", function () {
-    strictEqual(Function.length, 1, "Function.lenght");
+    strictEqual(Function.length, 1, "Function.length");
     strictEqual(Function.prototype.constructor, Function, "Function.prototype.constructor");
     ["apply", "bind", "call", "toString"].forEach(function(prop) {
       ok(typeof Function.prototype[prop] === "function", "Function.prototype." + prop);
@@ -642,7 +642,7 @@
     }
     var GeneratorFunction = generatorFunc.constructor;
     ok(GeneratorFunction.length === 1, "GeneratorFunction.length === 1");
-    hasOwn(GeneratorFunction.prototype, "prototype", "GeneratorFunction.prototype does'nt have \"prototype\" property");
+    hasOwn(GeneratorFunction.prototype, "prototype", "GeneratorFunction.prototype doesn't have \"prototype\" property");
 
     var generator2 = new GeneratorFunction("yield 2");
     ok(generator2 instanceof Function, "new Generator() is Function isntance");
