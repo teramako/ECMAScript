@@ -749,6 +749,34 @@
     }
   });
 
+  test("26.4 System", function () {
+    if (typeof Reflect === "undefined") {
+      ok(false, "not supported: Reflect");
+      return;
+    }
+    if (typeof Reflect.Loader !== "function") {
+      ok(false, "not supported: Reflect.Loader");
+      return;
+    }
+    if (typeof System === "undefined") {
+      ok(false, "not supported: System");
+      return;
+    }
+    strictEqual(System.constructor, Reflect.Loader, "System.constructor");
+    ["global", "realm"].forEach(function(prop) {
+      ok(
+        typeof Object.getOwnPropertyDescriptor(System, prop).get === "function",
+        "System." + prop + " is an accessor property"
+      );
+    });
+    [
+      "define", "delete", "entries", "get", "has", "import", "keys", "load", "module",
+      "newModule", "set", "values", "normalize", "locate", "fetch", "translate", "instantiate"
+    ].forEach(function(prop) {
+      ok(typeof System[prop] === "function", "System." + prop);
+    });
+  });
+
   test("26.5 Proxy", function () {
     if (typeof Proxy !== "undefined") {
       var code1 = 'new Proxy({}, { get: function(){ return "OK" } })',
