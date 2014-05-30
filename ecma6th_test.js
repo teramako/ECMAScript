@@ -525,11 +525,11 @@
       ok(sizeDesc && "get" in sizeDesc, "Map.prototype.size");
 
       var o = {}, o2 = {};
-      var m = new Map([["a","A"], [0, "+0"], [-0, "-0"]]);
+      var m = new Map([["a","A"], [0, "+0"]]);
       m.set(o, o2);
       strictEqual(m.get("a"), "A", 'm.get("a")');
       strictEqual(m.get(0), "+0", 'm.get(0)');
-      strictEqual(m.get(-0), "-0", 'm.get(-0)');
+      strictEqual(m.get(-0), "+0", 'm.get(-0)');
       strictEqual(m.get(o), o2, 'm.get(o)');
       strictEqual(m.get(o2), void(0), 'm.get(o2)');
     } else {
@@ -547,7 +547,7 @@
       ok(sizeDesc && "get" in sizeDesc, "Set.prototype.size");
 
       var o = {};
-      var s = new Set(["a", 0, -0]);
+      var s = new Set(["a", 0]);
       s.add(o);
       ok(s.has("a"), 's.has("a")');
       ok(s.has(0), "s.has(0)");
