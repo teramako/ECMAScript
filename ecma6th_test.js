@@ -670,6 +670,20 @@
     ok(v3.done === true, "g.next() => { done: true }");
   });
 
+  test("25.4 Promise", function () {
+    if (typeof Promise !== "undefined") {
+      ["all", "race", "reject", "resolve"].forEach(function(prop) {
+        ok(typeof Promise[prop] === "function", "Promise." + prop);
+      });
+      strictEqual(Promise.prototype.constructor, Promise, "Promise.prototype.constructor");
+      ["catch", "then"].forEach(function(prop) {
+        ok(typeof Promise.prototype[prop] === "function", "Promise.prototype." + prop);
+      })
+    } else {
+      ok(false, "not supported: Promise");
+    }
+  });
+
   test("26.1 Reflect", function () {
     if (typeof Reflect !== "undefined") {
       [
