@@ -718,6 +718,30 @@
     }
   });
 
+  test("26.3 Loader", function () {
+    if (typeof Reflect !== "undefined") {
+      if (typeof Reflect.Loader === "function") {
+        strictEqual(Reflect.Loader.prototype.constructor, Reflect.Loader, "Reflect.Loader.prototype.constructor");
+        ["global", "realm"].forEach(function(prop) {
+          ok(
+            typeof Object.getOwnPropertyDescriptor(Reflect.Loader.prototype, prop).get === "function",
+            "Reflect.Loader.prototype." + prop + " is an accessor property"
+          );
+        });
+        [
+          "define", "delete", "entries", "get", "has", "import", "keys", "load", "module",
+          "newModule", "set", "values", "normalize", "locate", "fetch", "translate", "instantiate"
+        ].forEach(function(prop) {
+          ok(typeof Reflect.Loader.prototype[prop] === "function", "Reflect.Loader.prototype." + prop);
+        });
+      } else {
+        ok(false, "not supported: Reflect.Loader");
+      }
+    } else {
+      ok(false, "not supported: Reflect");
+    }
+  });
+
   test("26.5 Proxy", function () {
     if (typeof Proxy !== "undefined") {
       var code1 = 'new Proxy({}, { get: function(){ return "OK" } })',
