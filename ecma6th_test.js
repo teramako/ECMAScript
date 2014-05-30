@@ -697,6 +697,27 @@
     }
   });
 
+  test("26.2 Realm", function () {
+    if (typeof Reflect !== "undefined") {
+      if (typeof Reflect.Realm === "function") {
+        strictEqual(Reflect.Realm.prototype.constructor, Reflect.Realm, "Reflect.Realm.prototype.constructor");
+        ["global", "intrinsics", "stdlib"].forEach(function(prop) {
+          ok(
+            typeof Object.getOwnPropertyDescriptor(Reflect.Realm.prototype, prop).get === "function",
+            "Reflect.Realm.prototype." + prop + " is an accessor property"
+          );
+        });
+        ["eval", "directEval", "indirectEval", "initGlobal", "nonEval"].forEach(function(prop) {
+          ok(typeof Reflect.Realm.prototype[prop] === "function", "Reflect.Realm.prototype." + prop);
+        });
+      } else {
+        ok(false, "not supported: Reflect.Realm");
+      }
+    } else {
+      ok(false, "not supported: Reflect");
+    }
+  });
+
   test("26.5 Proxy", function () {
     if (typeof Proxy !== "undefined") {
       var code1 = 'new Proxy({}, { get: function(){ return "OK" } })',
