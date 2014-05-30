@@ -697,7 +697,7 @@
     }
   });
 
-  test("26.2 Proxy", function () {
+  test("26.5 Proxy", function () {
     if (typeof Proxy !== "undefined") {
       var code1 = 'new Proxy({}, { get: function(){ return "OK" } })',
           code2 = 'Proxy.create({ get: function(){ return "OK" } })';
