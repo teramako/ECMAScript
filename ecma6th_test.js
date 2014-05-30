@@ -329,7 +329,7 @@
       "create", "hasInstance", "isRegExp", "iterator", "toPrimitive", "toStringTag",
       "unscopables"
     ].forEach(function(prop) {
-      hasOwn(Symbol, "prop", "Symbol." + prop);
+      hasOwn(Symbol, prop, "Symbol." + prop);
     });
   });
 
