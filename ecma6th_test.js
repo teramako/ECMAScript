@@ -324,7 +324,7 @@
       ok(false, "Symbol is undefined");
       return;
     }
-    strictEqual(typeof new Symbol, "symbol", "typeof symbol is \"symbol\"");
+    strictEqual(typeof Symbol(), "symbol", "typeof symbol is \"symbol\"");
     [
       "create", "hasInstance", "isRegExp", "iterator", "toPrimitive", "toStringTag",
       "unscopables"
