@@ -312,24 +312,31 @@
   });
 
   test("19.2 Function", function () {
-    strictEqual(Function.length, 1, "Function.lenght");
+    strictEqual(Function.length, 1, "Function.length");
     strictEqual(Function.prototype.constructor, Function, "Function.prototype.constructor");
-    ["apply", "bind", "call", "toString"].forEach(function(prop) {
+    ["apply", "bind", "call", "toMethod", "toString"].forEach(function(prop) {
       ok(typeof Function.prototype[prop] === "function", "Function.prototype." + prop);
     });
   });
 
-  test("19.4 Symbols", function () {
+  test("19.4 Symbol", function () {
     if (typeof Symbol === "undefined") {
       ok(false, "Symbol is undefined");
       return;
     }
-    strictEqual(typeof new Symbol, "symbol", "typeof symbol is \"symbol\"");
+    strictEqual(typeof Symbol(), "symbol", "typeof symbol is \"symbol\"");
     [
-      "create", "hasInstance", "isRegExp", "iterator", "toPrimitive", "toStringTag",
-      "unscopables"
+      "create", "hasInstance", "isConcatSpreadable", "isRegExp", "iterator", "toPrimitive",
+      "toStringTag", "unscopables"
     ].forEach(function(prop) {
-      hasOwn(Symbol, "prop", "Symbol." + prop);
+      hasOwn(Symbol, prop, "Symbol." + prop);
+    });
+    ["for", "keyFor"].forEach(function(prop) {
+      ok(typeof Symbol[prop] === "function", "Symbol." + prop);
+    });
+    strictEqual(Symbol.prototype.constructor, Symbol, "Symbol.prototype.constructor");
+    ["toString", "valueOf"].forEach(function(prop) {
+      ok(typeof Symbol.prototype[prop] === "function", "Symbol.prototype." + prop);
     });
   });
 
@@ -358,8 +365,7 @@
     });
     strictEqual(Number.prototype.constructor, Number, "Number.prototype.constructor");
     [
-      "clz", "toExponential", "toFixed", "toLocaleString", "toPrecision", "toString",
-      "valueOf"
+      "toExponential", "toFixed", "toLocaleString", "toPrecision", "toString", "valueOf"
     ].forEach(function(prop) {
       ok(typeof Number.prototype[prop] === "function", "Number.prototype." + prop);
     });
@@ -376,9 +382,9 @@
     ok(Math.SQRT2   === 1.4142135623730951, "Math.SQRT2");
     [
       "abs", "acos", "acosh", "asin", "asinh", "atan", "atanh", "atan2", "cbrt", "ceil",
-      "cos", "cosh", "exp", "expm1", "floor", "fround", "hypot", "imul", "log", "log1p",
-      "log10", "log2", "max", "min", "pow", "random", "round", "sign", "sin", "sinh",
-      "sqrt", "tan", "tanh", "trunc"
+      "clz32", "cos", "cosh", "exp", "expm1", "floor", "fround", "hypot", "imul", "log",
+      "log1p", "log10", "log2", "max", "min", "pow", "random", "round", "sign", "sin",
+      "sinh", "sqrt", "tan", "tanh", "trunc"
     ].forEach(function(prop) {
       ok(typeof Math[prop] === "function", "Math." + prop);
     });
@@ -526,11 +532,11 @@
       ok(sizeDesc && "get" in sizeDesc, "Map.prototype.size");
 
       var o = {}, o2 = {};
-      var m = new Map([["a","A"], [0, "+0"], [-0, "-0"]]);
+      var m = new Map([["a","A"], [0, "+0"]]);
       m.set(o, o2);
       strictEqual(m.get("a"), "A", 'm.get("a")');
       strictEqual(m.get(0), "+0", 'm.get(0)');
-      strictEqual(m.get(-0), "-0", 'm.get(-0)');
+      strictEqual(m.get(-0), "+0", 'm.get(-0)');
       strictEqual(m.get(o), o2, 'm.get(o)');
       strictEqual(m.get(o2), void(0), 'm.get(o2)');
     } else {
@@ -548,7 +554,7 @@
       ok(sizeDesc && "get" in sizeDesc, "Set.prototype.size");
 
       var o = {};
-      var s = new Set(["a", 0, -0]);
+      var s = new Set(["a", 0]);
       s.add(o);
       ok(s.has("a"), 's.has("a")');
       ok(s.has(0), "s.has(0)");
@@ -642,7 +648,7 @@
     }
     var GeneratorFunction = generatorFunc.constructor;
     ok(GeneratorFunction.length === 1, "GeneratorFunction.length === 1");
-    hasOwn(GeneratorFunction.prototype, "prototype", "GeneratorFunction.prototype does'nt have \"prototype\" property");
+    hasOwn(GeneratorFunction.prototype, "prototype", "GeneratorFunction.prototype doesn't have \"prototype\" property");
 
     var generator2 = new GeneratorFunction("yield 2");
     ok(generator2 instanceof Function, "new Generator() is Function isntance");
@@ -670,11 +676,26 @@
     ok(v3.done === true, "g.next() => { done: true }");
   });
 
+  test("25.4 Promise", function () {
+    if (typeof Promise !== "undefined") {
+      ["all", "race", "reject", "resolve"].forEach(function(prop) {
+        ok(typeof Promise[prop] === "function", "Promise." + prop);
+      });
+      strictEqual(Promise.prototype.constructor, Promise, "Promise.prototype.constructor");
+      ["catch", "then"].forEach(function(prop) {
+        ok(typeof Promise.prototype[prop] === "function", "Promise.prototype." + prop);
+      })
+    } else {
+      ok(false, "not supported: Promise");
+    }
+  });
+
   test("26.1 Reflect", function () {
     if (typeof Reflect !== "undefined") {
       [
-        "defineProperty", "deleteProperty", "enumerate", "get", "getOwnPropertyDescriptor", "getPrototypeOf",
-        "has", "hasOwn", "isExtensible", "ownKeys", "preventExtensions", "set", "setPrototypeOf"
+        "apply", "construct", "defineProperty", "deleteProperty", "enumerate", "get",
+        "getOwnPropertyDescriptor", "getPrototypeOf", "has", "isExtensible", "ownKeys",
+        "preventExtensions", "set", "setPrototypeOf"
       ].forEach(function(prop) {
         ok(typeof Reflect[prop] === "function", "Reflect." + prop);
       });
@@ -683,7 +704,80 @@
     }
   });
 
-  test("26.2 Proxy", function () {
+  test("26.2 Realm", function () {
+    if (typeof Reflect !== "undefined") {
+      if (typeof Reflect.Realm === "function") {
+        strictEqual(Reflect.Realm.prototype.constructor, Reflect.Realm, "Reflect.Realm.prototype.constructor");
+        ["global", "intrinsics", "stdlib"].forEach(function(prop) {
+          ok(
+            typeof Object.getOwnPropertyDescriptor(Reflect.Realm.prototype, prop).get === "function",
+            "Reflect.Realm.prototype." + prop + " is an accessor property"
+          );
+        });
+        ["eval", "directEval", "indirectEval", "initGlobal", "nonEval"].forEach(function(prop) {
+          ok(typeof Reflect.Realm.prototype[prop] === "function", "Reflect.Realm.prototype." + prop);
+        });
+      } else {
+        ok(false, "not supported: Reflect.Realm");
+      }
+    } else {
+      ok(false, "not supported: Reflect");
+    }
+  });
+
+  test("26.3 Loader", function () {
+    if (typeof Reflect !== "undefined") {
+      if (typeof Reflect.Loader === "function") {
+        strictEqual(Reflect.Loader.prototype.constructor, Reflect.Loader, "Reflect.Loader.prototype.constructor");
+        ["global", "realm"].forEach(function(prop) {
+          ok(
+            typeof Object.getOwnPropertyDescriptor(Reflect.Loader.prototype, prop).get === "function",
+            "Reflect.Loader.prototype." + prop + " is an accessor property"
+          );
+        });
+        [
+          "define", "delete", "entries", "get", "has", "import", "keys", "load", "module",
+          "newModule", "set", "values", "normalize", "locate", "fetch", "translate", "instantiate"
+        ].forEach(function(prop) {
+          ok(typeof Reflect.Loader.prototype[prop] === "function", "Reflect.Loader.prototype." + prop);
+        });
+      } else {
+        ok(false, "not supported: Reflect.Loader");
+      }
+    } else {
+      ok(false, "not supported: Reflect");
+    }
+  });
+
+  test("26.4 System", function () {
+    if (typeof Reflect === "undefined") {
+      ok(false, "not supported: Reflect");
+      return;
+    }
+    if (typeof Reflect.Loader !== "function") {
+      ok(false, "not supported: Reflect.Loader");
+      return;
+    }
+    if (typeof System === "undefined") {
+      ok(false, "not supported: System");
+      return;
+    }
+    strictEqual(System.constructor, Reflect.Loader, "System.constructor");
+    ["global", "realm"].forEach(function(prop) {
+      ok(
+        typeof Object.getOwnPropertyDescriptor(System, prop).get === "function",
+        "System." + prop + " is an accessor property"
+      );
+    });
+    [
+      "define", "delete", "entries", "get", "has", "import", "keys", "load", "module",
+      "newModule", "set", "values", "normalize", "locate", "fetch", "translate", "instantiate"
+    ].forEach(function(prop) {
+      ok(typeof System[prop] === "function", "System." + prop);
+    });
+  });
+
+  test("26.5 Proxy", function () {
     if (typeof Proxy !== "undefined") {
       var code1 = 'new Proxy({}, { get: function(){ return "OK" } })',
           code2 = 'Proxy.create({ get: function(){ return "OK" } })';
