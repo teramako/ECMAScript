@@ -16,7 +16,7 @@
     });
   });
 
-  test("12.1.4.1 spread array(...) operator", function () {
+  test("12.2.4.1 spread array(...) operator", function () {
     var code = '[...[1,2,3]].join("")';
     try {
       var res = eval(code);
@@ -26,7 +26,7 @@
     }
   });
 
-  test("12.1.4.2 Array Comprehension", function () {
+  test("12.2.4.2 Array Comprehension", function () {
     var list = ["a", "b", "c"];
     var newCode = '[for (i in list) list[i]]',
         oldCode = '[list[i] for (i in list)]';
@@ -45,7 +45,7 @@
     }
   });
 
-  test("12.1.7 Generator Comprehension", function () {
+  test("12.2.7 Generator Comprehension", function () {
     var list = ["a", "b", "c"];
     var newCode = '(for (i in list) list[i])',
         oldCode = '(list[i] for (i in list))';
@@ -65,7 +65,7 @@
     }
   });
 
-  test("12.1.9 Template Literal(`...`)", function () {
+  test("12.2.9 Template Literal(`...`)", function () {
     var str = "OK";
     var code = '`result is $(str).`';
     try {
@@ -76,7 +76,7 @@
     }
   });
 
-  test("12.2 spread call(...) operator", function () {
+  test("12.3.6 spread call(...) operator", function () {
     var code = "Math.max(...[1,2,3])";
     try {
       var res = eval(code);
@@ -86,7 +86,7 @@
     }
   });
 
-  test("12.13 Array Destructing Assignment", function () {
+  test("12.14.5 Array Destructing Assignment", function () {
     var code1 = 'var [ a, b ] = ["A","B","C"]',
         code2 = 'var [ a, b, ...c] = ["A","B","C","D"]';
     try {
@@ -104,7 +104,7 @@
     }
   });
 
-  test("12.13 Object Destructing Assignment", function () {
+  test("12.14.5 Object Destructing Assignment", function () {
     var code1 = 'var { a, b } = { a: "A", b: "B" }',
         code2 = 'var { a: a1, b: b1 } = { a: "A", b: "B" }';
     try {
@@ -259,7 +259,7 @@
     }
   });
 
-  test("15.1 module and export", function () {
+  test("15.2 module and export", function () {
     var code1 = 'module "foo" { }',
         code2 = 'module "bar" { export var b = "OK" }';
     try {
