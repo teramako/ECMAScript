@@ -28,7 +28,7 @@
 
   test("12.2.4.2 Array Comprehension", function () {
     var list = ["a", "b", "c"];
-    var newCode = '[for (i in list) list[i]]',
+    var newCode = '[for (v of list) v]',
         oldCode = '[list[i] for (i in list)]';
     try {
       var res = eval(newCode);
@@ -69,7 +69,7 @@
 
   test("12.2.7 Generator Comprehension", function () {
     var list = ["a", "b", "c"];
-    var newCode = '(for (i in list) list[i])',
+    var newCode = '(for (v of list) v)',
         oldCode = '(list[i] for (i in list))';
 
     try {
