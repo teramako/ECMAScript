@@ -108,6 +108,19 @@
     }
   });
 
+  test("12.3.7 Tagged Templates", function () {
+    function func() {
+      return Array.prototype.slice.call(arguments);
+    }
+    var code = "func`a\\`${\"B\"}c${\"D\"}\\``";
+    try {
+      var res = eval(code);
+      deepEqual(res, [["a`", "c", "`"], "B", "D"], code);
+    } catch (e) {
+      ok(false, "not supported: " + code);
+    }
+  });
+
   test("12.14.5 Array Destructing Assignment", function () {
     var code1 = 'var [ a, b ] = ["A","B","C"]',
         code2 = 'var [ a, b, ...c] = ["A","B","C","D"]';
