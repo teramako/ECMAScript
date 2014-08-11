@@ -45,6 +45,17 @@
     }
   });
 
+  test("12.2.5 Shorthand Property", function () {
+    var str = "OK";
+    var code = "({str})";
+    try {
+      var res = eval(code);
+      strictEqual(res.str, "OK", code);
+    } catch (e) {
+      ok(false, "not supported: " + e);
+    }
+  });
+
   test("12.2.5 Computed Property Name", function () {
     var str = "foo";
     var code = "({[str]: \"OK\"})";
