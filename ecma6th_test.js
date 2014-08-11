@@ -45,6 +45,17 @@
     }
   });
 
+  test("12.2.5 Computed Property Name", function () {
+    var str = "foo";
+    var code = "({[str]: \"OK\"})";
+    try {
+      var res = eval(code);
+      strictEqual(res.foo, "OK", code);
+    } catch (e) {
+      ok(false, "not supported: " + e);
+    }
+  });
+
   test("12.2.7 Generator Comprehension", function () {
     var list = ["a", "b", "c"];
     var newCode = '(for (i in list) list[i])',
