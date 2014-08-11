@@ -533,7 +533,7 @@
 
       var o = {}, o2 = {};
       var m = new Map([["a","A"], [0, "+0"]]);
-      m.set(o, o2);
+      strictEqual(m.set(o, o2), m, "m.set() returns m");
       strictEqual(m.get("a"), "A", 'm.get("a")');
       strictEqual(m.get(0), "+0", 'm.get(0)');
       strictEqual(m.get(-0), "+0", 'm.get(-0)');
@@ -555,7 +555,7 @@
 
       var o = {};
       var s = new Set(["a", 0]);
-      s.add(o);
+      strictEqual(s.add(o), s, "s.add() returns s");
       ok(s.has("a"), 's.has("a")');
       ok(s.has(0), "s.has(0)");
       ok(s.has(-0), "s.has(-0)");
@@ -575,7 +575,7 @@
       var o = {}, o2 = {};
       var wm = new WeakMap([[o, "OK"]]);
       strictEqual(wm.get(o), "OK", "initial value wm.get(o)");
-      wm.set(o2, o);
+      strictEqual(wm.set(o2, o), wm, "wm.set() returns wm");
       strictEqual(wm.get(o2), o, "wm.get(o2)");
       throws(function(){ wm.set(null, ""); }, "throws Error when set null");
       throws(function(){ wm.set("a", ""); }, "throws Error when set a primitive value");
@@ -592,7 +592,7 @@
       });
       var o1 = {}, o2 = {};
       var ws = new WeakSet([o1]);
-      ws.add(o2);
+      strictEqual(ws.add(o2), ws, "ws.add() returns ws");
       ok(ws.has(o1), "ws.has(o1)");
       ok(ws.has(o2), "ws.has(o2)");
       ok(ws.has({}) === false, "ws.has({}) is false");
