@@ -89,7 +89,7 @@
 
   test("12.2.9 Template Literal(`...`)", function () {
     var str = "OK";
-    var code = '`result is $(str).`';
+    var code = '`result is ${str}.`';
     try {
       var res = eval(code);
       strictEqual(res, "result is OK.", code);
