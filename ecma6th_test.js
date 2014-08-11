@@ -17,10 +17,17 @@
   });
 
   test("12.2.4.1 spread array(...) operator", function () {
-    var code = '[...[1,2,3]].join("")';
+    var code;
+
+    code = "[...[1, 2, 3]].join(\"\")";
     try {
-      var res = eval(code);
-      strictEqual(res, "123", code);
+      strictEqual(eval(code), "123", code);
+    } catch (e) {
+      ok(false, "not supported: " + e);
+    }
+    code = "[1, ...\"234\", 5].join(\"\")";
+    try {
+      strictEqual(eval(code), "12345", code);
     } catch (e) {
       ok(false, "not supported: " + e);
     }
