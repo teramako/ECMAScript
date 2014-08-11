@@ -188,6 +188,41 @@
     ok(eval('let value = 10; { let value = 20; } value === 10;'), "block scope");
   });
 
+  test("13.2.3 Destructuring Binding Patterns", function () {
+    var code;
+
+    code = "(function ({prop}) {return prop;}({prop: \"OK\"}))";
+    try {
+      strictEqual(eval(code), "OK", code);
+    } catch (e) {
+      ok(false, "not supported: " + code);
+    }
+    code = "(function ([str]) {return str;}([\"OK\"]))";
+    try {
+      strictEqual(eval(code), "OK", code);
+    } catch (e) {
+      ok(false, "not supported: " + code);
+    }
+    code = "(function ([str, ...ary]) {return [ary, str];}([\"a\", \"b\", \"c\"]))";
+    try {
+      deepEqual(eval(code), [["b", "c"], "a"], code);
+    } catch (e) {
+      ok(false, "not supported: " + code);
+    }
+    code = "(function () { for (var {length} in {four: true}) { if (length === 4) {return \"OK\";} } }())";
+    try {
+      strictEqual(eval(code), "OK", code);
+    } catch (e) {
+      ok(false, "not supported: " + code);
+    }
+    code = "(function () { try {throw new Error(\"OK\");} catch ({message}) {return message;} }())";
+    try {
+      strictEqual(eval(code), "OK", code);
+    } catch (e) {
+      ok(false, "not supported: " + code);
+    }
+  });
+
   test("13.6.4 for-of", function () {
     var list = ["a", "b", "c"];
     var code = 'var res=[]; for (var item of list){res.push(item);} res;';
