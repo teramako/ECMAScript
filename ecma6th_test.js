@@ -106,11 +106,18 @@
   });
 
   test("12.3.6 spread call(...) operator", function () {
-    var code = "Math.max(...[1,2,3])";
+    var code;
+
+    code = "Math.max(...[1, 2, 3])";
     try {
-      var res = eval(code);
-      strictEqual(res, 3, code);
-    } catch(e) {
+      strictEqual(eval(code), 3, code);
+    } catch (e) {
+      ok(false, "not supported: " + e);
+    }
+    code = "Math.max(1, ...\"234\", 5)";
+    try {
+      strictEqual(eval(code), 5, code);
+    } catch (e) {
       ok(false, "not supported: " + e);
     }
   });
