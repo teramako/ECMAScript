@@ -574,7 +574,7 @@
       });
       var o = {}, o2 = {};
       var wm = new WeakMap([[o, "OK"]]);
-      strictEqual(wm.get(o), o2, "initial value wm.get(o)");
+      strictEqual(wm.get(o), "OK", "initial value wm.get(o)");
       wm.set(o2, o);
       strictEqual(wm.get(o2), o, "wm.get(o2)");
       throws(function(){ wm.set(null, ""); }, "throws Error when set null");
