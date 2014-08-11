@@ -220,6 +220,7 @@
   test("14.4 Generator (yield)", function () {
     var newCode1 = '(function * foo(){ yield 5; })',
         newCode2 = '(function * foo(){ yield * 5; })',
+        newCode3 = '(function * foo(){ yield; })',
         oldCode = '(function foo(){ yield 5; })';
     try {
       var res = eval(newCode1);
@@ -229,6 +230,12 @@
         strictEqual(typeof res, "function", "supported new syntax: " + newCode2);
       } catch (e) {
         ok(false, "not supported new syntax: " + newCode2 + " : " + e);
+      }
+      try {
+        var res = eval(newCode3);
+        strictEqual(typeof res, "function", "supported new syntax: " + newCode3);
+      } catch (e) {
+        ok(false, "not supported new syntax: " + newCode3 + " : " + e);
       }
       return;
     } catch (e) {
