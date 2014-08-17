@@ -16,19 +16,26 @@
     });
   });
 
-  test("12.1.4.1 spread array(...) operator", function () {
-    var code = '[...[1,2,3]].join("")';
+  test("12.2.4.1 spread array(...) operator", function () {
+    var code;
+
+    code = "[...[1, 2, 3]].join(\"\")";
     try {
-      var res = eval(code);
-      strictEqual(res, "123", code);
+      strictEqual(eval(code), "123", code);
+    } catch (e) {
+      ok(false, "not supported: " + e);
+    }
+    code = "[1, ...\"234\", 5].join(\"\")";
+    try {
+      strictEqual(eval(code), "12345", code);
     } catch (e) {
       ok(false, "not supported: " + e);
     }
   });
 
-  test("12.1.4.2 Array Comprehension", function () {
+  test("12.2.4.2 Array Comprehension", function () {
     var list = ["a", "b", "c"];
-    var newCode = '[for (i in list) list[i]]',
+    var newCode = '[for (v of list) v]',
         oldCode = '[list[i] for (i in list)]';
     try {
       var res = eval(newCode);
@@ -45,9 +52,31 @@
     }
   });
 
-  test("12.1.7 Generator Comprehension", function () {
+  test("12.2.5 Shorthand Property", function () {
+    var str = "OK";
+    var code = "({str})";
+    try {
+      var res = eval(code);
+      strictEqual(res.str, "OK", code);
+    } catch (e) {
+      ok(false, "not supported: " + e);
+    }
+  });
+
+  test("12.2.5 Computed Property Name", function () {
+    var str = "foo";
+    var code = "({[str]: \"OK\"})";
+    try {
+      var res = eval(code);
+      strictEqual(res.foo, "OK", code);
+    } catch (e) {
+      ok(false, "not supported: " + e);
+    }
+  });
+
+  test("12.2.7 Generator Comprehension", function () {
     var list = ["a", "b", "c"];
-    var newCode = '(for (i in list) list[i])',
+    var newCode = '(for (v of list) v)',
         oldCode = '(list[i] for (i in list))';
 
     try {
@@ -65,9 +94,9 @@
     }
   });
 
-  test("12.1.9 Template Literal(`...`)", function () {
+  test("12.2.9 Template Literal(`...`)", function () {
     var str = "OK";
-    var code = '`result is $(str).`';
+    var code = '`result is ${str}.`';
     try {
       var res = eval(code);
       strictEqual(res, "result is OK.", code);
@@ -76,17 +105,37 @@
     }
   });
 
-  test("12.2 spread call(...) operator", function () {
-    var code = "Math.max(...[1,2,3])";
+  test("12.3.6 spread call(...) operator", function () {
+    var code;
+
+    code = "Math.max(...[1, 2, 3])";
     try {
-      var res = eval(code);
-      strictEqual(res, 3, code);
-    } catch(e) {
+      strictEqual(eval(code), 3, code);
+    } catch (e) {
+      ok(false, "not supported: " + e);
+    }
+    code = "Math.max(1, ...\"234\", 5)";
+    try {
+      strictEqual(eval(code), 5, code);
+    } catch (e) {
       ok(false, "not supported: " + e);
     }
   });
 
-  test("12.13 Array Destructing Assignment", function () {
+  test("12.3.7 Tagged Templates", function () {
+    function func() {
+      return Array.prototype.slice.call(arguments);
+    }
+    var code = "func`a\\`${\"B\"}c${\"D\"}\\``";
+    try {
+      var res = eval(code);
+      deepEqual(res, [["a`", "c", "`"], "B", "D"], code);
+    } catch (e) {
+      ok(false, "not supported: " + code);
+    }
+  });
+
+  test("12.14.5 Array Destructing Assignment", function () {
     var code1 = 'var [ a, b ] = ["A","B","C"]',
         code2 = 'var [ a, b, ...c] = ["A","B","C","D"]';
     try {
@@ -104,7 +153,7 @@
     }
   });
 
-  test("12.13 Object Destructing Assignment", function () {
+  test("12.14.5 Object Destructing Assignment", function () {
     var code1 = 'var { a, b } = { a: "A", b: "B" }',
         code2 = 'var { a: a1, b: b1 } = { a: "A", b: "B" }';
     try {
@@ -151,6 +200,41 @@
       return;
     }
     ok(eval('let value = 10; { let value = 20; } value === 10;'), "block scope");
+  });
+
+  test("13.2.3 Destructuring Binding Patterns", function () {
+    var code;
+
+    code = "(function ({prop}) {return prop;}({prop: \"OK\"}))";
+    try {
+      strictEqual(eval(code), "OK", code);
+    } catch (e) {
+      ok(false, "not supported: " + code);
+    }
+    code = "(function ([str]) {return str;}([\"OK\"]))";
+    try {
+      strictEqual(eval(code), "OK", code);
+    } catch (e) {
+      ok(false, "not supported: " + code);
+    }
+    code = "(function ([str, ...ary]) {return [ary, str];}([\"a\", \"b\", \"c\"]))";
+    try {
+      deepEqual(eval(code), [["b", "c"], "a"], code);
+    } catch (e) {
+      ok(false, "not supported: " + code);
+    }
+    code = "(function () { for (var {length} in {four: true}) { if (length === 4) {return \"OK\";} } }())";
+    try {
+      strictEqual(eval(code), "OK", code);
+    } catch (e) {
+      ok(false, "not supported: " + code);
+    }
+    code = "(function () { try {throw new Error(\"OK\");} catch ({message}) {return message;} }())";
+    try {
+      strictEqual(eval(code), "OK", code);
+    } catch (e) {
+      ok(false, "not supported: " + code);
+    }
   });
 
   test("13.6.4 for-of", function () {
@@ -220,6 +304,7 @@
   test("14.4 Generator (yield)", function () {
     var newCode1 = '(function * foo(){ yield 5; })',
         newCode2 = '(function * foo(){ yield * 5; })',
+        newCode3 = '(function * foo(){ yield; })',
         oldCode = '(function foo(){ yield 5; })';
     try {
       var res = eval(newCode1);
@@ -229,6 +314,12 @@
         strictEqual(typeof res, "function", "supported new syntax: " + newCode2);
       } catch (e) {
         ok(false, "not supported new syntax: " + newCode2 + " : " + e);
+      }
+      try {
+        var res = eval(newCode3);
+        strictEqual(typeof res, "function", "supported new syntax: " + newCode3);
+      } catch (e) {
+        ok(false, "not supported new syntax: " + newCode3 + " : " + e);
       }
       return;
     } catch (e) {
@@ -252,7 +343,7 @@
     }
   });
 
-  test("15.1 module and export", function () {
+  test("15.2 module and export", function () {
     var code1 = 'module "foo" { }',
         code2 = 'module "bar" { export var b = "OK" }';
     try {
@@ -533,7 +624,7 @@
 
       var o = {}, o2 = {};
       var m = new Map([["a","A"], [0, "+0"]]);
-      m.set(o, o2);
+      strictEqual(m.set(o, o2), m, "m.set() returns m");
       strictEqual(m.get("a"), "A", 'm.get("a")');
       strictEqual(m.get(0), "+0", 'm.get(0)');
       strictEqual(m.get(-0), "+0", 'm.get(-0)');
@@ -547,7 +638,7 @@
   test("23.2 Set", function () {
     if (typeof Set === "function") {
       strictEqual(Set.prototype.constructor, Set, "Set.prototype.constructor");
-      ["add", "clear", "delete", "entries", "forEach", "has", "values"].forEach(function(prop) {
+      ["add", "clear", "delete", "entries", "forEach", "has", "keys", "values"].forEach(function(prop) {
         ok(typeof Set.prototype[prop] === "function", "Set.prototype." + prop);
       });
       var sizeDesc = Object.getOwnPropertyDescriptor(Set.prototype, "size");
@@ -555,7 +646,7 @@
 
       var o = {};
       var s = new Set(["a", 0]);
-      s.add(o);
+      strictEqual(s.add(o), s, "s.add() returns s");
       ok(s.has("a"), 's.has("a")');
       ok(s.has(0), "s.has(0)");
       ok(s.has(-0), "s.has(-0)");
@@ -574,8 +665,8 @@
       });
       var o = {}, o2 = {};
       var wm = new WeakMap([[o, "OK"]]);
-      strictEqual(wm.get(o), o2, "initial value wm.get(o)");
-      wm.set(o2, o);
+      strictEqual(wm.get(o), "OK", "initial value wm.get(o)");
+      strictEqual(wm.set(o2, o), wm, "wm.set() returns wm");
       strictEqual(wm.get(o2), o, "wm.get(o2)");
       throws(function(){ wm.set(null, ""); }, "throws Error when set null");
       throws(function(){ wm.set("a", ""); }, "throws Error when set a primitive value");
@@ -592,7 +683,7 @@
       });
       var o1 = {}, o2 = {};
       var ws = new WeakSet([o1]);
-      ws.add(o2);
+      strictEqual(ws.add(o2), ws, "ws.add() returns ws");
       ok(ws.has(o1), "ws.has(o1)");
       ok(ws.has(o2), "ws.has(o2)");
       ok(ws.has({}) === false, "ws.has({}) is false");
